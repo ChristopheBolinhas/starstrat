@@ -14,6 +14,7 @@
         <item>Exemple</item>
         <item>Speed Choose</item>
         <item>Gloups</item>
+		<item>Configure Strategies</item>
     </string-array>
 
     <!-- Nav Drawer List Item Icons -->
@@ -23,6 +24,7 @@
         <item>@drawable/ic_exemple</item>
         <item>@drawable/ic_exemple</item>
         <item>@drawable/ic_exemple</item>
+		<item>@drawable/ic_exemple</item>
     </array>
 
     <!-- Content Description -->

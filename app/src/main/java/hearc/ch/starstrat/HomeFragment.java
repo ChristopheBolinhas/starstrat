@@ -6,6 +6,12 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.GridView;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+
+import hearc.ch.starstrat.adapter.HomeButtonAdapter;
 
 
 /**
@@ -24,6 +30,19 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
+    }
+
+
+
+
+    @Override
+    public void onActivityCreated (Bundle savedInstanceState)
+    {
+        super.onActivityCreated(savedInstanceState);
+
+        GridView gridview = (GridView) getActivity().findViewById(R.id.gridview);
+        gridview.setAdapter(new HomeButtonAdapter(getView().getContext(),(MainActivity)getActivity()));
+
     }
 
 

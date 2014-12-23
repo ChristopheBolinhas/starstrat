@@ -66,6 +66,7 @@ public class MainActivity extends ActionBarActivity {
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[1],navMenuIcons.getResourceId(1,0)));
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[2],navMenuIcons.getResourceId(2,0)));
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[3],navMenuIcons.getResourceId(3,0)));
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[4],navMenuIcons.getResourceId(4,0)));
         navMenuIcons.recycle();
 
         mDrawerList.setOnItemClickListener(new DrawerMenuClickListener() );
@@ -137,7 +138,7 @@ public class MainActivity extends ActionBarActivity {
     /**
      * Diplaying fragment view for selected nav drawer list item
      * */
-    private void displayView(int position) {
+    public void displayView(int position) {
         // update the main content by replacing fragments
         Fragment fragment = null;
         switch (position) {
@@ -153,6 +154,8 @@ public class MainActivity extends ActionBarActivity {
             case 3:
                 fragment = new LaunchGameFragment();
                 break;
+			case 4:
+                fragment = new StrategieMakerFragment();
 
             default:
                 break;
