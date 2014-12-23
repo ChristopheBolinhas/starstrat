@@ -13,12 +13,14 @@
         <item>Home</item>
         <item>Exemple</item>
         <item>Speed Choose</item>
+        <item>Gloups</item>
     </string-array>
 
     <!-- Nav Drawer List Item Icons -->
     <!-- Keep them in order as the titles are in -->
     <array name="nav_drawer_icons">
         <item>@drawable/ic_home</item>
+        <item>@drawable/ic_exemple</item>
         <item>@drawable/ic_exemple</item>
         <item>@drawable/ic_exemple</item>
     </array>

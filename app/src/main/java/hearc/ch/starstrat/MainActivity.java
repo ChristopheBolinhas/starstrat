@@ -65,6 +65,7 @@ public class MainActivity extends ActionBarActivity {
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[0],navMenuIcons.getResourceId(0,0)));
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[1],navMenuIcons.getResourceId(1,0)));
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[2],navMenuIcons.getResourceId(2,0)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3],navMenuIcons.getResourceId(3,0)));
         navMenuIcons.recycle();
 
         mDrawerList.setOnItemClickListener(new DrawerMenuClickListener() );
@@ -148,6 +149,9 @@ public class MainActivity extends ActionBarActivity {
                 break;
             case 2:
                 fragment = SpeedChooseFragment.newInstance();
+                break;
+            case 3:
+                fragment = new LaunchGameFragment();
                 break;
 
             default:
