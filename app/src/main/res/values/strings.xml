@@ -12,6 +12,7 @@
     <string-array name="nav_drawer_items">
         <item>Home</item>
         <item>Exemple</item>
+        <item>Speed Choose</item>
     </string-array>
 
     <!-- Nav Drawer List Item Icons -->
@@ -19,11 +20,21 @@
     <array name="nav_drawer_icons">
         <item>@drawable/ic_home</item>
         <item>@drawable/ic_exemple</item>
+        <item>@drawable/ic_exemple</item>
     </array>
 
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
     <string name="hello_blank_fragment">Hello home fragment</string>
     <string name="text_hello_exemple">Hello example fragment</string>
+
+
+    <!-- Values for SpeedChooseFragment -->
+    <string name="choose_speed_fragment_title">Choose your speed of game</string>
+    <string name="choose_speed_fragment_normal">Regular</string>
+    <string name="choose_speed_fragment_faster">Faster</string>
+    <string name="choose_speed_fragment_faster2">Faster*2</string>
+    <string name="choose_speed_fragment_faster4">Faster*4</string>
+    <string name="choose_speed_fragment_return">Return</string>
 
 </resources>
