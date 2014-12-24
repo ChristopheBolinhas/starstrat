@@ -27,6 +27,12 @@
 		<item>@drawable/ic_exemple</item>
     </array>
 
+    <string-array name="races_array">
+        <item>Terran</item>
+        <item>Protoss</item>
+        <item>Zerg</item>
+    </string-array>
+
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
     <string name="hello_blank_fragment">Hello home fragment</string>
