@@ -27,6 +27,8 @@ import android.widget.TextView;
  */
 public class LaunchGameFragment extends Fragment {
 
+    private ImageView[] tabImageAnimation;
+
     private TextView textTotalTime, textStepTime;
     private Button buttonLaunchGame;
     private TextView text,textAnim;
@@ -103,16 +105,20 @@ public class LaunchGameFragment extends Fragment {
         textStepTime = (TextView)getActivity().findViewById(R.id.timerActuel);
         layoutAnimation = (LinearLayout)getActivity().findViewById(R.id.layoutAnimation);
 
-        imageAnimation = new ImageView(getActivity());
-        imageAnimation.setImageResource(R.drawable.ic_home_favs);
+        tabImageAnimation = new ImageView[10];
+
+        for(int i=0; i < 10; i++) {
+            ImageView tmp = new ImageView(getActivity());
+            tmp.setImageResource(R.drawable.ic_home_favs);
+            tabImageAnimation[i] = tmp;
+        }/*
         layoutAnimation.addView(imageAnimation);
         imageAnimation.animate().translationX(-100).scaleX((float)0.2).scaleY((float)0.2).setDuration(0).withLayer();
-
-
+*/
         //GET SCREEN SIZE
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        int height = displaymetrics.heightPixels;
+        final int height = displaymetrics.heightPixels;
         final int width = displaymetrics.widthPixels;
 
         /* MARCHE MAIS PAS PRATIQUE (TRANSLATION SEPARER DE SCALE)
@@ -125,45 +131,21 @@ public class LaunchGameFragment extends Fragment {
         trAnim4 = new TranslateAnimation(layoutAnimation.getMeasuredWidth()/2+ layoutAnimation.getMeasuredWidth()/4, layoutAnimation.getMeasuredWidth(), layoutAnimation.getMeasuredHeight()/2, layoutAnimation.getMeasuredHeight()/2);
         */
 
-
         buttonLaunchGame = (Button)getActivity().findViewById(R.id.buttonLaunchGame);
         buttonLaunchGame.setOnClickListener(new View.OnClickListener() {
+            int index = 0;
             @Override
             public void onClick(View v) {
 
                 System.out.println("lalalalalalalalala"+ layoutAnimation.getMeasuredWidth());
 
-                /* MARCHE PAS, COORDONNE CENSER ETRE EN % EST EN PIXEL (MEILLEURE METHODE)
+                /* MARCHE PAS, COORDONNE CENSER ETRE EN % EST EN PIXEL (MEILLEURE METHODE POURTANT...)
                 Animation animation = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.game_anim);
                 textAnim.startAnimation(animation);
                 //textAnim.startAnimation(trAnim1);
                 */
 
-                imageAnimation.animate().translationX((width/4)-imageAnimation.getMeasuredWidth()).scaleX((float) 0.5).scaleY((float) 0.5).setDuration(1000).withLayer().withEndAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        imageAnimation.animate().scaleX(2).scaleY(2).translationX(width/2-imageAnimation.getMeasuredWidth()).setStartDelay(3000).setDuration(1000).withLayer().withEndAction(new Runnable() {
-
-                            @Override
-                            public void run() {
-                                imageAnimation.animate().translationX(width-(width/4)).scaleX((float) 0.5).scaleY((float) 0.5).setStartDelay(3000).setDuration(1000).withLayer().withEndAction(new Runnable() {
-
-                                    @Override
-                                    public void run() {
-                                        imageAnimation.animate().translationX(width+imageAnimation.getMeasuredWidth()).scaleX((float)0.2).scaleY((float)0.2).withLayer().setDuration(1000).withEndAction(new Runnable() {
-
-                                            @Override
-                                            public void run() {
-
-                                                layoutAnimation.removeView(imageAnimation);
-                                            }
-                                        });
-                                    }
-                                });
-                            }
-                        });
-                    }
-                });
+                launchAnimation(0,width,height);
 
                 handlerStep.post(updateStep);
 
@@ -174,6 +156,41 @@ public class LaunchGameFragment extends Fragment {
         totalTime = 1000;
         stepTime = 50;
         stepTimeTMP = 1;
+    }
+
+    private void launchAnimation(int ind, final int width, final int height)
+    {
+        final int index = ind;
+        final int quartW = width/4;
+        final int demiW = width/4;
+        layoutAnimation.addView(tabImageAnimation[index]);
+        tabImageAnimation[index].animate().translationX(quartW).scaleX((float) 0.5).scaleY((float) 0.5).setDuration(1000).withLayer().withEndAction(new Runnable() {
+            @Override
+            public void run() {
+                tabImageAnimation[index].animate().scaleX(2).scaleY(2).translationX(demiW).setStartDelay(3000).setDuration(1000).withLayer().withEndAction(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        if(index < 9)
+                            launchAnimation(index+1,width,height);
+                        tabImageAnimation[index].animate().translationX(width-quartW).scaleX((float) 0.5).scaleY((float) 0.5).setStartDelay(3000).setDuration(1000).withLayer().withEndAction(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                tabImageAnimation[index].animate().translationX(width+tabImageAnimation[index].getMeasuredWidth()).scaleX((float)0.2).scaleY((float)0.2).withLayer().setDuration(1000).withEndAction(new Runnable() {
+
+                                    @Override
+                                    public void run() {
+
+                                        layoutAnimation.removeView(tabImageAnimation[index]);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        });
     }
 
         @Override
