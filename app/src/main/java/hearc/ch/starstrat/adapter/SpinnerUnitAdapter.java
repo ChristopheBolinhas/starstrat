@@ -17,6 +17,9 @@ public class SpinnerUnitAdapter extends ArrayAdapter<String> {
     private Context mContext;
     private String[] mTitles;
     private Integer[] mIcons;
+    private Integer[] unitIds;
+
+
 
     public SpinnerUnitAdapter(Context context, int textViewResId, String[] titles, Integer[] icons)
     {
@@ -24,6 +27,14 @@ public class SpinnerUnitAdapter extends ArrayAdapter<String> {
         this.mContext = context;
         this.mTitles = titles;
         this.mIcons = icons;
+
+        this.unitIds = icons;
+        //TODO : Adapter au remplissage automatique
+    }
+
+    public int getSelectedUnitId(int position)
+    {
+        return unitIds[position];
     }
 
     @Override

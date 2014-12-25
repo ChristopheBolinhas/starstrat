@@ -16,17 +16,17 @@
             android:layout_width="match_parent"
             android:layout_height="48dp">
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="Nom : "
-                android:layout_weight="3"
+                android:layout_weight="1"
                 />
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/editText"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:singleLine="true"
                 android:gravity="center"/>
             </LinearLayout>
@@ -35,17 +35,17 @@
             android:layout_height="48dp"
             android:orientation="horizontal">
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="Race : "
-                android:layout_weight="3"
+                android:layout_weight="1"
                 />
             <Spinner
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:id="@+id/spinner_race">
 
                 </Spinner>
@@ -55,16 +55,16 @@
             android:layout_height="96dp"
             android:orientation="horizontal">
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="Description : "
-                android:layout_weight="3"
+                android:layout_weight="1"
                 />
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="3"/>
         </LinearLayout>
         <View
             android:layout_width="fill_parent"
@@ -78,6 +78,37 @@
             android:gravity="center"
             android:textSize="24dp"
            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <NumberPicker
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/picker_minutes"
+                ></NumberPicker>
+            <NumberPicker
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/picker_secondes"
+                ></NumberPicker>
+            <Spinner android:id="@+id/spinner_unit_choice"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="4"/>
+            <Button
+
+                android:background="@drawable/button_stratmake_style_normal"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:id="@+id/button_add_unit"
+                android:text="+"/>
+        </LinearLayout>
         <TableLayout
             android:id="@+id/table_units"
             android:layout_width="match_parent"
@@ -88,122 +119,17 @@
             <TableRow
                 android:layout_height="60dp"
                 android:padding="5dp"
+                android:layout_width="match_parent"
                 android:textAlignment="center">
                 <TextView android:padding="3dip" android:gravity="center" android:text="Unité"/>
                 <TextView android:padding="3dip" android:gravity="center" android:text="Temps"/>
                 <TextView android:padding="3dip" android:gravity="center" android:text="Actions"/>
             </TableRow>
-            <TableRow
-                android:layout_height="48dp">
-                <TextView android:padding="3dip" android:gravity="center" android:text="Ouvrier"/>
-                <TextView android:padding="3dip" android:gravity="center" android:text="0:05"/>
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:weightSum="2"
-                    android:layout_height="match_parent">
-                    <Button
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/button_stratmake_style_normal"
-                        android:layout_weight="1"
-                        android:text="e"/>
-                    <Button
-                        android:layout_width="30dp"
-                        android:background="@drawable/button_stratmake_style_normal"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="x"/>
-                </LinearLayout>
-            </TableRow>
-            <TableRow
-                android:layout_height="48dp">
-                <TextView android:padding="3dip" android:gravity="center" android:text="Ouvrier"/>
-                <TextView android:padding="3dip" android:gravity="center" android:text="0:05"/>
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:weightSum="2"
-                    android:layout_height="match_parent">
-                    <Button
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/button_stratmake_style_normal"
-                        android:layout_weight="1"
-                        android:text="e"/>
-                    <Button
-                        android:layout_width="30dp"
-                        android:background="@drawable/button_stratmake_style_normal"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="x"/>
-                </LinearLayout>
-            </TableRow>
-            <TableRow
-                android:layout_height="48dp">
-                <TextView android:padding="3dip" android:gravity="center" android:text="Ouvrier"/>
-                <TextView android:padding="3dip" android:gravity="center" android:text="0:05"/>
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:weightSum="2"
-                    android:layout_height="match_parent">
-                    <Button
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/button_stratmake_style_normal"
-                        android:layout_weight="1"
-                        android:text="e"/>
-                    <Button
-                        android:layout_width="30dp"
-                        android:background="@drawable/button_stratmake_style_normal"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="x"/>
-                </LinearLayout>
-            </TableRow>
-            <TableRow
-                android:layout_height="48dp">
-                <TextView android:padding="3dip" android:gravity="center" android:text="Ouvrier"/>
-                <TextView android:padding="3dip" android:gravity="center" android:text="0:05"/>
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:weightSum="2"
-                    android:layout_height="wrap_content">
-                    <Button
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/button_stratmake_style_normal"
-                        android:layout_weight="1"
-                        android:text="e"/>
-                    <Button
-                        android:layout_width="30dp"
-                        android:background="@drawable/button_stratmake_style_normal"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="x"/>
-                </LinearLayout>
-            </TableRow>
+
 
             </TableLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="5">
 
-            <NumberPicker
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                ></NumberPicker>
-            <NumberPicker
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                ></NumberPicker>
-            <Spinner android:id="@+id/spinner_unit_choice"
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:layout_weight="1"/>
-            </LinearLayout>
+
     </LinearLayout>
 
 </FrameLayout>
