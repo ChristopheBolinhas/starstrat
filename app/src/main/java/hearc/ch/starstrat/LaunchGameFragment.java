@@ -1,18 +1,22 @@
 package hearc.ch.starstrat;
 
+import android.animation.Animator;
+import android.app.ActionBar;
 import android.app.Activity;
-import android.content.pm.ActivityInfo;
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import hearc.ch.starstrat.R;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,13 +27,19 @@ import hearc.ch.starstrat.R;
  */
 public class LaunchGameFragment extends Fragment {
 
-    private TextView textTotal, textActuel;
-    private Button buttonLaunch;
+    private TextView textTotalTime, textStepTime;
+    private Button buttonLaunchGame;
+    private TextView text,textAnim;
+    private ImageView imageAnimation;
+    private LinearLayout layoutAnimation;
+
+    private TranslateAnimation trAnim1, trAnim2, trAnim3, trAnim4;
 
     private int totalTime, stepTime, stepTimeTMP;
 
     private int activityOrientation;
 
+    private Thread thread;
     private final Runnable updateStep = new Runnable() {
         @Override
         public void run() {
@@ -68,13 +78,13 @@ public class LaunchGameFragment extends Fragment {
 
     public void incrementAfterStep()
     {
-        textTotal.setText(""+(totalTime - stepTimeTMP));
+        textTotalTime.setText("" + (totalTime - stepTimeTMP));
     }
 
     public void incrementStep()
     {
         stepTimeTMP++;
-        textActuel.setText(""+stepTimeTMP);
+        textStepTime.setText("" + stepTimeTMP);
 
         if(totalTime > stepTimeTMP)
             handlerStep.post(updateStep);
@@ -88,14 +98,75 @@ public class LaunchGameFragment extends Fragment {
     public void onActivityCreated (Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        textTotal = (TextView)getActivity().findViewById(R.id.timerTotal);
-        textActuel = (TextView)getActivity().findViewById(R.id.timerActuel);
+        text = (TextView)getActivity().findViewById(R.id.textTest);
+        textTotalTime = (TextView)getActivity().findViewById(R.id.timerTotal);
+        textStepTime = (TextView)getActivity().findViewById(R.id.timerActuel);
+        layoutAnimation = (LinearLayout)getActivity().findViewById(R.id.layoutAnimation);
 
-        buttonLaunch = (Button)getActivity().findViewById(R.id.buttonLaunchGame);
-        buttonLaunch.setOnClickListener(new View.OnClickListener() {
+        imageAnimation = new ImageView(getActivity());
+        imageAnimation.setImageResource(R.drawable.ic_home_favs);
+        layoutAnimation.addView(imageAnimation);
+        imageAnimation.animate().translationX(-100).scaleX((float)0.2).scaleY((float)0.2).setDuration(0).withLayer();
+
+
+        //GET SCREEN SIZE
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        int height = displaymetrics.heightPixels;
+        final int width = displaymetrics.widthPixels;
+
+        /* MARCHE MAIS PAS PRATIQUE (TRANSLATION SEPARER DE SCALE)
+        trAnim1 = new TranslateAnimation(0, (width/2),0,0);
+        trAnim1.setDuration(3000);
+        trAnim2 = new TranslateAnimation(layoutAnimation.getMeasuredWidth()/4, layoutAnimation.getMeasuredWidth()/2,0,0);
+        trAnim2.setDuration(3000);
+        trAnim3 = new TranslateAnimation(layoutAnimation.getMeasuredWidth()/2, layoutAnimation.getMeasuredWidth()/2+ layoutAnimation.getMeasuredWidth()/4,0,0);
+        trAnim3.setDuration(3000);
+        trAnim4 = new TranslateAnimation(layoutAnimation.getMeasuredWidth()/2+ layoutAnimation.getMeasuredWidth()/4, layoutAnimation.getMeasuredWidth(), layoutAnimation.getMeasuredHeight()/2, layoutAnimation.getMeasuredHeight()/2);
+        */
+
+
+        buttonLaunchGame = (Button)getActivity().findViewById(R.id.buttonLaunchGame);
+        buttonLaunchGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                System.out.println("lalalalalalalalala"+ layoutAnimation.getMeasuredWidth());
+
+                /* MARCHE PAS, COORDONNE CENSER ETRE EN % EST EN PIXEL (MEILLEURE METHODE)
+                Animation animation = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.game_anim);
+                textAnim.startAnimation(animation);
+                //textAnim.startAnimation(trAnim1);
+                */
+
+                imageAnimation.animate().translationX((width/4)-imageAnimation.getMeasuredWidth()).scaleX((float) 0.5).scaleY((float) 0.5).setDuration(1000).withLayer().withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        imageAnimation.animate().scaleX(2).scaleY(2).translationX(width/2-imageAnimation.getMeasuredWidth()).setStartDelay(3000).setDuration(1000).withLayer().withEndAction(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                imageAnimation.animate().translationX(width-(width/4)).scaleX((float) 0.5).scaleY((float) 0.5).setStartDelay(3000).setDuration(1000).withLayer().withEndAction(new Runnable() {
+
+                                    @Override
+                                    public void run() {
+                                        imageAnimation.animate().translationX(width+imageAnimation.getMeasuredWidth()).scaleX((float)0.2).scaleY((float)0.2).withLayer().setDuration(1000).withEndAction(new Runnable() {
+
+                                            @Override
+                                            public void run() {
+
+                                                layoutAnimation.removeView(imageAnimation);
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+
                 handlerStep.post(updateStep);
+
             }
         });
 
