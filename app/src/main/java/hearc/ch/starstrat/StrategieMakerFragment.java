@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hearc.ch.starstrat.adapter.SpinnerUnitAdapter;
+import hearc.ch.starstrat.dataBase.Use.UseBDD;
+import hearc.ch.starstrat.dataBase.models.Race_entities;
 import hearc.ch.starstrat.objects.UnitItem;
 
 
@@ -31,11 +33,17 @@ public class StrategieMakerFragment extends Fragment {
     String[] unitsList = {"ahah", "2eme"};
     Integer[] iconList = {R.drawable.ic_home_favs,R.drawable.ic_home_favs};
     private List<UnitItem> unitList;
+    private UseBDD useBDD;
 
     public StrategieMakerFragment() {
         unitList = new ArrayList<UnitItem>();
     }
 
+
+    public void setUseBDD(UseBDD use)
+    {
+        useBDD = use;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,6 +59,16 @@ public class StrategieMakerFragment extends Fragment {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getView().getContext(),R.array.races_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
+
+        List<Race_entities> list = useBDD.getAllUnitTerran();
+        unitsList = new String[list.size()];
+        iconList = new Integer[list.size()];
+        for(int i=0;i<list.size();i++)
+        {
+            unitsList[i] = list.get(i).getName();
+            iconList[i] = R.drawable.ic_home_favs;
+        }
 
         Spinner spinnerUnits = (Spinner) getActivity().findViewById(R.id.spinner_unit_choice);
         spinnerUnits.setAdapter(new SpinnerUnitAdapter(getView().getContext(),R.layout.spinner_units_style,unitsList,iconList));

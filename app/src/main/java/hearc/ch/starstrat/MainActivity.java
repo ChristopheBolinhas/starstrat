@@ -19,6 +19,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import hearc.ch.starstrat.adapter.NavDrawerListAdapter;
+import hearc.ch.starstrat.dataBase.Use.UseBDD;
 import hearc.ch.starstrat.model.NavDrawerItem;
 
 
@@ -40,6 +41,7 @@ public class MainActivity extends ActionBarActivity {
 
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
+    private UseBDD useBDD;
 
     public MainActivity() {
     }
@@ -49,6 +51,10 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        useBDD = new UseBDD(this);
+
+
 
         mTitle = mDrawerTitle = getTitle();
         //setActionBar(new Toolbar(this));
@@ -93,6 +99,8 @@ public class MainActivity extends ActionBarActivity {
         if(savedInstanceState == null){
             displayView(0);
         }
+
+        //useBDD.close();
     }
 
     /**
@@ -155,7 +163,9 @@ public class MainActivity extends ActionBarActivity {
                 fragment = new LaunchGameFragment();
                 break;
 			case 4:
-                fragment = new StrategieMakerFragment();
+                StrategieMakerFragment strat = new StrategieMakerFragment();
+                strat.setUseBDD(useBDD);
+                fragment = strat;
 
             default:
                 break;
