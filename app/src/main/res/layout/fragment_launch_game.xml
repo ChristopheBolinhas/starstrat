@@ -7,16 +7,15 @@
     tools:context="hearc.ch.starstrat.LaunchGameFragment"
     android:weightSum="5">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/layoutAnimation"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center_vertical"
-        android:background="#FF0000"
-        android:orientation="horizontal" >
+        android:background="#FF0000" >
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
