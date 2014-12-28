@@ -3,6 +3,7 @@ package hearc.ch.starstrat;
 import android.animation.Animator;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.Handler;
@@ -16,7 +17,10 @@ import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.util.Timer;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,12 +32,16 @@ import android.widget.TextView;
 public class LaunchGameFragment extends Fragment {
 
     private ImageView[] tabImageAnimation;
+    private LinearLayout[] tabLayoutImage;
+    private int withScreen;
 
     private TextView textTotalTime, textStepTime;
     private Button buttonLaunchGame;
     private TextView text,textAnim;
     private ImageView imageAnimation;
-    private LinearLayout layoutAnimation;
+    private RelativeLayout layoutAnimation;
+
+    private Timer firstTimer, secondeTimer;
 
     private TranslateAnimation trAnim1, trAnim2, trAnim3, trAnim4;
 
@@ -42,12 +50,15 @@ public class LaunchGameFragment extends Fragment {
     private int activityOrientation;
 
     private Thread thread;
+
     private final Runnable updateStep = new Runnable() {
         @Override
         public void run() {
             incrementStep();
         }
     };
+
+
 
     private final Runnable updateAfterStep = new Runnable() {
         @Override
@@ -58,6 +69,45 @@ public class LaunchGameFragment extends Fragment {
 
     private final Handler handlerStep = new Handler();
     private final Handler handlerAfterStep = new Handler();
+
+    private final Handler hAnimation = new Handler();
+    private final Handler hAnimation2 = new Handler();
+    private final Handler hAnimation3 = new Handler();
+    private final Handler hAnimation4 = new Handler();
+
+    private final Runnable launchFirst = new Runnable() {
+        int index = 0;
+        @Override
+        public void run() {
+            launch(index);
+            index++;
+        }
+    };
+    private final Runnable launchSecond = new Runnable() {
+        int index = 0;
+        @Override
+        public void run() {
+            launch2(index);
+            index++;
+        }
+    };
+    private final Runnable launchThird = new Runnable() {
+        int index = 0;
+        @Override
+        public void run() {
+            launch3(index);
+            index++;
+        }
+    };
+    private final Runnable launchFourth = new Runnable() {
+        int index = 0;
+        @Override
+        public void run() {
+            launch4(index);
+            index++;
+        }
+    };
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -103,15 +153,40 @@ public class LaunchGameFragment extends Fragment {
         text = (TextView)getActivity().findViewById(R.id.textTest);
         textTotalTime = (TextView)getActivity().findViewById(R.id.timerTotal);
         textStepTime = (TextView)getActivity().findViewById(R.id.timerActuel);
-        layoutAnimation = (LinearLayout)getActivity().findViewById(R.id.layoutAnimation);
+        layoutAnimation = (RelativeLayout)getActivity().findViewById(R.id.layoutAnimation);
 
-        tabImageAnimation = new ImageView[10];
+        tabImageAnimation = new ImageView[6];
+        tabLayoutImage = new LinearLayout[10];
 
-        for(int i=0; i < 10; i++) {
-            ImageView tmp = new ImageView(getActivity());
-            tmp.setImageResource(R.drawable.ic_home_favs);
-            tabImageAnimation[i] = tmp;
-        }/*
+
+        for(int i = 0; i < 10 ; i++)
+        {
+            LinearLayout first = new LinearLayout(getActivity());
+            first.setOrientation(LinearLayout.VERTICAL);
+
+            for(int j = 0; j < 6 ; j+=2)
+            {
+                LinearLayout l = new LinearLayout(getActivity());
+                l.setOrientation(LinearLayout.HORIZONTAL);
+
+
+                ImageView tmp = new ImageView(getActivity());
+                tmp.setImageResource(R.drawable.ic_home_favs);
+
+                l.addView(tmp);
+
+                tmp = new ImageView(getActivity());
+                tmp.setImageResource(R.drawable.ic_home_favs);
+
+                l.addView(tmp);
+
+                first.addView(l);
+            }
+
+            tabLayoutImage[i] = first;
+        }
+
+        /*
         layoutAnimation.addView(imageAnimation);
         imageAnimation.animate().translationX(-100).scaleX((float)0.2).scaleY((float)0.2).setDuration(0).withLayer();
 */
@@ -120,6 +195,7 @@ public class LaunchGameFragment extends Fragment {
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         final int height = displaymetrics.heightPixels;
         final int width = displaymetrics.widthPixels;
+        withScreen = displaymetrics.widthPixels;
 
         /* MARCHE MAIS PAS PRATIQUE (TRANSLATION SEPARER DE SCALE)
         trAnim1 = new TranslateAnimation(0, (width/2),0,0);
@@ -133,11 +209,9 @@ public class LaunchGameFragment extends Fragment {
 
         buttonLaunchGame = (Button)getActivity().findViewById(R.id.buttonLaunchGame);
         buttonLaunchGame.setOnClickListener(new View.OnClickListener() {
-            int index = 0;
+
             @Override
             public void onClick(View v) {
-
-                System.out.println("lalalalalalalalala"+ layoutAnimation.getMeasuredWidth());
 
                 /* MARCHE PAS, COORDONNE CENSER ETRE EN % EST EN PIXEL (MEILLEURE METHODE POURTANT...)
                 Animation animation = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.game_anim);
@@ -145,7 +219,9 @@ public class LaunchGameFragment extends Fragment {
                 //textAnim.startAnimation(trAnim1);
                 */
 
-                launchAnimation(0,width,height);
+                //launchAnimation(0,width,height);
+
+                hAnimation.post(launchFirst);
 
                 handlerStep.post(updateStep);
 
@@ -158,31 +234,69 @@ public class LaunchGameFragment extends Fragment {
         stepTimeTMP = 1;
     }
 
+    private void launch(int index)
+    {
+        layoutAnimation.addView(tabLayoutImage[index]);
+        tabLayoutImage[index].animate().translationX((withScreen-tabLayoutImage[index].getMeasuredWidth())/4).scaleX(0.5f).scaleY(0.5f).withLayer();
+        if(index < 9)
+            hAnimation.postDelayed(launchFirst,1000);
+
+        hAnimation2.postDelayed(launchSecond,1000);
+    }
+
+    private void launch2(int index)
+    {
+        tabLayoutImage[index].animate().translationX(withScreen/2).scaleX(2f).scaleY(2f).withLayer();
+        hAnimation3.postDelayed(launchThird,1000);
+    }
+
+    private void launch3(int index)
+    {
+        tabLayoutImage[index].animate().translationX(withScreen-withScreen/4).scaleX(0.5f).scaleY(0.5f).withLayer();
+        hAnimation4.postDelayed(launchFourth,1000);
+    }
+
+    private void launch4(final int index)
+    {
+        tabLayoutImage[index].animate().translationX(withScreen).withLayer().withEndAction(new Runnable() {
+            @Override
+            public void run() {
+                layoutAnimation.removeView(tabLayoutImage[index]);
+            }
+        });
+    }
+
     private void launchAnimation(int ind, final int width, final int height)
     {
         final int index = ind;
         final int quartW = width/4;
         final int demiW = width/4;
-        layoutAnimation.addView(tabImageAnimation[index]);
-        tabImageAnimation[index].animate().translationX(quartW).scaleX((float) 0.5).scaleY((float) 0.5).setDuration(1000).withLayer().withEndAction(new Runnable() {
+
+
+        layoutAnimation.addView(tabLayoutImage[index]);
+        tabLayoutImage[index].animate().scaleX(0.5f).scaleY(0.5f).translationX(quartW - (tabLayoutImage[index].getWidth()*0.5f)).setDuration(1000).withLayer().withEndAction(new Runnable() {
             @Override
             public void run() {
-                tabImageAnimation[index].animate().scaleX(2).scaleY(2).translationX(demiW).setStartDelay(3000).setDuration(1000).withLayer().withEndAction(new Runnable() {
+                tabLayoutImage[index].animate().scaleX(2).scaleY(2).translationX(demiW - (tabLayoutImage[index].getMeasuredWidth())).setStartDelay(3000).setDuration(1000).withLayer().withStartAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (index < 9)
+                            launchAnimation(index + 1, width, height);
+                    }
+                }).withEndAction(new Runnable() {
 
                     @Override
                     public void run() {
-                        if(index < 9)
-                            launchAnimation(index+1,width,height);
-                        tabImageAnimation[index].animate().translationX(width-quartW).scaleX((float) 0.5).scaleY((float) 0.5).setStartDelay(3000).setDuration(1000).withLayer().withEndAction(new Runnable() {
+                        tabLayoutImage[index].animate().scaleX(0.5f).scaleY(0.5f).translationX(width - quartW - (tabLayoutImage[index].getWidth() * 0.5f)).setStartDelay(3000).setDuration(1000).withLayer().withEndAction(new Runnable() {
 
                             @Override
                             public void run() {
-                                tabImageAnimation[index].animate().translationX(width+tabImageAnimation[index].getMeasuredWidth()).scaleX((float)0.2).scaleY((float)0.2).withLayer().setDuration(1000).withEndAction(new Runnable() {
+                                tabLayoutImage[index].animate().translationX(width).scaleX((float) 0.2).scaleY((float) 0.2).withLayer().setDuration(1000).withEndAction(new Runnable() {
 
                                     @Override
                                     public void run() {
 
-                                        layoutAnimation.removeView(tabImageAnimation[index]);
+                                        layoutAnimation.removeView(tabLayoutImage[index]);
                                     }
                                 });
                             }
@@ -191,6 +305,7 @@ public class LaunchGameFragment extends Fragment {
                 });
             }
         });
+
     }
 
         @Override
