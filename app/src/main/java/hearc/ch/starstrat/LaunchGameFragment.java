@@ -34,6 +34,9 @@ public class LaunchGameFragment extends Fragment {
     private ImageView[] tabImageAnimation;
     private LinearLayout[] tabLayoutImage;
     private int withScreen;
+    private boolean isPause;
+    private int nbAnimation, whereFirstPassed;
+    private String textButtonStart, textButtonPause;
 
     private TextView textTotalTime, textStepTime;
     private Button buttonLaunchGame;
@@ -79,32 +82,41 @@ public class LaunchGameFragment extends Fragment {
         int index = 0;
         @Override
         public void run() {
+            if(!isPause && nbAnimation > index) {
             launch(index);
             index++;
+            }
         }
     };
     private final Runnable launchSecond = new Runnable() {
         int index = 0;
         @Override
         public void run() {
-            launch2(index);
-            index++;
+            if(!isPause && nbAnimation > index) {
+                launch2(index);
+                index++;
+            }
         }
     };
     private final Runnable launchThird = new Runnable() {
         int index = 0;
         @Override
         public void run() {
-            launch3(index);
-            index++;
+            if(!isPause && nbAnimation > index) {
+
+                launch3(index);
+                index++;
+            }
         }
     };
     private final Runnable launchFourth = new Runnable() {
         int index = 0;
         @Override
         public void run() {
-            launch4(index);
-            index++;
+            if(!isPause && nbAnimation > index) {
+                launch4(index);
+                index++;
+            }
         }
     };
 
@@ -155,8 +167,13 @@ public class LaunchGameFragment extends Fragment {
         textStepTime = (TextView)getActivity().findViewById(R.id.timerActuel);
         layoutAnimation = (RelativeLayout)getActivity().findViewById(R.id.layoutAnimation);
 
+        textButtonStart = (String)getActivity().getText(R.string.launch_game_fragment_Start);
+        textButtonPause = (String)getActivity().getText(R.string.launch_game_fragment_Pause);
+
         tabImageAnimation = new ImageView[6];
         tabLayoutImage = new LinearLayout[10];
+        nbAnimation = 10;
+        isPause = false;
 
 
         for(int i = 0; i < 10 ; i++)
@@ -209,7 +226,7 @@ public class LaunchGameFragment extends Fragment {
 
         buttonLaunchGame = (Button)getActivity().findViewById(R.id.buttonLaunchGame);
         buttonLaunchGame.setOnClickListener(new View.OnClickListener() {
-
+            private boolean isFirst = true;
             @Override
             public void onClick(View v) {
 
@@ -221,10 +238,45 @@ public class LaunchGameFragment extends Fragment {
 
                 //launchAnimation(0,width,height);
 
-                hAnimation.post(launchFirst);
+                if(isFirst) {
+                    whereFirstPassed = 0;
+                    hAnimation.post(launchFirst);
 
-                handlerStep.post(updateStep);
+                    handlerStep.post(updateStep);
+                    isFirst = false;
+                    buttonLaunchGame.setText(textButtonPause);
+                }
+                else if(isPause == false) {
+                    isPause = true;
+                    buttonLaunchGame.setText(textButtonStart);
+                }
+                else
+                {
+                    switch(whereFirstPassed)
+                    {
+                        case 1:
+                            hAnimation.post(launchFirst);
+                            hAnimation2.post(launchSecond);
+                            break;
+                        case 2:
+                            hAnimation.post(launchFirst);
+                            hAnimation2.post(launchSecond);
+                            hAnimation3.post(launchThird);
+                            break;
 
+                        case 3:
+                            hAnimation.post(launchFirst);
+                            hAnimation2.post(launchSecond);
+                            hAnimation3.post(launchThird);
+                            hAnimation4.post(launchFourth);
+                            break;
+
+                        default:
+                            hAnimation.post(launchFirst);
+                    }
+                    isPause = false;
+                    buttonLaunchGame.setText(textButtonPause);
+                }
             }
         });
 
@@ -236,6 +288,8 @@ public class LaunchGameFragment extends Fragment {
 
     private void launch(int index)
     {
+        if(index == 0)
+            whereFirstPassed++;
         layoutAnimation.addView(tabLayoutImage[index]);
         tabLayoutImage[index].animate().translationX((withScreen-tabLayoutImage[index].getMeasuredWidth())/4).scaleX(0.5f).scaleY(0.5f).withLayer();
         if(index < 9)
@@ -246,12 +300,16 @@ public class LaunchGameFragment extends Fragment {
 
     private void launch2(int index)
     {
+        if(index == 0)
+            whereFirstPassed++;
         tabLayoutImage[index].animate().translationX(withScreen/2).scaleX(2f).scaleY(2f).withLayer();
         hAnimation3.postDelayed(launchThird,1000);
     }
 
     private void launch3(int index)
     {
+        if(index == 0)
+            whereFirstPassed++;
         tabLayoutImage[index].animate().translationX(withScreen-withScreen/4).scaleX(0.5f).scaleY(0.5f).withLayer();
         hAnimation4.postDelayed(launchFourth,1000);
     }
