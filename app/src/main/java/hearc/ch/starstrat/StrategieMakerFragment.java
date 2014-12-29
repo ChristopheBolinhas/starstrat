@@ -1,12 +1,16 @@
 package hearc.ch.starstrat;
 
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.NumberPicker;
@@ -15,6 +19,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +27,7 @@ import java.util.List;
 import hearc.ch.starstrat.adapter.SpinnerUnitAdapter;
 import hearc.ch.starstrat.dataBase.Use.UseBDD;
 import hearc.ch.starstrat.dataBase.models.Race_entities;
+import hearc.ch.starstrat.model.StrategyItem;
 import hearc.ch.starstrat.objects.UnitItem;
 
 
@@ -34,9 +40,12 @@ public class StrategieMakerFragment extends Fragment {
     Integer[] iconList = {R.drawable.ic_home_favs,R.drawable.ic_home_favs};
     private List<UnitItem> unitList;
     private UseBDD useBDD;
+    StrategyItem currentStrat;
+    private int selectedRaceId;
 
     public StrategieMakerFragment() {
         unitList = new ArrayList<UnitItem>();
+        currentStrat = new StrategyItem();
     }
 
 
@@ -54,14 +63,75 @@ public class StrategieMakerFragment extends Fragment {
     public void onActivityCreated (Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Spinner spinner = (Spinner) getActivity().findViewById(R.id.spinner_race);
+        final Spinner spinner = (Spinner) getActivity().findViewById(R.id.spinner_race);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getView().getContext(),R.array.races_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                String selectedRace = (String)adapterView.getItemAtPosition(position);
+                switch(selectedRace)
+                {
+                    case "Terran":
+                        selectedRaceId = 0;
+                        break;
+                    case "Protoss":
+                        selectedRaceId = 1;
+                        break;
+                    case "Zerg":
+                        selectedRaceId = 2;
+                        break;
+                    default:
+                        selectedRaceId = 0;
+
+                }
+                if(currentStrat.getRace() == -1)
+                {
+                    resetConfiguration();
+                }
+                else
+                {
+                    if(currentStrat.getRace() != selectedRaceId )//&& currentStrat.getListSize() > 0)
+                    {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setMessage("Changer de race supprimera la configuration actuelle")
+                                .setTitle("Changer de race ?");
+                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                resetConfiguration();
+                            }
+                        });
+
+                        builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                spinner.setSelection(currentStrat.getRace());
+                            }
+                        });
+
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Toast.makeText(getActivity(),"Nothing",Toast.LENGTH_LONG).show();
+            }
+        });
 
         List<Race_entities> list = useBDD.getAllUnitTerran();
+
+
+
+
         unitsList = new String[list.size()];
         iconList = new Integer[list.size()];
         for(int i=0;i<list.size();i++)
@@ -103,6 +173,15 @@ public class StrategieMakerFragment extends Fragment {
 
 
     }
+
+    private void resetConfiguration()
+    {
+        currentStrat.setRace(selectedRaceId);
+        Toast.makeText(getActivity(),"Set race : " + currentStrat.getRace(),Toast.LENGTH_LONG).show();
+    }
+
+
+
 
     private void addUnit(int unitId, int minutes, int secondes)
     {

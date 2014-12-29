@@ -3,7 +3,7 @@ package hearc.ch.starstrat.model;
 /**
  * Created by JuUsT on 26.12.2014.
  */
-public class StrategyListItem {
+public class StrategyListItem{
     public final int raceIcon;
     public final String title;
     public final String description;
