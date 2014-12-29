@@ -49,4 +49,9 @@
     <string name="choose_speed_fragment_faster4">Faster*4</string>
     <string name="choose_speed_fragment_return">Return</string>
 
+
+    <!-- Values for LaunchGameFragment -->
+    <string name="launch_game_fragment_Start">Start</string>
+    <string name="launch_game_fragment_Pause">Pause</string>
+
 </resources>
