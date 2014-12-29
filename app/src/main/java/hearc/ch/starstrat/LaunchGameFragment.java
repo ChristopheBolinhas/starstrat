@@ -36,6 +36,7 @@ public class LaunchGameFragment extends Fragment {
     private int withScreen;
     private boolean isPause;
     private int nbAnimation, whereFirstPassed;
+    private int timeAnimate = 500, timeBetweenAnimation = 3000;
     private String textButtonStart, textButtonPause;
 
     private TextView textTotalTime, textStepTime;
@@ -44,15 +45,7 @@ public class LaunchGameFragment extends Fragment {
     private ImageView imageAnimation;
     private RelativeLayout layoutAnimation;
 
-    private Timer firstTimer, secondeTimer;
-
-    private TranslateAnimation trAnim1, trAnim2, trAnim3, trAnim4;
-
     private int totalTime, stepTime, stepTimeTMP;
-
-    private int activityOrientation;
-
-    private Thread thread;
 
     private final Runnable updateStep = new Runnable() {
         @Override
@@ -60,8 +53,6 @@ public class LaunchGameFragment extends Fragment {
             incrementStep();
         }
     };
-
-
 
     private final Runnable updateAfterStep = new Runnable() {
         @Override
@@ -162,7 +153,6 @@ public class LaunchGameFragment extends Fragment {
     public void onActivityCreated (Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        text = (TextView)getActivity().findViewById(R.id.textTest);
         textTotalTime = (TextView)getActivity().findViewById(R.id.timerTotal);
         textStepTime = (TextView)getActivity().findViewById(R.id.timerActuel);
         layoutAnimation = (RelativeLayout)getActivity().findViewById(R.id.layoutAnimation);
@@ -291,32 +281,32 @@ public class LaunchGameFragment extends Fragment {
         if(index == 0)
             whereFirstPassed++;
         layoutAnimation.addView(tabLayoutImage[index]);
-        tabLayoutImage[index].animate().translationX((withScreen-tabLayoutImage[index].getMeasuredWidth())/4).scaleX(0.5f).scaleY(0.5f).withLayer();
+        tabLayoutImage[index].animate().translationX((withScreen/4)-tabLayoutImage[index].getMeasuredWidth()).scaleX(0.5f).scaleY(0.5f).setDuration(timeAnimate).withLayer();
         if(index < 9)
-            hAnimation.postDelayed(launchFirst,1000);
+            hAnimation.postDelayed(launchFirst,timeBetweenAnimation);
 
-        hAnimation2.postDelayed(launchSecond,1000);
+        hAnimation2.postDelayed(launchSecond,timeBetweenAnimation);
     }
 
     private void launch2(int index)
     {
         if(index == 0)
             whereFirstPassed++;
-        tabLayoutImage[index].animate().translationX(withScreen/2).scaleX(2f).scaleY(2f).withLayer();
-        hAnimation3.postDelayed(launchThird,1000);
+        tabLayoutImage[index].animate().translationX(withScreen/2 - tabLayoutImage[index].getMeasuredWidth()).scaleX(2f).scaleY(2f).setDuration(timeAnimate).withLayer();
+        hAnimation3.postDelayed(launchThird,timeBetweenAnimation);
     }
 
     private void launch3(int index)
     {
         if(index == 0)
             whereFirstPassed++;
-        tabLayoutImage[index].animate().translationX(withScreen-withScreen/4).scaleX(0.5f).scaleY(0.5f).withLayer();
-        hAnimation4.postDelayed(launchFourth,1000);
+        tabLayoutImage[index].animate().translationX(withScreen-withScreen/4).scaleX(0.5f).scaleY(0.5f).setDuration(timeAnimate).withLayer();
+        hAnimation4.postDelayed(launchFourth,timeBetweenAnimation);
     }
 
     private void launch4(final int index)
     {
-        tabLayoutImage[index].animate().translationX(withScreen).withLayer().withEndAction(new Runnable() {
+        tabLayoutImage[index].animate().translationX(withScreen).setDuration(timeAnimate).withLayer().withEndAction(new Runnable() {
             @Override
             public void run() {
                 layoutAnimation.removeView(tabLayoutImage[index]);
