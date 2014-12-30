@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:layout_margin="0px"
         android:gravity="center_vertical"
         android:background="#FF0000" >
 
@@ -43,8 +44,8 @@
             />
         <Button
             android:id="@+id/buttonLaunchGame"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="64dp"
+            android:layout_height="48dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/launch_game_fragment_Start"/>

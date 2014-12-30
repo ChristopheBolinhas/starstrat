@@ -33,7 +33,8 @@ public class LaunchGameFragment extends Fragment {
 
     private ImageView[] tabImageAnimation;
     private LinearLayout[] tabLayoutImage;
-    private int withScreen;
+    private int withScreen, heightScreen, transX = 20, marginLeftLayout = 200;
+    private float littleScale = 0.5f, bigScale = 2;
     private boolean isPause;
     private int nbAnimation, whereFirstPassed;
     private int timeAnimate = 500, timeBetweenAnimation = 3000;
@@ -160,13 +161,12 @@ public class LaunchGameFragment extends Fragment {
         textButtonStart = (String)getActivity().getText(R.string.launch_game_fragment_Start);
         textButtonPause = (String)getActivity().getText(R.string.launch_game_fragment_Pause);
 
-        tabImageAnimation = new ImageView[6];
         tabLayoutImage = new LinearLayout[10];
         nbAnimation = 10;
         isPause = false;
 
-
-        for(int i = 0; i < 10 ; i++)
+        //Construction des vues avec les images
+        for(int i = 0; i < nbAnimation ; i++)
         {
             LinearLayout first = new LinearLayout(getActivity());
             first.setOrientation(LinearLayout.VERTICAL);
@@ -193,26 +193,14 @@ public class LaunchGameFragment extends Fragment {
             tabLayoutImage[i] = first;
         }
 
-        /*
-        layoutAnimation.addView(imageAnimation);
-        imageAnimation.animate().translationX(-100).scaleX((float)0.2).scaleY((float)0.2).setDuration(0).withLayer();
-*/
         //GET SCREEN SIZE
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         final int height = displaymetrics.heightPixels;
         final int width = displaymetrics.widthPixels;
         withScreen = displaymetrics.widthPixels;
+        heightScreen = displaymetrics.heightPixels - layoutAnimation.getMeasuredHeight();
 
-        /* MARCHE MAIS PAS PRATIQUE (TRANSLATION SEPARER DE SCALE)
-        trAnim1 = new TranslateAnimation(0, (width/2),0,0);
-        trAnim1.setDuration(3000);
-        trAnim2 = new TranslateAnimation(layoutAnimation.getMeasuredWidth()/4, layoutAnimation.getMeasuredWidth()/2,0,0);
-        trAnim2.setDuration(3000);
-        trAnim3 = new TranslateAnimation(layoutAnimation.getMeasuredWidth()/2, layoutAnimation.getMeasuredWidth()/2+ layoutAnimation.getMeasuredWidth()/4,0,0);
-        trAnim3.setDuration(3000);
-        trAnim4 = new TranslateAnimation(layoutAnimation.getMeasuredWidth()/2+ layoutAnimation.getMeasuredWidth()/4, layoutAnimation.getMeasuredWidth(), layoutAnimation.getMeasuredHeight()/2, layoutAnimation.getMeasuredHeight()/2);
-        */
 
         buttonLaunchGame = (Button)getActivity().findViewById(R.id.buttonLaunchGame);
         buttonLaunchGame.setOnClickListener(new View.OnClickListener() {
@@ -220,14 +208,7 @@ public class LaunchGameFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                /* MARCHE PAS, COORDONNE CENSER ETRE EN % EST EN PIXEL (MEILLEURE METHODE POURTANT...)
-                Animation animation = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.game_anim);
-                textAnim.startAnimation(animation);
-                //textAnim.startAnimation(trAnim1);
-                */
-
-                //launchAnimation(0,width,height);
-
+                //Si c'est le 1er passage, on lance l'animation et change le texte du bouton
                 if(isFirst) {
                     whereFirstPassed = 0;
                     hAnimation.post(launchFirst);
@@ -240,6 +221,7 @@ public class LaunchGameFragment extends Fragment {
                     isPause = true;
                     buttonLaunchGame.setText(textButtonStart);
                 }
+                //Si on relance l'animation, relancer aux bonnes étapes
                 else
                 {
                     switch(whereFirstPassed)
@@ -278,11 +260,13 @@ public class LaunchGameFragment extends Fragment {
 
     private void launch(int index)
     {
+        layoutAnimation.addView(tabLayoutImage[index]);
+
         if(index == 0)
             whereFirstPassed++;
-        layoutAnimation.addView(tabLayoutImage[index]);
-        tabLayoutImage[index].animate().translationX((withScreen/4)-tabLayoutImage[index].getMeasuredWidth()).scaleX(0.5f).scaleY(0.5f).setDuration(timeAnimate).withLayer();
-        if(index < 9)
+        tabLayoutImage[index].animate().translationX(transX).scaleX(littleScale).scaleY(littleScale).setDuration(timeAnimate).withLayer();
+        //tabLayoutImage[index].animate().translationX((withScreen/4)-tabLayoutImage[index].getMeasuredWidth()).scaleX(0.5f).scaleY(0.5f).setDuration(timeAnimate).withLayer();
+        if(index < nbAnimation)
             hAnimation.postDelayed(launchFirst,timeBetweenAnimation);
 
         hAnimation2.postDelayed(launchSecond,timeBetweenAnimation);
@@ -292,7 +276,7 @@ public class LaunchGameFragment extends Fragment {
     {
         if(index == 0)
             whereFirstPassed++;
-        tabLayoutImage[index].animate().translationX(withScreen/2 - tabLayoutImage[index].getMeasuredWidth()).scaleX(2f).scaleY(2f).setDuration(timeAnimate).withLayer();
+        tabLayoutImage[index].animate().translationX(withScreen/2 - tabLayoutImage[index].getMeasuredWidth()/2).scaleX(bigScale).scaleY(bigScale).setDuration(timeAnimate).withLayer();
         hAnimation3.postDelayed(launchThird,timeBetweenAnimation);
     }
 
@@ -300,7 +284,7 @@ public class LaunchGameFragment extends Fragment {
     {
         if(index == 0)
             whereFirstPassed++;
-        tabLayoutImage[index].animate().translationX(withScreen-withScreen/4).scaleX(0.5f).scaleY(0.5f).setDuration(timeAnimate).withLayer();
+        tabLayoutImage[index].animate().translationX(withScreen-tabLayoutImage[index].getMeasuredWidth()-transX).scaleX(littleScale).scaleY(littleScale).setDuration(timeAnimate).withLayer();
         hAnimation4.postDelayed(launchFourth,timeBetweenAnimation);
     }
 
@@ -314,49 +298,7 @@ public class LaunchGameFragment extends Fragment {
         });
     }
 
-    private void launchAnimation(int ind, final int width, final int height)
-    {
-        final int index = ind;
-        final int quartW = width/4;
-        final int demiW = width/4;
-
-
-        layoutAnimation.addView(tabLayoutImage[index]);
-        tabLayoutImage[index].animate().scaleX(0.5f).scaleY(0.5f).translationX(quartW - (tabLayoutImage[index].getWidth()*0.5f)).setDuration(1000).withLayer().withEndAction(new Runnable() {
-            @Override
-            public void run() {
-                tabLayoutImage[index].animate().scaleX(2).scaleY(2).translationX(demiW - (tabLayoutImage[index].getMeasuredWidth())).setStartDelay(3000).setDuration(1000).withLayer().withStartAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (index < 9)
-                            launchAnimation(index + 1, width, height);
-                    }
-                }).withEndAction(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        tabLayoutImage[index].animate().scaleX(0.5f).scaleY(0.5f).translationX(width - quartW - (tabLayoutImage[index].getWidth() * 0.5f)).setStartDelay(3000).setDuration(1000).withLayer().withEndAction(new Runnable() {
-
-                            @Override
-                            public void run() {
-                                tabLayoutImage[index].animate().translationX(width).scaleX((float) 0.2).scaleY((float) 0.2).withLayer().setDuration(1000).withEndAction(new Runnable() {
-
-                                    @Override
-                                    public void run() {
-
-                                        layoutAnimation.removeView(tabLayoutImage[index]);
-                                    }
-                                });
-                            }
-                        });
-                    }
-                });
-            }
-        });
-
-    }
-
-        @Override
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
