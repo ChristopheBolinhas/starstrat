@@ -1,26 +1,20 @@
 package hearc.ch.starstrat;
 
-import android.animation.Animator;
-import android.app.ActionBar;
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.Handler;
+import android.text.format.Time;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import java.util.Timer;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,10 +29,12 @@ public class LaunchGameFragment extends Fragment {
     private LinearLayout[] tabLayoutImage;
     private int withScreen, heightScreen, transX = 20, marginLeftLayout = 200;
     private float littleScale = 0.5f, bigScale = 2;
-    private boolean isPause;
+    private boolean isPause, isPauseFinish;
     private int nbAnimation, whereFirstPassed;
     private int timeAnimate = 500, timeBetweenAnimation = 3000;
     private String textButtonStart, textButtonPause;
+
+    private android.text.format.Time timeSincePause, timeSinceLastAnimation;
 
     private TextView textTotalTime, textStepTime;
     private Button buttonLaunchGame;
@@ -65,6 +61,7 @@ public class LaunchGameFragment extends Fragment {
     private final Handler handlerStep = new Handler();
     private final Handler handlerAfterStep = new Handler();
 
+    private final Handler hRelaunchAnimation = new Handler();
     private final Handler hAnimation = new Handler();
     private final Handler hAnimation2 = new Handler();
     private final Handler hAnimation3 = new Handler();
@@ -75,9 +72,10 @@ public class LaunchGameFragment extends Fragment {
         @Override
         public void run() {
             if(!isPause && nbAnimation > index) {
-            launch(index);
-            index++;
+                launch(index);
+                index++;
             }
+
         }
     };
     private final Runnable launchSecond = new Runnable() {
@@ -95,7 +93,6 @@ public class LaunchGameFragment extends Fragment {
         @Override
         public void run() {
             if(!isPause && nbAnimation > index) {
-
                 launch3(index);
                 index++;
             }
@@ -165,6 +162,8 @@ public class LaunchGameFragment extends Fragment {
         nbAnimation = 10;
         isPause = false;
 
+        timeSinceLastAnimation = new Time();
+
         //Construction des vues avec les images
         for(int i = 0; i < nbAnimation ; i++)
         {
@@ -217,35 +216,46 @@ public class LaunchGameFragment extends Fragment {
                     isFirst = false;
                     buttonLaunchGame.setText(textButtonPause);
                 }
+                //Sinon c'est la pause et on enregistre le temps de l'animation qui s'est déroulé
                 else if(isPause == false) {
+                    timeSincePause = new Time();
+                    timeSincePause.setToNow();
+                    timeSincePause.set(timeSincePause.toMillis(false) - timeSinceLastAnimation.toMillis(false));
+
                     isPause = true;
                     buttonLaunchGame.setText(textButtonStart);
                 }
-                //Si on relance l'animation, relancer aux bonnes étapes
+                //Si on relance l'animation, relancer aux bonnes étapes avec le bon temps
                 else
                 {
-                    switch(whereFirstPassed)
-                    {
-                        case 1:
-                            hAnimation.post(launchFirst);
-                            hAnimation2.post(launchSecond);
-                            break;
-                        case 2:
-                            hAnimation.post(launchFirst);
-                            hAnimation2.post(launchSecond);
-                            hAnimation3.post(launchThird);
-                            break;
+                    hRelaunchAnimation.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            switch(whereFirstPassed)
+                            {
+                                case 1:
+                                    hAnimation.post(launchFirst);
+                                    hAnimation2.post(launchSecond);
+                                    break;
+                                case 2:
+                                    hAnimation.post(launchFirst);
+                                    hAnimation2.post(launchSecond);
+                                    hAnimation3.post(launchThird);
+                                    break;
 
-                        case 3:
-                            hAnimation.post(launchFirst);
-                            hAnimation2.post(launchSecond);
-                            hAnimation3.post(launchThird);
-                            hAnimation4.post(launchFourth);
-                            break;
+                                case 3:
+                                    hAnimation.post(launchFirst);
+                                    hAnimation2.post(launchSecond);
+                                    hAnimation3.post(launchThird);
+                                    hAnimation4.post(launchFourth);
+                                    break;
 
-                        default:
-                            hAnimation.post(launchFirst);
-                    }
+                                default:
+                                    hAnimation.post(launchFirst);
+                            }
+                        }
+                    }, timeBetweenAnimation-timeSincePause.toMillis(false));
+
                     isPause = false;
                     buttonLaunchGame.setText(textButtonPause);
                 }
@@ -262,14 +272,23 @@ public class LaunchGameFragment extends Fragment {
     {
         layoutAnimation.addView(tabLayoutImage[index]);
 
+        RelativeLayout.LayoutParams rlParams =
+                (RelativeLayout.LayoutParams)tabLayoutImage[index].getLayoutParams();
+        rlParams.setMargins(-1*tabLayoutImage[index].getMeasuredWidth(), 0, 0, 0);
+
+        tabLayoutImage[index].setLayoutParams(rlParams);
+
         if(index == 0)
             whereFirstPassed++;
+
         tabLayoutImage[index].animate().translationX(transX).scaleX(littleScale).scaleY(littleScale).setDuration(timeAnimate).withLayer();
-        //tabLayoutImage[index].animate().translationX((withScreen/4)-tabLayoutImage[index].getMeasuredWidth()).scaleX(0.5f).scaleY(0.5f).setDuration(timeAnimate).withLayer();
+
         if(index < nbAnimation)
             hAnimation.postDelayed(launchFirst,timeBetweenAnimation);
 
         hAnimation2.postDelayed(launchSecond,timeBetweenAnimation);
+
+        timeSinceLastAnimation.setToNow();
     }
 
     private void launch2(int index)
@@ -278,6 +297,7 @@ public class LaunchGameFragment extends Fragment {
             whereFirstPassed++;
         tabLayoutImage[index].animate().translationX(withScreen/2 - tabLayoutImage[index].getMeasuredWidth()/2).scaleX(bigScale).scaleY(bigScale).setDuration(timeAnimate).withLayer();
         hAnimation3.postDelayed(launchThird,timeBetweenAnimation);
+        timeSinceLastAnimation.setToNow();
     }
 
     private void launch3(int index)
@@ -286,6 +306,7 @@ public class LaunchGameFragment extends Fragment {
             whereFirstPassed++;
         tabLayoutImage[index].animate().translationX(withScreen-tabLayoutImage[index].getMeasuredWidth()-transX).scaleX(littleScale).scaleY(littleScale).setDuration(timeAnimate).withLayer();
         hAnimation4.postDelayed(launchFourth,timeBetweenAnimation);
+        timeSinceLastAnimation.setToNow();
     }
 
     private void launch4(final int index)
@@ -296,6 +317,7 @@ public class LaunchGameFragment extends Fragment {
                 layoutAnimation.removeView(tabLayoutImage[index]);
             }
         });
+        timeSinceLastAnimation.setToNow();
     }
 
     @Override
