@@ -1,18 +1,13 @@
 package hearc.ch.starstrat;
 
 
-import android.app.ListFragment;
-import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.app.ListFragment;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -84,7 +79,7 @@ public class StrategieFragment extends ListFragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }*/
         mItems = new ArrayList<StrategyListItem>();
-
+        mItems.add(new StrategyListItem(R.drawable.ic_add,"Nouvelle stratégie", "Composer une stratégie", -1));
         mItems.add(new StrategyListItem(R.drawable.ic_zerg,"Strat 1", "Yolo strat",0));
         mItems.add(new StrategyListItem(R.drawable.ic_protoss,"Strat 2", "Yolo strat 2",1));
 
@@ -104,6 +99,11 @@ public class StrategieFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id)
     {
         StrategyListItem item = mItems.get(position);
+        if(position == 0)
+        {
+            ((MainActivity)getActivity()).setConfigFragement(this,null);
+        }
+
         Toast.makeText(getActivity(),item.title,Toast.LENGTH_LONG).show();
 
 

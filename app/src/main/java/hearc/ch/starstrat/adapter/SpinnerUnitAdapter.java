@@ -21,14 +21,14 @@ public class SpinnerUnitAdapter extends ArrayAdapter<String> {
 
 
 
-    public SpinnerUnitAdapter(Context context, int textViewResId, String[] titles, Integer[] icons)
+    public SpinnerUnitAdapter(Context context, int textViewResId, String[] titles, Integer[] icons, Integer[] ids)
     {
         super(context,textViewResId,titles);
         this.mContext = context;
         this.mTitles = titles;
         this.mIcons = icons;
 
-        this.unitIds = icons;
+        this.unitIds = ids;
         //TODO : Adapter au remplissage automatique
     }
 

@@ -1,5 +1,7 @@
 package hearc.ch.starstrat.objects;
 
+import android.graphics.drawable.Drawable;
+
 /**
  * Created by JuUsT on 25.12.2014.
  */
@@ -7,12 +9,17 @@ public class UnitItem {
     private int id;
     private int minutes;
     private int secondes;
+    private boolean vibrate;
+    private String name;
+    private Drawable icon;
 
-    public UnitItem(int id, int minutes, int secondes)
+    public UnitItem(int id, int minutes, int secondes, boolean vibrate, String name)
     {
         this.id = id;
         this.minutes = minutes;
         this.secondes = secondes;
+        this.vibrate = vibrate;
+        this.name = name;
     }
 
 
@@ -24,7 +31,7 @@ public class UnitItem {
     public String getNom()
     {
         //TODO : Rajouter requete en fonction de valeur dans la bdd
-        return "todo";
+        return this.name;
     }
 
     public int getMinutes()
@@ -35,6 +42,6 @@ public class UnitItem {
     {
         return secondes;
     }
-
+    public boolean getVibrate() { return vibrate;}
 
 }

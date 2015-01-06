@@ -3,6 +3,7 @@ package hearc.ch.starstrat;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.support.v4.widget.DrawerLayout;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import hearc.ch.starstrat.adapter.NavDrawerListAdapter;
 import hearc.ch.starstrat.dataBase.Use.UseBDD;
 import hearc.ch.starstrat.model.NavDrawerItem;
+import hearc.ch.starstrat.objects.StrategyItem;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -142,6 +144,43 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        FragmentManager fragmentManager = getFragmentManager();
+        if(fragmentManager.getBackStackEntryCount() > 0)
+            fragmentManager.popBackStack();
+        else
+            this.finish();
+
+    }
+
+
+    public void setConfigFragement(Fragment fragmentOrigin, StrategyItem strat)
+    {
+        if(strat == null) {
+            final Fragment fragment = new StrategieMakerFragment();
+            ((StrategieMakerFragment)fragment).setUseBDD(useBDD);
+
+
+
+            final FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.frame_container, fragment);
+
+            transaction.addToBackStack(null);
+
+            transaction.commit();
+        }
+
+// Replace whatever is in the fragment_container view with this fragment,
+// and add the transaction to the back stack so the user can navigate back
+
+
+    }
+    public void getUnitFromId(int unitId){
+        //useBDD.g
     }
 
     /**

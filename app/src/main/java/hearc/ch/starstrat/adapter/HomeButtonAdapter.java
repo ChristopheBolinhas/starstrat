@@ -1,6 +1,5 @@
 package hearc.ch.starstrat.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,7 @@ public class HomeButtonAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return menuStyles.length;
+        return menuImages.length;
     }
 
     @Override
@@ -45,7 +44,7 @@ public class HomeButtonAdapter extends BaseAdapter {
         if(view == null)
         {
             button = new ImageButton(mContext);
-            button.setBackgroundResource(menuStyles[position]);
+            button.setBackgroundResource(R.drawable.button_home_style);
             button.setImageResource(menuImages[position]);
             button.setLayoutParams(new GridView.LayoutParams(120,120));
             button.setPadding(8,8,8,8);
@@ -64,23 +63,14 @@ public class HomeButtonAdapter extends BaseAdapter {
         return button;
     }
 
-    public Integer[] menuStyles = {
-           R.drawable.button_home_style,
-           R.drawable.button_home_style,
-           R.drawable.button_home_style,
-            R.drawable.button_home_style,
-            R.drawable.button_home_style,
-            R.drawable.button_home_style
-
-    };
 
     public Integer[] menuImages = {
-           R.drawable.ic_home_favs,
-            R.drawable.ic_home_favs,
-            R.drawable.ic_home_favs,
-            R.drawable.ic_home_favs,
-            R.drawable.ic_home_favs,
-            R.drawable.ic_home_favs
+           R.drawable.ic_mystrats,
+            R.drawable.ic_about,
+
+
+
+
     };
 
 }

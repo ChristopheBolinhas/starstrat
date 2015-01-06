@@ -9,10 +9,10 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TableLayout;
@@ -27,7 +27,7 @@ import java.util.List;
 import hearc.ch.starstrat.adapter.SpinnerUnitAdapter;
 import hearc.ch.starstrat.dataBase.Use.UseBDD;
 import hearc.ch.starstrat.dataBase.models.Race_entities;
-import hearc.ch.starstrat.model.StrategyItem;
+import hearc.ch.starstrat.objects.StrategyItem;
 import hearc.ch.starstrat.objects.UnitItem;
 
 
@@ -36,8 +36,7 @@ import hearc.ch.starstrat.objects.UnitItem;
  */
 public class StrategieMakerFragment extends Fragment {
 
-    String[] unitsList = {"ahah", "2eme"};
-    Integer[] iconList = {R.drawable.ic_home_favs,R.drawable.ic_home_favs};
+
     private List<UnitItem> unitList;
     private UseBDD useBDD;
     StrategyItem currentStrat;
@@ -127,21 +126,7 @@ public class StrategieMakerFragment extends Fragment {
             }
         });
 
-        List<Race_entities> list = useBDD.getAllUnitTerran();
 
-
-
-
-        unitsList = new String[list.size()];
-        iconList = new Integer[list.size()];
-        for(int i=0;i<list.size();i++)
-        {
-            unitsList[i] = list.get(i).getName();
-            iconList[i] = R.drawable.ic_home_favs;
-        }
-
-        Spinner spinnerUnits = (Spinner) getActivity().findViewById(R.id.spinner_unit_choice);
-        spinnerUnits.setAdapter(new SpinnerUnitAdapter(getView().getContext(),R.layout.spinner_units_style,unitsList,iconList));
 
 
         Button buttonAddUnit = (Button) getActivity().findViewById(R.id.button_add_unit);
@@ -152,10 +137,14 @@ public class StrategieMakerFragment extends Fragment {
                 SpinnerUnitAdapter spinnerUnitAdapter = (SpinnerUnitAdapter)spinnerUnits.getAdapter();
                 int unitId = spinnerUnitAdapter.getSelectedUnitId(spinnerUnits.getSelectedItemPosition());
 
+                boolean checked = ((CheckBox)getActivity().findViewById(R.id.checkbox_vibrate)).isChecked();
+
                 int mMinutes = ((NumberPicker) getActivity().findViewById(R.id.picker_minutes)).getValue();
                 int mSecondes = ((NumberPicker) getActivity().findViewById(R.id.picker_secondes)).getValue();
 
-                addUnit(unitId,mMinutes,mSecondes);
+                addUnit(unitId,mMinutes,mSecondes, checked);
+
+
             }
         });
 
@@ -176,18 +165,51 @@ public class StrategieMakerFragment extends Fragment {
 
     private void resetConfiguration()
     {
+        List<Race_entities> list;
         currentStrat.setRace(selectedRaceId);
-        Toast.makeText(getActivity(),"Set race : " + currentStrat.getRace(),Toast.LENGTH_LONG).show();
+        switch(selectedRaceId)
+        {
+            case 2://Protoss
+                list = useBDD.getAllUnitProtoss();
+                break;
+            case 3://Zerg
+                list = useBDD.getAllUnitZerg();
+                break;
+
+            default:
+            case 1://Terran
+                list = useBDD.getAllUnitTerran();
+        }
+
+
+
+
+
+        String[] unitTab = new String[list.size()];
+        Integer[] iconTab = new Integer[list.size()];
+        Integer[] idTab = new Integer[list.size()];
+        for(int i=0;i<list.size();i++)
+        {
+            unitTab[i] = list.get(i).getName();
+            iconTab[i] = R.drawable.ic_zerg;
+            idTab[i] = list.get(i).getId();
+        }
+
+        Spinner spinnerUnits = (Spinner) getActivity().findViewById(R.id.spinner_unit_choice);
+        spinnerUnits.setAdapter(new SpinnerUnitAdapter(getView().getContext(),R.layout.spinner_units_style, unitTab, iconTab, idTab));
+
+
+        //Toast.makeText(getActivity(),"Set race : " + currentStrat.getRace(),Toast.LENGTH_LONG).show();
     }
 
 
 
 
-    private void addUnit(int unitId, int minutes, int secondes)
+    private void addUnit(int unitId, int minutes, int secondes, boolean checked)
     {
 
 
-        UnitItem unit = new UnitItem(unitId,minutes,secondes);
+        UnitItem unit = new UnitItem(unitId,minutes,secondes,checked,"lambda");
         unitList.add(unit);
         addUiUnit(unit);
 
@@ -216,12 +238,22 @@ public class StrategieMakerFragment extends Fragment {
         textView1.setText(unit.getNom());
         textView1.setGravity(TextView.TEXT_ALIGNMENT_CENTER);
         textView1.setPadding(padding,padding,padding,padding);
+
+
+        CheckBox box = new CheckBox(getView().getContext());
+        box.setChecked(unit.getVibrate());
+        box.setEnabled(false);
+        box.setGravity(CheckBox.TEXT_ALIGNMENT_CENTER);
+        box.setPadding(padding,padding,padding,padding);
+        //box.setGravity(CheckBox.ALIGN);
+
         TextView textView2 = new TextView(getView().getContext());
-        textView2.setText(unit.getMinutes() + " : " + unit.getSecondes());
+        textView2.setText(unit.getMinutes() + ":" + unit.getSecondes());
         textView2.setGravity(TextView.TEXT_ALIGNMENT_CENTER);
         textView2.setPadding(padding,padding,padding,padding);
         Button buttonRemove = new Button(getView().getContext());
         buttonRemove.setText("x");
+        buttonRemove.setWidth(20);
         buttonRemove.setBackgroundResource(R.drawable.button_stratmake_style_normal);
         buttonRemove.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -233,6 +265,7 @@ public class StrategieMakerFragment extends Fragment {
         });
 
         newRow.addView(textView1);
+        newRow.addView(box);
         newRow.addView(textView2);
         newRow.addView(buttonRemove);
         tableLayout.addView(newRow);
