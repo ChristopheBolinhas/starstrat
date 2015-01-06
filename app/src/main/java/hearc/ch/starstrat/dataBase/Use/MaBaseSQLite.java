@@ -11,16 +11,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class MaBaseSQLite extends SQLiteOpenHelper {
 
-    private static final String TABLE_LIVRES = "table_livres";
-    private static final String COL_ID = "ID";
-    private static final String COL_ISBN = "ISBN";
-    private static final String COL_TITRE = "Titre";
-
-    private static final String CREATE_BDD = "CREATE TABLE " + TABLE_LIVRES + " ("
-            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COL_ISBN + " TEXT NOT NULL, "
-            + COL_TITRE + " TEXT NOT NULL);";
-
-
     private static final String TABLE_Events = "events";
     private static final String COL_ID_EVENT = "ID";
     private static final String COL_ID_strategies_EVENT = "ID_strategies";
@@ -84,21 +74,49 @@ public class MaBaseSQLite extends SQLiteOpenHelper {
             + COL_NAME_Type + " TEXT);";
 
 
+    private static final String TABLE_IMAGE = "images";
+    private static final String COL_ID_Image = "ID";
+    private static final String COL_ImageTexte_Image = "Image_Texte";
+    private static final String COL_IDRaceEntities_Image = "ID_Race_Entities";
+
+    private static final String CREATE_Image = "CREATE TABLE "+ TABLE_IMAGE + "("
+            + COL_ID_Image + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COL_ImageTexte_Image + " BLOB, "
+            + COL_IDRaceEntities_Image + " INTEGER );";
+
+
+    private static final String TABLE_ELEMENT_Strategie = "elementStrategie";
+    private static final String COL_ID_Element = "ID";
+    private static final String COL_ID_Strat_Element = "ID_Strategie";
+    private static final String COL_ID_RaceEntities_Element = "ID_RaceEntities";
+    private static final String COL_Minute_Element = "Minute";
+    private static final String COL_Seconde_Element = "Seconde";
+    private static final String COL_Vibrate_Element = "Vibrate";
+
+    private static final String CREATE_Element_Strategie = "CREATE TABLE "+ TABLE_ELEMENT_Strategie + "("
+            + COL_ID_Element + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COL_ID_Strat_Element + " INTEGER, "
+            + COL_ID_RaceEntities_Element + " INTEGER, "
+            + COL_Minute_Element + " INTEGER, "
+            + COL_Seconde_Element + " INTEGER, "
+            + COL_Vibrate_Element + " INTEGER );";
+
 
     public MaBaseSQLite(Context context, String name, CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
-        //on créé la table à partir de la requête écrite dans la variable CREATE_BDD
-        //db.execSQL(CREATE_BDD);
+    public void onCreate(SQLiteDatabase db)
+    {
 
         db.execSQL(CREATE_EVENT);
         db.execSQL(CREATE_Race_Entities);
         db.execSQL(CREATE_Race);
         db.execSQL(CREATE_Strategies);
         db.execSQL(CREATE_Type);
+        db.execSQL(CREATE_Image);
+        db.execSQL(CREATE_Element_Strategie);
 
     }
 

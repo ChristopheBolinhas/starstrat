@@ -8,6 +8,7 @@ public class Strategies
     private int id;
     private int id_race;
     private String name;
+    private String description;
     private String games_tried;
     private String games_won;
 
@@ -54,5 +55,13 @@ public class Strategies
     public String toString()
     {
         return "Strategie id : "+id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

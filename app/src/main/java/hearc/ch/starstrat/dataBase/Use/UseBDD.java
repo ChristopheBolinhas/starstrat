@@ -1,18 +1,29 @@
 package hearc.ch.starstrat.dataBase.Use;
 
 import android.content.Context;
+import android.widget.Toast;
+
 import java.util.List;
+
+import hearc.ch.starstrat.dataBase.BDD.ElementStrategieBDD;
 import hearc.ch.starstrat.dataBase.BDD.EventsBDD;
+import hearc.ch.starstrat.dataBase.BDD.ImageBDD;
 import hearc.ch.starstrat.dataBase.BDD.RaceBDD;
 import hearc.ch.starstrat.dataBase.BDD.Race_entitiesBDD;
 import hearc.ch.starstrat.dataBase.BDD.StrategiesBDD;
 import hearc.ch.starstrat.dataBase.BDD.TypeBDD;
+import hearc.ch.starstrat.dataBase.Remplissage.InsertImages;
 import hearc.ch.starstrat.dataBase.Remplissage.InsertRace;
 import hearc.ch.starstrat.dataBase.Remplissage.InsertRaceEntities;
 import hearc.ch.starstrat.dataBase.Remplissage.InsertType;
+import hearc.ch.starstrat.dataBase.models.ElementStrategie;
+import hearc.ch.starstrat.dataBase.models.Image;
 import hearc.ch.starstrat.dataBase.models.Race;
 import hearc.ch.starstrat.dataBase.models.Race_entities;
+import hearc.ch.starstrat.dataBase.models.Strategies;
 import hearc.ch.starstrat.dataBase.models.Type;
+import hearc.ch.starstrat.objects.StrategyItem;
+import hearc.ch.starstrat.objects.UnitItem;
 
 /**
  * Created by Kevin on 25/12/2014.
@@ -25,7 +36,10 @@ public class UseBDD
     private Race_entitiesBDD raceEntities;
     private EventsBDD events;
     private StrategiesBDD strats;
+    private ImageBDD image;
+    private ElementStrategieBDD elementStrategie;
 
+    private Context context;
 
     public UseBDD(Context context)
     {
@@ -34,6 +48,10 @@ public class UseBDD
         this.raceEntities = new Race_entitiesBDD(context);
         this.events = new EventsBDD(context);
         this.strats = new StrategiesBDD(context);
+        this.image = new ImageBDD(context);
+        this.elementStrategie = new ElementStrategieBDD(context);
+
+        this.context = context;
 
         open();
         init();
@@ -53,6 +71,13 @@ public class UseBDD
         Race_entities re = raceEntities.getRaceEntitiesWithID(1);
         if(re==null)
             new InsertRaceEntities(raceEntities);
+
+        //TODO Image
+        /*Image im = image.getImageWithID(1);
+        //Toast.makeText(context, ""+im.getImage_Texte(), Toast.LENGTH_LONG).show();
+        if(im==null)
+            new InsertImages(image, context);*/
+
     }
 
     //Fonction pour ouvrir les tables
@@ -63,6 +88,8 @@ public class UseBDD
         raceEntities.open();
         events.open();
         strats.open();
+        image.open();
+        elementStrategie.open();
     }
 
     //Fonction pour fermer les tables
@@ -73,6 +100,8 @@ public class UseBDD
         raceEntities.close();
         events.close();
         strats.close();
+        image.close();
+        elementStrategie.close();
     }
 
 
@@ -97,6 +126,42 @@ public class UseBDD
         return raceEntities.getRaceEntitiesByRace(r.getId());
     }
 
+
+    public void addStrat(StrategyItem objetStrategie)
+    {
+        Strategies strategies = new Strategies();
+        strategies.setDescription(objetStrategie.getDescription());
+        strategies.setName(objetStrategie.getName());
+        if(objetStrategie.getRace()==0)
+            strategies.setId_race(3);
+        else if(objetStrategie.getRace()==1)
+            strategies.setId_race(2);
+        else if(objetStrategie.getRace()==2)
+            strategies.setId_race(1);
+
+        strats.insertStrategies(strategies);
+
+        //TODO a voir pour ameliorer la recuperation de l'id
+        strategies = strats.getStrategiesWithName(objetStrategie.getName());
+
+        int id = strategies.getId();
+
+        List<UnitItem> list = objetStrategie.getListUnits();
+
+        for(int i=0;i<list.size();i++)
+        {
+            ElementStrategie element = new ElementStrategie();
+            element.setId_Strat(id);
+            element.setMinute(list.get(i).getMinutes());
+            element.setSecond(list.get(i).getSecondes());
+            element.setVibrate(list.get(i).getVibrate());
+
+            Race_entities entities = raceEntities.getRaceEntitiesWithName(list.get(i).getNom());
+            element.setId_Race_Entities(entities.getId());
+
+            elementStrategie.insertElement(element);
+        }
+    }
 
 
 }

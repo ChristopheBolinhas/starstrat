@@ -16,6 +16,30 @@ public class StrategyItem {
     //private List<StrategyListItem> listItems;
     private List<UnitItem> listUnits;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<UnitItem> getListUnits() {
+        return listUnits;
+    }
+
+    public void setListUnits(List<UnitItem> listUnits) {
+        this.listUnits = listUnits;
+    }
+
     private int race; //0 - terran, 1 - protoss -, 2 - zerg, -1 - unset
 
 

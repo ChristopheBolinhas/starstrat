@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.ColorDrawable;
 
 import hearc.ch.starstrat.dataBase.Use.MaBaseSQLite;
 import hearc.ch.starstrat.dataBase.models.Strategies;
@@ -33,6 +34,9 @@ public class StrategiesBDD
 
     private static final String COL_Game_Won = "Game_Won";
     private static final int NUM_COL_Game_Won = 4;
+
+    private static final String COL_Description = "Description";
+    private static final int NUM_COL_Description = 5;
 
     private SQLiteDatabase bdd;
 
@@ -66,6 +70,7 @@ public class StrategiesBDD
         values.put(COL_Name, strat.getName());
         values.put(COL_Game_Tried, strat.getGames_tried());
         values.put(COL_Game_Won, strat.getGames_won());
+        values.put(COL_Description, strat.getDescription());
 
         //on insère l'objet dans la BDD via le ContentValues
         return bdd.insert(TABLE_Strategies, null, values);
@@ -79,6 +84,7 @@ public class StrategiesBDD
         values.put(COL_Name, strat.getName());
         values.put(COL_Game_Tried, strat.getGames_tried());
         values.put(COL_Game_Won, strat.getGames_won());
+        values.put(COL_Description, strat.getDescription());
 
         return bdd.update(TABLE_Strategies, values, COL_ID + " = " +id, null);
     }
@@ -90,7 +96,7 @@ public class StrategiesBDD
 
     public Strategies getStrategiesWithName(String name)
     {
-        Cursor c = bdd.query(TABLE_Strategies, new String[] {COL_ID, COL_ID_Race, COL_Name, COL_Game_Tried, COL_Game_Won}, COL_Name + " LIKE \"" + name +"\"", null, null, null, null);
+        Cursor c = bdd.query(TABLE_Strategies, new String[] {COL_ID, COL_ID_Race, COL_Name, COL_Game_Tried, COL_Game_Won, COL_Description}, COL_Name + " LIKE \"" + name +"\"", null, null, null, null);
         return cursorToStrategies(c);
     }
 
@@ -110,6 +116,7 @@ public class StrategiesBDD
         strat.setName(c.getString(NUM_COL_Name));
         strat.setGames_tried(c.getString(NUM_COL_Game_Tried));
         strat.setGames_won(c.getString(NUM_COL_Game_Won));
+        strat.setDescription(c.getString(NUM_COL_Description));
 
         //On ferme le cursor
         c.close();

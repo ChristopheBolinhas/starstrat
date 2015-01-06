@@ -12,14 +12,260 @@ public class InsertRaceEntities
 
     public InsertRaceEntities(Race_entitiesBDD race)
     {
-        terran(race);
-        zerg(race);
-        protoss(race);
+        unit(race);
+        // batiment(race);
+        //upgrade(race);
+
+        //terran(race);
+        //zerg(race);
+        //protoss(race);
     }
 
-    private void protoss(Race_entitiesBDD race)
+    private void unit(Race_entitiesBDD race)
     {
-        //////////////////////UNITS ///////////////////////
+        //////////////////////TERRAN //////////////////////
+        //SCV
+        Race_entities scv = new Race_entities();
+        scv.setId_races(3);
+        scv.setName("SCV");
+        scv.setId_type(2);
+        scv.setTime_creation(17);
+        race.insertRaceEntities(scv);
+
+        //MARINE
+        Race_entities marine = new Race_entities();
+        marine.setId_races(3);
+        marine.setName("Marine");
+        marine.setId_type(2);
+        marine.setTime_creation(25);
+        race.insertRaceEntities(marine);
+
+        //Marauder
+        Race_entities marauder = new Race_entities();
+        marauder.setId_races(3);
+        marauder.setName("Marauder");
+        marauder.setId_type(2);
+        marauder.setTime_creation(30);
+        race.insertRaceEntities(marauder);
+
+        //Reaper
+        Race_entities reaper = new Race_entities();
+        reaper.setId_races(3);
+        reaper.setName("Reaper");
+        reaper.setId_type(2);
+        reaper.setTime_creation(45);
+        race.insertRaceEntities(reaper);
+
+        //Ghost
+        Race_entities ghost = new Race_entities();
+        ghost.setId_races(3);
+        ghost.setName("Ghost");
+        ghost.setId_type(2);
+        ghost.setTime_creation(40);
+        race.insertRaceEntities(ghost);
+
+        //Hellion
+        Race_entities hellion = new Race_entities();
+        hellion.setId_races(3);
+        hellion.setName("Hellion");
+        hellion.setId_type(2);
+        hellion.setTime_creation(30);
+        race.insertRaceEntities(hellion);
+
+        //Tank
+        Race_entities tank = new Race_entities();
+        tank.setId_races(3);
+        tank.setName("Tank");
+        tank.setId_type(2);
+        tank.setTime_creation(45);
+        race.insertRaceEntities(tank);
+
+        //Thor
+        Race_entities thor = new Race_entities();
+        thor.setId_races(3);
+        thor.setName("Thor");
+        thor.setId_type(2);
+        thor.setTime_creation(60);
+        race.insertRaceEntities(thor);
+
+        //Viking
+        Race_entities viking = new Race_entities();
+        viking.setId_races(3);
+        viking.setName("Viking");
+        viking.setId_type(2);
+        viking.setTime_creation(42);
+        race.insertRaceEntities(viking);
+
+        //Medivac
+        Race_entities medivac = new Race_entities();
+        medivac.setId_races(3);
+        medivac.setName("Medivac");
+        medivac.setId_type(2);
+        medivac.setTime_creation(42);
+        race.insertRaceEntities(medivac);
+
+        //Raven
+        Race_entities raven = new Race_entities();
+        raven.setId_races(3);
+        raven.setName("Raven");
+        raven.setId_type(2);
+        raven.setTime_creation(60);
+        race.insertRaceEntities(raven);
+
+        //Banshee
+        Race_entities banshee = new Race_entities();
+        banshee.setId_races(3);
+        banshee.setName("Banshee");
+        banshee.setId_type(2);
+        banshee.setTime_creation(60);
+        race.insertRaceEntities(banshee);
+
+        //Battlecruiser
+        Race_entities bc = new Race_entities();
+        bc.setId_races(3);
+        bc.setName("Battlecruiser");
+        bc.setId_type(2);
+        bc.setTime_creation(90);
+        race.insertRaceEntities(bc);
+
+        //Hellbat
+        Race_entities hellbat = new Race_entities();
+        hellbat.setId_races(3);
+        hellbat.setName("Hellbat");
+        hellbat.setId_type(2);
+        hellbat.setTime_creation(30);
+        race.insertRaceEntities(hellbat);
+
+        //Widow Mine
+        Race_entities mine = new Race_entities();
+        mine.setId_races(3);
+        mine.setName("Widow Mine");
+        mine.setId_type(2);
+        mine.setTime_creation(40);
+        race.insertRaceEntities(mine);
+
+        //////////////////////ZERG //////////////////////
+        //Drone
+        Race_entities drone = new Race_entities();
+        drone.setId_races(1);
+        drone.setName("Drone");
+        drone.setId_type(2);
+        drone.setTime_creation(17);
+        race.insertRaceEntities(drone);
+
+        //Overlord
+        Race_entities overlord = new Race_entities();
+        overlord.setId_races(1);
+        overlord.setName("Overlord");
+        overlord.setId_type(2);
+        overlord.setTime_creation(25);
+        race.insertRaceEntities(overlord);
+
+        //Zergling
+        Race_entities zergling = new Race_entities();
+        zergling.setId_races(1);
+        zergling.setName("Zergling");
+        zergling.setId_type(2);
+        zergling.setTime_creation(24);
+        race.insertRaceEntities(zergling);
+
+        //Queen
+        Race_entities queen = new Race_entities();
+        queen.setId_races(1);
+        queen.setName("Queen");
+        queen.setId_type(2);
+        queen.setTime_creation(50);
+        race.insertRaceEntities(queen);
+
+        //Hydralisk
+        Race_entities hydra = new Race_entities();
+        hydra.setId_races(1);
+        hydra.setName("Hydralisk");
+        hydra.setId_type(2);
+        hydra.setTime_creation(33);
+        race.insertRaceEntities(hydra);
+
+        //Baneling
+        Race_entities baneling = new Race_entities();
+        baneling.setId_races(1);
+        baneling.setName("Baneling");
+        baneling.setId_type(2);
+        baneling.setTime_creation(20);
+        race.insertRaceEntities(baneling);
+
+        //Overseer
+        Race_entities overseer = new Race_entities();
+        overseer.setId_races(1);
+        overseer.setName("Overseer");
+        overseer.setId_type(2);
+        overseer.setTime_creation(17);
+        race.insertRaceEntities(overseer);
+
+        //Roach
+        Race_entities roach = new Race_entities();
+        roach.setId_races(1);
+        roach.setName("Roach");
+        roach.setId_type(2);
+        roach.setTime_creation(27);
+        race.insertRaceEntities(roach);
+
+        //Infestor
+        Race_entities infest = new Race_entities();
+        infest.setId_races(1);
+        infest.setName("Infestor");
+        infest.setId_type(2);
+        infest.setTime_creation(50);
+        race.insertRaceEntities(infest);
+
+        //Mutalisk
+        Race_entities muta = new Race_entities();
+        muta.setId_races(1);
+        muta.setName("Mutalisk");
+        muta.setId_type(2);
+        muta.setTime_creation(33);
+        race.insertRaceEntities(muta);
+
+        //Corruptor
+        Race_entities corruptor = new Race_entities();
+        corruptor.setId_races(1);
+        corruptor.setName("Corruptor");
+        corruptor.setId_type(2);
+        corruptor.setTime_creation(40);
+        race.insertRaceEntities(corruptor);
+
+        //Ultralisk
+        Race_entities ultra = new Race_entities();
+        ultra.setId_races(1);
+        ultra.setName("Ultralisk");
+        ultra.setId_type(2);
+        ultra.setTime_creation(55);
+        race.insertRaceEntities(ultra);
+
+        //Brood Lord
+        Race_entities broodLord = new Race_entities();
+        broodLord.setId_races(1);
+        broodLord.setName("Brood Lord");
+        broodLord.setId_type(2);
+        broodLord.setTime_creation(34);
+        race.insertRaceEntities(broodLord);
+
+        //Swarm Host
+        Race_entities sh = new Race_entities();
+        sh.setId_races(1);
+        sh.setName("Swarm Host");
+        sh.setId_type(2);
+        sh.setTime_creation(40);
+        race.insertRaceEntities(sh);
+
+        //Viper
+        Race_entities viper = new Race_entities();
+        viper.setId_races(1);
+        viper.setName("Viper");
+        viper.setId_type(2);
+        viper.setTime_creation(40);
+        race.insertRaceEntities(viper);
+
+        //////////////////////PROTOSS //////////////////////
         //Probe
         Race_entities probe = new Race_entities();
         probe.setId_races(2);
@@ -163,6 +409,12 @@ public class InsertRaceEntities
         tempest.setId_type(2);
         tempest.setTime_creation(60);
         race.insertRaceEntities(tempest);
+    }
+
+    private void protoss(Race_entitiesBDD race)
+    {
+        //////////////////////UNITS ///////////////////////
+
 
         //////////////////////Batiments ///////////////////////
         //Pylon
@@ -290,125 +542,7 @@ public class InsertRaceEntities
     private void zerg(Race_entitiesBDD race)
     {
         //////////////////////UNITS ///////////////////////
-        //Drone
-        Race_entities drone = new Race_entities();
-        drone.setId_races(1);
-        drone.setName("Drone");
-        drone.setId_type(2);
-        drone.setTime_creation(17);
-        race.insertRaceEntities(drone);
 
-        //Overlord
-        Race_entities overlord = new Race_entities();
-        overlord.setId_races(1);
-        overlord.setName("Overlord");
-        overlord.setId_type(2);
-        overlord.setTime_creation(25);
-        race.insertRaceEntities(overlord);
-
-        //Zergling
-        Race_entities zergling = new Race_entities();
-        zergling.setId_races(1);
-        zergling.setName("Zergling");
-        zergling.setId_type(2);
-        zergling.setTime_creation(24);
-        race.insertRaceEntities(zergling);
-
-        //Queen
-        Race_entities queen = new Race_entities();
-        queen.setId_races(1);
-        queen.setName("Queen");
-        queen.setId_type(2);
-        queen.setTime_creation(50);
-        race.insertRaceEntities(queen);
-
-        //Hydralisk
-        Race_entities hydra = new Race_entities();
-        hydra.setId_races(1);
-        hydra.setName("Hydralisk");
-        hydra.setId_type(2);
-        hydra.setTime_creation(33);
-        race.insertRaceEntities(hydra);
-
-        //Baneling
-        Race_entities baneling = new Race_entities();
-        baneling.setId_races(1);
-        baneling.setName("Baneling");
-        baneling.setId_type(2);
-        baneling.setTime_creation(20);
-        race.insertRaceEntities(baneling);
-
-        //Overseer
-        Race_entities overseer = new Race_entities();
-        overseer.setId_races(1);
-        overseer.setName("Overseer");
-        overseer.setId_type(2);
-        overseer.setTime_creation(17);
-        race.insertRaceEntities(overseer);
-
-        //Roach
-        Race_entities roach = new Race_entities();
-        roach.setId_races(1);
-        roach.setName("Roach");
-        roach.setId_type(2);
-        roach.setTime_creation(27);
-        race.insertRaceEntities(roach);
-
-        //Infestor
-        Race_entities infest = new Race_entities();
-        infest.setId_races(1);
-        infest.setName("Infestor");
-        infest.setId_type(2);
-        infest.setTime_creation(50);
-        race.insertRaceEntities(infest);
-
-        //Mutalisk
-        Race_entities muta = new Race_entities();
-        muta.setId_races(1);
-        muta.setName("Mutalisk");
-        muta.setId_type(2);
-        muta.setTime_creation(33);
-        race.insertRaceEntities(muta);
-
-        //Corruptor
-        Race_entities corruptor = new Race_entities();
-        corruptor.setId_races(1);
-        corruptor.setName("Corruptor");
-        corruptor.setId_type(2);
-        corruptor.setTime_creation(40);
-        race.insertRaceEntities(corruptor);
-
-        //Ultralisk
-        Race_entities ultra = new Race_entities();
-        ultra.setId_races(1);
-        ultra.setName("Ultralisk");
-        ultra.setId_type(2);
-        ultra.setTime_creation(55);
-        race.insertRaceEntities(ultra);
-
-        //Brood Lord
-        Race_entities broodLord = new Race_entities();
-        broodLord.setId_races(1);
-        broodLord.setName("Brood Lord");
-        broodLord.setId_type(2);
-        broodLord.setTime_creation(34);
-        race.insertRaceEntities(broodLord);
-
-        //Swarm Host
-        Race_entities sh = new Race_entities();
-        sh.setId_races(1);
-        sh.setName("Swarm Host");
-        sh.setId_type(2);
-        sh.setTime_creation(40);
-        race.insertRaceEntities(sh);
-
-        //Viper
-        Race_entities viper = new Race_entities();
-        viper.setId_races(1);
-        viper.setName("Viper");
-        viper.setId_type(2);
-        viper.setTime_creation(40);
-        race.insertRaceEntities(viper);
 
         //////////////////////Batiments ///////////////////////
         //Hatchery
@@ -545,125 +679,7 @@ public class InsertRaceEntities
     private void terran(Race_entitiesBDD race)
     {
         //////////////////////UNITS ///////////////////////
-        //SCV
-        Race_entities scv = new Race_entities();
-        scv.setId_races(3);
-        scv.setName("SCV");
-        scv.setId_type(2);
-        scv.setTime_creation(17);
-        race.insertRaceEntities(scv);
 
-        //MARINE
-        Race_entities marine = new Race_entities();
-        marine.setId_races(3);
-        marine.setName("Marine");
-        marine.setId_type(2);
-        marine.setTime_creation(25);
-        race.insertRaceEntities(marine);
-
-        //Marauder
-        Race_entities marauder = new Race_entities();
-        marauder.setId_races(3);
-        marauder.setName("Marauder");
-        marauder.setId_type(2);
-        marauder.setTime_creation(30);
-        race.insertRaceEntities(marauder);
-
-        //Reaper
-        Race_entities reaper = new Race_entities();
-        reaper.setId_races(3);
-        reaper.setName("Reaper");
-        reaper.setId_type(2);
-        reaper.setTime_creation(45);
-        race.insertRaceEntities(reaper);
-
-        //Ghost
-        Race_entities ghost = new Race_entities();
-        ghost.setId_races(3);
-        ghost.setName("Ghost");
-        ghost.setId_type(2);
-        ghost.setTime_creation(40);
-        race.insertRaceEntities(ghost);
-
-        //Hellion
-        Race_entities hellion = new Race_entities();
-        hellion.setId_races(3);
-        hellion.setName("Hellion");
-        hellion.setId_type(2);
-        hellion.setTime_creation(30);
-        race.insertRaceEntities(hellion);
-
-        //Tank
-        Race_entities tank = new Race_entities();
-        tank.setId_races(3);
-        tank.setName("Tank");
-        tank.setId_type(2);
-        tank.setTime_creation(45);
-        race.insertRaceEntities(tank);
-
-        //Thor
-        Race_entities thor = new Race_entities();
-        thor.setId_races(3);
-        thor.setName("Thor");
-        thor.setId_type(2);
-        thor.setTime_creation(60);
-        race.insertRaceEntities(thor);
-
-        //Viking
-        Race_entities viking = new Race_entities();
-        viking.setId_races(3);
-        viking.setName("Viking");
-        viking.setId_type(2);
-        viking.setTime_creation(42);
-        race.insertRaceEntities(viking);
-
-        //Medivac
-        Race_entities medivac = new Race_entities();
-        medivac.setId_races(3);
-        medivac.setName("Medivac");
-        medivac.setId_type(2);
-        medivac.setTime_creation(42);
-        race.insertRaceEntities(medivac);
-
-        //Raven
-        Race_entities raven = new Race_entities();
-        raven.setId_races(3);
-        raven.setName("Raven");
-        raven.setId_type(2);
-        raven.setTime_creation(60);
-        race.insertRaceEntities(raven);
-
-        //Banshee
-        Race_entities banshee = new Race_entities();
-        banshee.setId_races(3);
-        banshee.setName("Banshee");
-        banshee.setId_type(2);
-        banshee.setTime_creation(60);
-        race.insertRaceEntities(banshee);
-
-        //Battlecruiser
-        Race_entities bc = new Race_entities();
-        bc.setId_races(3);
-        bc.setName("Battlecruiser");
-        bc.setId_type(2);
-        bc.setTime_creation(90);
-        race.insertRaceEntities(bc);
-
-        //Hellbat
-        Race_entities hellbat = new Race_entities();
-        hellbat.setId_races(3);
-        hellbat.setName("Hellbat");
-        hellbat.setId_type(2);
-        hellbat.setTime_creation(30);
-        race.insertRaceEntities(hellbat);
-
-        //Widow Mine
-        Race_entities mine = new Race_entities();
-        mine.setId_races(3);
-        mine.setName("Widow Mine");
-        mine.setId_type(2);
-        mine.setTime_creation(40);
-        race.insertRaceEntities(mine);
 
         //////////////////////Batiments ///////////////////////
         //Command Center
@@ -770,11 +786,13 @@ public class InsertRaceEntities
         fusionCore.setTime_creation(65);
         race.insertRaceEntities(fusionCore);
 
+        //////////////////////Recherche ///////////////////////
+        /*
         //Orbital Command
         Race_entities orbitalCommand = new Race_entities();
         orbitalCommand.setId_races(3);
         orbitalCommand.setName("Orbital Command");
-        orbitalCommand.setId_type(1);
+        orbitalCommand.setId_type(3);
         orbitalCommand.setTime_creation(35);
         race.insertRaceEntities(orbitalCommand);
 
@@ -782,11 +800,10 @@ public class InsertRaceEntities
         Race_entities planetaryFortress = new Race_entities();
         planetaryFortress.setId_races(3);
         planetaryFortress.setName("Planetary Fortress");
-        planetaryFortress.setId_type(1);
+        planetaryFortress.setId_type(3);
         planetaryFortress.setTime_creation(50);
         race.insertRaceEntities(planetaryFortress);
 
-        //////////////////////Recherche ///////////////////////
         //Combat Shield
         Race_entities combatShield = new Race_entities();
         combatShield.setId_races(3);
@@ -1034,7 +1051,7 @@ public class InsertRaceEntities
         extraSupplies.setId_type(3);
         extraSupplies.setTime_creation(0);
         race.insertRaceEntities(extraSupplies);
-
+        */
     }
 
 }
