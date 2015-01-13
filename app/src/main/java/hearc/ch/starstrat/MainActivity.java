@@ -49,6 +49,15 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
+    public UseBDD getDBInstance()
+    {
+        if(useBDD == null)
+            useBDD = new UseBDD(this);
+        return useBDD;
+    }
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -71,7 +71,7 @@ public class StrategieFragment extends ListFragment {
 
     public static StrategieFragment newInstance(UseBDD bdd) {
         StrategieFragment fragment = new StrategieFragment();
-        fragment.bdd = bdd;
+        //fragment.bdd = bdd;
         return fragment;
     }
 
@@ -92,10 +92,12 @@ public class StrategieFragment extends ListFragment {
         }*/
         mItems = new ArrayList<StrategyListItem>();
         mItems.add(new StrategyListItem(R.drawable.ic_add,"Nouvelle stratégie", "Composer une stratégie", -1));
+        UseBDD bdd1 =((MainActivity)getActivity()).getDBInstance();
 
-        for(StrategyItem item : bdd.getAllStrategie())
-            mItems.add(new StrategyListItem(R.drawable.ic_zerg,item));
-
+        for(StrategyItem item : bdd1.getAllStrategie()) {
+            mItems.add(new StrategyListItem(R.drawable.ic_zerg, item));
+            Toast.makeText(getActivity(),item.getDescription(),Toast.LENGTH_LONG).show();
+        }
 
         setListAdapter(new StrategyListAdapter(getActivity(),mItems));
     }

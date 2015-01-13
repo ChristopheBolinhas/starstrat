@@ -197,26 +197,46 @@ public class UseBDD
         List<StrategyItem> listFinal = new ArrayList<StrategyItem>();
 
         List<Strategies> listStrats = strats.getAllStrategie();
-        List<ElementStrategie> listElement = null;
-        for(int i = 0;i<listStrats.size();i++)
-        {
-            listElement = elementStrategie.getListElementStrategieWithIDStrat(listStrats.get(i).getId());
+        List<ElementStrategie> listElement = new ArrayList<ElementStrategie>();
+        if(listStrats != null) {
+            for (int i = 0; i < listStrats.size(); i++) {
+                listElement = elementStrategie.getListElementStrategieWithIDStrat(listStrats.get(i).getId());
 
-            List<UnitItem> listUnit = new ArrayList<UnitItem>();
-            for(int j=0;j<listElement.size();j++)
-            {
-                ElementStrategie el = listElement.get(i);
-                Race_entities entities = raceEntities.getRaceEntitiesWithID(el.getId_Race_Entities());
+                List<UnitItem> listUnit = new ArrayList<UnitItem>();
+                for (int j = 0; j < listElement.size(); j++) {
+                    ElementStrategie el = listElement.get(i);
+                    Race_entities entities = raceEntities.getRaceEntitiesWithID(el.getId_Race_Entities());
 
-                UnitItem item = new UnitItem(el.getId(),el.getMinute(),el.getSecond(),el.isVibrate(),entities.getName());
-                listUnit.add(item);
+                    UnitItem item = new UnitItem(el.getId(), el.getMinute(), el.getSecond(), el.isVibrate(), entities.getName());
+                    listUnit.add(item);
+                }
+                StrategyItem item = new StrategyItem();
+                Strategies stratref = listStrats.get(i);
+                item.setName(stratref.getName());
+                item.setDescription(stratref.getDescription());
+                item.setDbId(stratref.getId());
+                item.setRace(convertRaceId(stratref.getId_race()));
+
+                item.setListUnits(listUnit);
+                listFinal.add(item);
             }
-
-            listFinal.add(new StrategyItem());
-            listFinal.get(listFinal.size()-1).setListUnits(listUnit);
         }
         
         return listFinal;
+    }
+
+    private int convertRaceId(int id)
+    {
+        switch(id)
+        {
+            case 3://Terran
+                return 0;
+            case 2://Protoss
+                return 1;
+            case 1://zergs
+                return 2;
+        }
+        return -1;
     }
 
 }
