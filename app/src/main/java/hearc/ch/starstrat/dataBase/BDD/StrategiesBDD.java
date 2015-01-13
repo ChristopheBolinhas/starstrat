@@ -100,7 +100,7 @@ public class StrategiesBDD
 
     public Strategies getStrategiesWithName(String name)
     {
-        Cursor c = bdd.query(TABLE_Strategies, new String[] {COL_ID, COL_ID_Race, COL_Name, COL_Game_Tried, COL_Game_Won, COL_Description}, COL_Name + " LIKE \"" + name +"\"", null, null, null, null);
+        Cursor c = bdd.query(TABLE_Strategies, new String[] {COL_ID, COL_ID_Race, COL_Name, COL_Description , COL_Game_Tried, COL_Game_Won}, COL_Name + " LIKE \"" + name +"\"", null, null, null, null);
         return cursorToStrategies(c);
     }
 

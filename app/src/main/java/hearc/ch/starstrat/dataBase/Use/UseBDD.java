@@ -1,6 +1,7 @@
 package hearc.ch.starstrat.dataBase.Use;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -173,12 +174,9 @@ public class UseBDD
         else if(objetStrategie.getRace()==2)
             strategies.setId_race(1);
 
-        strats.insertStrategies(strategies);
+        long l = strats.insertStrategies(strategies);
 
-        //TODO a voir pour ameliorer la recuperation de l'id
-        strategies = strats.getStrategiesWithName(objetStrategie.getName());
-
-        int id = strategies.getId();
+        int id = (int)l;
 
         List<UnitItem> list = objetStrategie.getListUnits(false);
 

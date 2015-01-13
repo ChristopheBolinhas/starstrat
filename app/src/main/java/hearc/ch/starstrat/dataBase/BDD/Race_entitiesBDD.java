@@ -109,7 +109,7 @@ public class Race_entitiesBDD
     public Race_entities getRaceEntitiesWithName(String name)
     {
         //Récupère dans un Cursor les valeur correspondant à une RaceEntities contenu dans la BDD (ici on sélectionne la RaceEntities grâce à son titre)
-        Cursor c = bdd.query(TABLE_Race_Entities, new String[] {COL_ID, COL_ID_Race, COL_ID_Type,COL_Name,COL_Time_Creation}, COL_Name + "=" + name, null, null, null, null);
+        Cursor c = bdd.query(TABLE_Race_Entities, new String[] {COL_ID, COL_ID_Race, COL_ID_Type,COL_Name,COL_Time_Creation}, COL_Name + " LIKE \"" + name +"\"", null, null, null, null);
         return cursorToRaceEntities(c);
     }
 
