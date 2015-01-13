@@ -2,6 +2,7 @@ package hearc.ch.starstrat.dataBase.Use;
 
 import android.content.Context;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import hearc.ch.starstrat.dataBase.BDD.ElementStrategieBDD;
@@ -160,5 +161,31 @@ public class UseBDD
         }
     }
 
+    public List<StrategyItem> getAllStrategie()
+    {
+        List<StrategyItem> listFinal = new ArrayList<StrategyItem>();
+
+        List<Strategies> listStrats = strats.getAllStrategie();
+        List<ElementStrategie> listElement = null;
+        for(int i = 0;i<listStrats.size();i++)
+        {
+            listElement = elementStrategie.getListElementStrategieWithIDStrat(listStrats.get(i).getId());
+
+            List<UnitItem> listUnit = new ArrayList<UnitItem>();
+            for(int j=0;j<listElement.size();j++)
+            {
+                ElementStrategie el = listElement.get(i);
+                Race_entities entities = raceEntities.getRaceEntitiesWithID(el.getId_Race_Entities());
+
+                UnitItem item = new UnitItem(el.getId(),el.getMinute(),el.getSecond(),el.isVibrate(),entities.getName());
+                listUnit.add(item);
+            }
+
+            listFinal.add(new StrategyItem());
+            listFinal.get(listFinal.size()-1).setListUnits(listUnit);
+        }
+        
+        return listFinal;
+    }
 
 }
