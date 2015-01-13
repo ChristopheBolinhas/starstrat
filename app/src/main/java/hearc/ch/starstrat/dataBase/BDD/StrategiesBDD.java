@@ -6,7 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.ColorDrawable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import hearc.ch.starstrat.dataBase.Use.MaBaseSQLite;
+import hearc.ch.starstrat.dataBase.models.Race_entities;
 import hearc.ch.starstrat.dataBase.models.Strategies;
 
 
@@ -100,6 +104,12 @@ public class StrategiesBDD
         return cursorToStrategies(c);
     }
 
+    public List<Strategies> getAllStrategie()
+    {
+        Cursor c = bdd.rawQuery("SELECT "+COL_ID+", "+ COL_ID_Race+", "+ COL_Name+", "+COL_Description+", "+COL_Game_Tried + ","+COL_Game_Won+" FROM "+TABLE_Strategies, null );
+        return cursorToListStrategies(c);
+    }
+
     private Strategies cursorToStrategies(Cursor c)
     {
         //si aucun élément n'a été retourné dans la requête, on renvoie null
@@ -124,5 +134,33 @@ public class StrategiesBDD
         //On retourne le livre
         return strat;
     }
+
+    private List<Strategies> cursorToListStrategies(Cursor c)
+    {
+        if (c.getCount() == 0)
+            return null;
+
+        ArrayList<Strategies> list = new ArrayList<Strategies>();
+
+
+        c.moveToFirst();
+        while(!c.isAfterLast())
+        {
+            Strategies strat = new Strategies();
+
+            strat.setId(c.getInt(NUM_COL_ID));
+            strat.setId_race(c.getInt(NUM_COL_ID_Race));
+            strat.setName(c.getString(NUM_COL_Name));
+            strat.setDescription(c.getString(NUM_COL_Description));
+            strat.setGames_tried(c.getString(NUM_COL_Game_Tried));
+            strat.setGames_won(c.getString(NUM_COL_Game_Won));
+
+            list.add(strat);
+            c.moveToNext();
+        }
+
+        return list;
+    }
+
 
 }
