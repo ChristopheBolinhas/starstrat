@@ -37,6 +37,11 @@ public class SpinnerUnitAdapter extends ArrayAdapter<String> {
         return unitIds[position];
     }
 
+    public String getSelectedUnitName(int position)
+    {
+        return mTitles[position];
+    }
+
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent)
     {

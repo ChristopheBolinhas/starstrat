@@ -1,17 +1,11 @@
 package hearc.ch.starstrat;
 
 
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.GridView;
-import android.widget.RadioGroup;
-import android.widget.TextView;
-
-import hearc.ch.starstrat.adapter.HomeButtonAdapter;
 
 
 /**
@@ -40,8 +34,8 @@ public class HomeFragment extends Fragment {
     {
         super.onActivityCreated(savedInstanceState);
 
-        GridView gridview = (GridView) getActivity().findViewById(R.id.gridview);
-        gridview.setAdapter(new HomeButtonAdapter(getView().getContext(),(MainActivity)getActivity()));
+        /*GridView gridview = (GridView) getActivity().findViewById(R.id.gridview);
+        gridview.setAdapter(new HomeButtonAdapter(getView().getContext(),(MainActivity)getActivity()));*/
 
     }
 

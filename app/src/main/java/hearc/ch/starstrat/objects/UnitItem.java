@@ -30,7 +30,6 @@ public class UnitItem {
 
     public String getNom()
     {
-        //TODO : Rajouter requete en fonction de valeur dans la bdd
         return this.name;
     }
 

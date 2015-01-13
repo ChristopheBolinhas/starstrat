@@ -20,13 +20,13 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Nom : "
+                android:text="Nom* : "
                 android:layout_weight="1"
                 />
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:id="@+id/editText"
+                android:id="@+id/editName"
                 android:layout_weight="3"
                 android:singleLine="true"
                 android:gravity="center"/>
@@ -39,7 +39,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Race : "
+                android:text="Race* : "
                 android:layout_weight="1"
                 />
             <Spinner
@@ -67,6 +67,12 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3"/>
         </LinearLayout>
+        <Button android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="Ajouter stratégie"
+            android:layout_gravity="center"
+            android:id="@+id/buttonValidStrat"
+            />
         <View
             android:layout_width="100dp"
             android:layout_gravity="center"

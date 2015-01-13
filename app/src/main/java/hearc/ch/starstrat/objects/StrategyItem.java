@@ -32,7 +32,9 @@ public class StrategyItem {
         this.description = description;
     }
 
-    public List<UnitItem> getListUnits() {
+    public List<UnitItem> getListUnits(boolean asc) {
+
+        sortList(asc);
         return listUnits;
     }
 
@@ -59,19 +61,31 @@ public class StrategyItem {
         }
     }
 
-    public void addItem(String nom, int id, int minutes, int secondes, boolean vibrate, UseBDD useBDD)
+    public void addItem(String nom, int id, int minutes, int secondes, boolean vibrate)
     {
         listUnits.add(new UnitItem(id,minutes,secondes,vibrate,nom));
-        sortList();
+
     }
 
-    private void sortList()
+    public void addItem(UnitItem item)
+    {
+        listUnits.add(item);
+
+
+    }
+
+    private void sortList(boolean asc)
     {
         if(listUnits != null)
         {
-            Collections.sort(listUnits,new UnitItemComparator());
+            if(asc)
+                Collections.sort(listUnits,new UnitItemComparator(asc));
+            else
+                Collections.sort(listUnits,new UnitItemComparator(asc));
         }
     }
+
+
 
 
     public void loadFromDB(UseBDD useBDD)

@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TableLayout;
@@ -46,6 +47,13 @@ public class StrategieMakerFragment extends Fragment {
         unitList = new ArrayList<UnitItem>();
         currentStrat = new StrategyItem();
     }
+    public static StrategieMakerFragment newInstance(StrategyItem strat)
+    {
+        StrategieMakerFragment frag = new StrategieMakerFragment();
+        frag.currentStrat = strat;
+        frag.setControls();
+        return frag;
+    }
 
 
     public void setUseBDD(UseBDD use)
@@ -59,7 +67,7 @@ public class StrategieMakerFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_strategie_maker, container, false);
     }
-    public void onActivityCreated (Bundle savedInstanceState) {
+        public void onActivityCreated (Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         final Spinner spinner = (Spinner) getActivity().findViewById(R.id.spinner_race);
@@ -94,7 +102,7 @@ public class StrategieMakerFragment extends Fragment {
                 }
                 else
                 {
-                    if(currentStrat.getRace() != selectedRaceId )//&& currentStrat.getListSize() > 0)
+                    if(currentStrat.getRace() != selectedRaceId && currentStrat.getListSize() > 0)
                     {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         builder.setMessage("Changer de race supprimera la configuration actuelle")
@@ -116,6 +124,10 @@ public class StrategieMakerFragment extends Fragment {
                         AlertDialog dialog = builder.create();
                         dialog.show();
                     }
+                    else
+                    {
+                        resetConfiguration();
+                    }
                 }
 
             }
@@ -136,13 +148,13 @@ public class StrategieMakerFragment extends Fragment {
                 Spinner spinnerUnits = (Spinner) getActivity().findViewById(R.id.spinner_unit_choice);
                 SpinnerUnitAdapter spinnerUnitAdapter = (SpinnerUnitAdapter)spinnerUnits.getAdapter();
                 int unitId = spinnerUnitAdapter.getSelectedUnitId(spinnerUnits.getSelectedItemPosition());
-
+                String nom = spinnerUnitAdapter.getSelectedUnitName(spinnerUnits.getSelectedItemPosition());
                 boolean checked = ((CheckBox)getActivity().findViewById(R.id.checkbox_vibrate)).isChecked();
 
                 int mMinutes = ((NumberPicker) getActivity().findViewById(R.id.picker_minutes)).getValue();
                 int mSecondes = ((NumberPicker) getActivity().findViewById(R.id.picker_secondes)).getValue();
 
-                addUnit(unitId,mMinutes,mSecondes, checked);
+                addUnit(unitId,mMinutes,mSecondes, checked, nom);
 
 
             }
@@ -160,6 +172,29 @@ public class StrategieMakerFragment extends Fragment {
         numberPickerSecondes.setWrapSelectorWheel(false);
 
 
+        Button buttonValidStrategy = (Button) getActivity().findViewById(R.id.buttonValidStrat);
+        buttonValidStrategy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                int nbUnits = currentStrat.getListSize();
+                String stratName = ((EditText) getActivity().findViewById(R.id.editName)).getText().toString();
+
+                if(selectedRaceId != -1 && nbUnits > 0 && stratName != "")
+                {
+                    useBDD.addStrat(currentStrat);
+                    Toast.makeText(getActivity(),"Stratégie ajoutée !",Toast.LENGTH_LONG).show();
+                    getFragmentManager().popBackStack();
+                }
+                else
+                {
+                    Toast.makeText(getActivity(),"Veuilez remplir tous les champs obligatoires (*)",Toast.LENGTH_LONG).show();
+                }
+
+
+            }
+        });
 
     }
 
@@ -169,15 +204,15 @@ public class StrategieMakerFragment extends Fragment {
         currentStrat.setRace(selectedRaceId);
         switch(selectedRaceId)
         {
-            case 2://Protoss
+            case 1://Protoss
                 list = useBDD.getAllUnitProtoss();
                 break;
-            case 3://Zerg
+            case 2://Zerg
                 list = useBDD.getAllUnitZerg();
                 break;
 
             default:
-            case 1://Terran
+            case 0://Terran
                 list = useBDD.getAllUnitTerran();
         }
 
@@ -205,13 +240,16 @@ public class StrategieMakerFragment extends Fragment {
 
 
 
-    private void addUnit(int unitId, int minutes, int secondes, boolean checked)
+    private void addUnit(int unitId, int minutes, int secondes, boolean checked, String nom)
     {
 
 
-        UnitItem unit = new UnitItem(unitId,minutes,secondes,checked,"lambda");
-        unitList.add(unit);
-        addUiUnit(unit);
+        UnitItem unit = new UnitItem(unitId,minutes,secondes,checked,nom);
+        currentStrat.addItem(unit);
+        remakeUnitList();
+
+
+        //addUiUnit(unit);
 
         //newRow.setLayout
        //newRow.s
@@ -220,6 +258,17 @@ public class StrategieMakerFragment extends Fragment {
         android:padding="5dp"
         android:textAlignment="center"*/
 
+    }
+
+    private void remakeUnitList()
+    {
+        TableLayout tableLayout = (TableLayout)getActivity().findViewById(R.id.table_units);
+        tableLayout.removeAllViews();
+
+        for(UnitItem item : currentStrat.getListUnits(false))
+        {
+            addUiUnit(item);
+        }
     }
 
     private void addUiUnit(final UnitItem unit)
@@ -283,6 +332,17 @@ public class StrategieMakerFragment extends Fragment {
     private void setControls()
     {
 
+        selectedRaceId = currentStrat.getRace();
+        Spinner spinner = (Spinner) getActivity().findViewById(R.id.spinner_race);
+        if(selectedRaceId != 0)
+            spinner.setSelection(selectedRaceId);
+
+        ((EditText ) getActivity().findViewById(R.id.editName)).setText(currentStrat.getName());
+
+
+        resetConfiguration();
+
+        remakeUnitList();
     }
 
 
