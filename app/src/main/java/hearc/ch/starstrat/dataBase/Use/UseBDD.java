@@ -3,6 +3,9 @@ package hearc.ch.starstrat.dataBase.Use;
 import android.content.Context;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +20,7 @@ import hearc.ch.starstrat.dataBase.Remplissage.InsertImages;
 import hearc.ch.starstrat.dataBase.Remplissage.InsertRace;
 import hearc.ch.starstrat.dataBase.Remplissage.InsertRaceEntities;
 import hearc.ch.starstrat.dataBase.Remplissage.InsertType;
+import hearc.ch.starstrat.dataBase.Test.DataBaseHelper;
 import hearc.ch.starstrat.dataBase.models.ElementStrategie;
 import hearc.ch.starstrat.dataBase.models.Image;
 import hearc.ch.starstrat.dataBase.models.Race;
@@ -72,6 +76,38 @@ public class UseBDD
         Race_entities re = raceEntities.getRaceEntitiesWithID(1);
         if(re==null)
             new InsertRaceEntities(raceEntities);
+
+
+        //TEST
+        /*DataBaseHelper myDbHelper = new DataBaseHelper(context);
+
+        try {
+
+            myDbHelper.createDataBase();
+
+        } catch (IOException ioe) {
+
+            throw new Error(ioe);
+
+        }
+
+        try {
+
+            myDbHelper.openDataBase();
+
+        }catch(SQLException sqle){
+
+            throw new Error(sqle);
+
+        }*/
+
+        /*try {
+            InputStream in = context.getAssets().open("testImage");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+
 
         //TODO Image
         /*Image im = image.getImageWithID(1);

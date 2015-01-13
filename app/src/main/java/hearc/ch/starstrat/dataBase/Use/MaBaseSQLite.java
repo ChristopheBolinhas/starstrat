@@ -54,6 +54,7 @@ public class MaBaseSQLite extends SQLiteOpenHelper {
     private static final String COL_ID_Strategies = "ID";
     private static final String COL_ID_Race_Strategies = "ID_Race";
     private static final String COL_Name_Strategies = "Name";
+    private static final String COL_Description_Strategies = "Name";
     private static final String COL_Game_Tried_Strategies = "Game_Tried";
     private static final String COL_Game_Won_Strategies = "Game_Won";
 
@@ -61,6 +62,7 @@ public class MaBaseSQLite extends SQLiteOpenHelper {
             + COL_ID_Strategies + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COL_ID_Race_Strategies + "INTEGER,"
             + COL_Name_Strategies + " TEXT,"
+            + COL_Description_Strategies + " TEXT,"
             + COL_Game_Tried_Strategies + " INTEGER,"
             + COL_Game_Won_Strategies + "INTEGER);";
 
