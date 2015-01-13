@@ -70,6 +70,38 @@ public class UseBDD
         if(re==null)
             new InsertRaceEntities(raceEntities);
 
+
+        //TEST
+        /*DataBaseHelper myDbHelper = new DataBaseHelper(context);
+
+        try {
+
+            myDbHelper.createDataBase();
+
+        } catch (IOException ioe) {
+
+            throw new Error(ioe);
+
+        }
+
+        try {
+
+            myDbHelper.openDataBase();
+
+        }catch(SQLException sqle){
+
+            throw new Error(sqle);
+
+        }*/
+
+        /*try {
+            InputStream in = context.getAssets().open("testImage");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+
+
         //TODO Image
         /*Image im = image.getImageWithID(1);
         //Toast.makeText(context, ""+im.getImage_Texte(), Toast.LENGTH_LONG).show();
@@ -137,12 +169,11 @@ public class UseBDD
         else if(objetStrategie.getRace()==2)
             strategies.setId_race(1);
 
-        strats.insertStrategies(strategies);
-        //strategies.getId()
-        //TODO a voir pour ameliorer la recuperation de l'id
-        strategies = strats.getStrategiesWithName(objetStrategie.getName());
 
-        int id = strategies.getId();
+        long l = strats.insertStrategies(strategies);
+
+
+        int id = (int)l;
 
         List<UnitItem> list = objetStrategie.getListUnits(false);
 
