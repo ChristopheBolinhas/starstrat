@@ -1,9 +1,11 @@
 package hearc.ch.starstrat;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.text.format.Time;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -16,6 +18,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+
+import hearc.ch.starstrat.objects.ImagesViewLaunch;
+import hearc.ch.starstrat.objects.StrategyItem;
+import hearc.ch.starstrat.objects.UnitItem;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -25,6 +34,12 @@ import android.widget.TextView;
  */
 public class LaunchGameFragment extends Fragment {
 
+    //Real
+    private LinkedList<ImagesViewLaunch> listImagesAnimation;
+    private StrategyItem myStrategy;
+    private float speedGame;
+
+    //Testing
     private ImageView[] tabImageAnimation;
     private LinearLayout[] tabLayoutImage;
     private int widthScreen, heightScreen, transX = 20, marginLeftLayout = 200, sizeImage;
@@ -73,13 +88,13 @@ public class LaunchGameFragment extends Fragment {
         public void run() {
             if(!isPause && nbAnimation > index) {
                 launch2(index);
+                if(listImagesAnimation.get(index).getIsVibrate())
+                {
+                    Vibrator vib;
+                    vib= (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+                    vib.vibrate(1000);
+                }
                 index++;
-                //TODO : SI L'IMAGE DOIT VIBRER
-                /*
-                Vibrator vib;
-                vib= (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-                vib.vibrate(1000);
-                 */
             }
         }
     };
@@ -104,18 +119,10 @@ public class LaunchGameFragment extends Fragment {
         }
     };
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment LaunchGameFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static LaunchGameFragment newInstance(String param1, String param2) {
+    public static LaunchGameFragment newInstance(StrategyItem strategy) {
         LaunchGameFragment fragment = new LaunchGameFragment();
-
+        fragment.myStrategy = strategy;
+        //fragment.speedGame = ((MainActivity)getActivity())
         return fragment;
     }
 
@@ -157,6 +164,8 @@ public class LaunchGameFragment extends Fragment {
 
         timeSinceLastAnimation = new Time();
 
+        listImagesAnimation = new LinkedList<ImagesViewLaunch>();
+
         //Position the 2 first images
         //Event that happened when the window is totally draw
         ViewTreeObserver vto = getView().getViewTreeObserver();
@@ -168,6 +177,40 @@ public class LaunchGameFragment extends Fragment {
 
                 if(isFirst) {
 
+                    int time = 10;
+
+                    //Foreach strategy item in strategylistitem
+                    for(UnitItem unit : myStrategy.getListUnits())
+                    {
+                        ArrayList<UnitItem> listUnite = new ArrayList<UnitItem>();
+                        if(unit.getSecondes() >= time-10)
+                        {
+                            //on regroupe les unites par tranche de 10 secondes
+                            listUnite.add(unit);
+                            buttonLaunchGame.setText("nn " + unit.getSecondes());
+                        }
+                        else
+                        {
+                            //On crée l'élément a afficher avec les bonnes unités
+                            ImagesViewLaunch imgGroup = new ImagesViewLaunch(listUnite,getActivity());
+                            imgGroup.constructImagesView(sizeHeight);
+                            listImagesAnimation.addLast(imgGroup);
+
+                            time += time;
+                        }
+
+                    }
+
+                    //On place toutes les images en dehors de l'écran en format petit
+                    for(ImagesViewLaunch im : listImagesAnimation)
+                    {
+                        layoutAnimation.addView(im.getLinearAnimation());
+                        im.getLinearAnimation().animate().scaleX(littleScale).setDuration(0).scaleY(littleScale).alpha(0.2f).withLayer();
+                    }
+
+                    nbAnimation = listImagesAnimation.size();
+
+                    /*
                     //Construction des vues avec les images
                     for (int i = 0; i < nbAnimation; i++) {
                         //TODO : TAILLE MAX = HAUTEUR
@@ -196,16 +239,23 @@ public class LaunchGameFragment extends Fragment {
                         tabLayoutImage[i] = first;
                         layoutAnimation.addView(tabLayoutImage[i]);
                         tabLayoutImage[i].animate().scaleX(littleScale).setDuration(0).scaleY(littleScale).alpha(0.2f).withLayer();
-                    }
 
+                    }
+                    */
                     //tabLayoutImage[0].animate().alpha(1).scaleX(bigScale).scaleY(bigScale).setDuration(0).withLayer();
                     //tabLayoutImage[1].animate().translationX(transX + marginLeftLayout).alpha(0.5f).scaleX(littleScale).scaleY(littleScale).setDuration(0).withLayer();
                     isFirst = false;
                 }
                 else {
-                    bigScale = sizeHeight/tabLayoutImage[0].getHeight();
+                    //On place les 2 premiers respectivement au centre et a gauche
+                    listImagesAnimation.get(0).getLinearAnimation().animate().alpha(1).translationX(marginLeftLayout + (widthScreen/2) - (listImagesAnimation.get(0).getLinearAnimation().getMeasuredWidth()/2)).scaleX(bigScale).scaleY(bigScale).setDuration(0).withLayer();
+                    listImagesAnimation.get(1).getLinearAnimation().animate().translationX(transX + marginLeftLayout).alpha(0.5f).scaleX(littleScale).scaleY(littleScale).setDuration(0).withLayer();
+
+                    //bigScale = sizeHeight/listImagesAnimation.getFirst().getLinearAnimation().getHeight();
+                    /*
                     tabLayoutImage[0].animate().alpha(1).translationX(marginLeftLayout + widthScreen / 2 - tabLayoutImage[0].getMeasuredWidth()/2).scaleX(bigScale).scaleY(bigScale).setDuration(0).withLayer();
                     tabLayoutImage[1].animate().translationX(transX + marginLeftLayout).alpha(0.5f).scaleX(littleScale).scaleY(littleScale).setDuration(0).withLayer();
+                    */
                     ViewTreeObserver obs = getView().getViewTreeObserver();
                     obs.removeOnGlobalLayoutListener(this);
                 }
@@ -225,6 +275,7 @@ public class LaunchGameFragment extends Fragment {
                     handlerStep.post(updateTime);
                     isFirst = false;
                     buttonLaunchGame.setText(textButtonPause);
+                    buttonLaunchGame.setText("n "+nbAnimation);
 
                     totalTimeAnimation = new Time();
                     timeAnimation = new Time();
@@ -289,12 +340,13 @@ public class LaunchGameFragment extends Fragment {
         });
 
         //Réception des temps
-        totalTime = 20000;
+        //timeBetween animation = 10 / vitesse du jeu
+        totalTime = 30000;
     }
 
     private void launch(int index)
     {
-        tabLayoutImage[index].animate().translationX(transX + marginLeftLayout).alpha(0.5f).scaleX(littleScale).scaleY(littleScale).setDuration(timeAnimate).withLayer();
+        listImagesAnimation.get(index).getLinearAnimation().animate().translationX(transX + marginLeftLayout).alpha(0.5f).scaleX(littleScale).scaleY(littleScale).setDuration(timeAnimate).withLayer();
 
         if(index < nbAnimation)
             hAnimation.postDelayed(launchFirst,timeBetweenAnimation);
@@ -306,11 +358,8 @@ public class LaunchGameFragment extends Fragment {
 
     private void launch2(int index)
     {
-        /*
-        if(index == 1)
-            tabLayoutImage[index].setLayoutParams(tabImageAnimation[index+1].getLayoutParams());
-        */
-        tabLayoutImage[index].animate().translationX(marginLeftLayout+widthScreen /2 - tabLayoutImage[index].getMeasuredWidth()/2).alpha(1).scaleX(bigScale).scaleY(bigScale).setDuration(timeAnimate).withLayer();
+        (listImagesAnimation.get(index).getLinearAnimation()).animate().translationX(marginLeftLayout+(widthScreen/2)-listImagesAnimation.get(index).getLinearAnimation().getMeasuredWidth()/2).alpha(1).scaleX(bigScale).scaleY(bigScale).setDuration(timeAnimate).withLayer();
+        //(listImagesAnimation.get(index).getLinearAnimation()).animate().translationX(marginLeftLayout+widthScreen /2 - listImagesAnimation.get(index).getLinearAnimation().getMeasuredWidth()/2).alpha(1).scaleX(bigScale).scaleY(bigScale).setDuration(timeAnimate).withLayer();
         hAnimation3.postDelayed(launchThird,timeBetweenAnimation);
         timeSinceLastAnimation.setToNow();
     }
@@ -321,17 +370,17 @@ public class LaunchGameFragment extends Fragment {
             whereFirstPassed++;
             //tabLayoutImage[index].setLayoutParams(tabImageAnimation[index+2].getLayoutParams());
         }
-        tabLayoutImage[index].animate().translationX(marginLeftLayout+widthScreen -tabLayoutImage[index].getMeasuredWidth()-transX).alpha(0.5f).scaleX(littleScale).scaleY(littleScale).setDuration(timeAnimate).withLayer();
+        listImagesAnimation.get(index).getLinearAnimation().animate().translationX(marginLeftLayout+widthScreen-transX-(listImagesAnimation.get(index).getLinearAnimation().getMeasuredWidth()/2)).alpha(0.5f).scaleX(littleScale).scaleY(littleScale).setDuration(timeAnimate).withLayer();
         hAnimation4.postDelayed(launchFourth,timeBetweenAnimation);
         timeSinceLastAnimation.setToNow();
     }
 
     private void launch4(final int index)
     {
-        tabLayoutImage[index].animate().translationX(marginLeftLayout + widthScreen).alpha(0.2f).setDuration(timeAnimate).withLayer().withEndAction(new Runnable() {
+        listImagesAnimation.get(index).getLinearAnimation().animate().translationX(marginLeftLayout + widthScreen).alpha(0.2f).setDuration(timeAnimate).withLayer().withEndAction(new Runnable() {
             @Override
             public void run() {
-                layoutAnimation.removeView(tabLayoutImage[index]);
+                layoutAnimation.removeView(listImagesAnimation.get(index).getLinearAnimation());
             }
         });
         timeSinceLastAnimation.setToNow();

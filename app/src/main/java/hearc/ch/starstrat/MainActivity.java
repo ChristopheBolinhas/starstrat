@@ -200,7 +200,12 @@ public class MainActivity extends ActionBarActivity {
                 fragment = SpeedChooseFragment.newInstance();
                 break;
             case 3:
-                fragment = new LaunchGameFragment();
+                StrategyItem strat = new StrategyItem();
+                for(int i = 0; i < 40; i+=2)
+                {
+                    strat.addItem("",0,0,i,true,null);
+                }
+                fragment = LaunchGameFragment.newInstance(strat);
                 break;
 			case 4:
 
