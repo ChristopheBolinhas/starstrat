@@ -16,6 +16,7 @@ import java.util.List;
 import hearc.ch.starstrat.adapter.StrategyListAdapter;
 import hearc.ch.starstrat.dataBase.Use.UseBDD;
 import hearc.ch.starstrat.model.StrategyListItem;
+import hearc.ch.starstrat.objects.StrategyItem;
 
 
 /**
@@ -92,8 +93,8 @@ public class StrategieFragment extends ListFragment {
         mItems = new ArrayList<StrategyListItem>();
         mItems.add(new StrategyListItem(R.drawable.ic_add,"Nouvelle stratégie", "Composer une stratégie", -1));
 
-        //for(bdd.)
-        mItems.add(new StrategyListItem(R.drawable.ic_zerg,"Strat 1", "Yolo strat",0));
+        for(StrategyItem item : bdd.getAllStrategie())
+            mItems.add(new StrategyListItem(R.drawable.ic_zerg,item));
 
 
         setListAdapter(new StrategyListAdapter(getActivity(),mItems));

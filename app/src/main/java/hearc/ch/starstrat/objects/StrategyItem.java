@@ -16,6 +16,14 @@ public class StrategyItem {
     //private List<StrategyListItem> listItems;
     private List<UnitItem> listUnits;
 
+    private int dbId = -1;
+
+
+    public void setDbId(int dbId) { this.dbId = dbId; }
+
+    public int getDbId(){ return this.dbId;}
+
+
     public String getName() {
         return name;
     }

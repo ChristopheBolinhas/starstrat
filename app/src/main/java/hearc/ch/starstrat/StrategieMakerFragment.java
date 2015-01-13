@@ -180,6 +180,9 @@ public class StrategieMakerFragment extends Fragment {
 
                 int nbUnits = currentStrat.getListSize();
                 String stratName = ((EditText) getActivity().findViewById(R.id.editName)).getText().toString();
+                currentStrat.setName(stratName);
+                String stratDescription = ((EditText)getActivity().findViewById(R.id.editDescription)).toString();
+                currentStrat.setDescription(stratDescription);
 
                 if(selectedRaceId != -1 && nbUnits > 0 && stratName != "")
                 {

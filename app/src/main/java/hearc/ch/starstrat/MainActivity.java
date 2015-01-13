@@ -209,7 +209,7 @@ public class MainActivity extends ActionBarActivity {
                 fragment = new HomeFragment();
                 break;
             case 1://StrategyList
-                fragment = StrategieFragment.newInstance("a","b"); //TODO ADAPT
+                fragment = StrategieFragment.newInstance(useBDD); //TODO ADAPT
                 break;
 			case 2: //Speed choice
                 fragment = SpeedChooseFragment.newInstance();

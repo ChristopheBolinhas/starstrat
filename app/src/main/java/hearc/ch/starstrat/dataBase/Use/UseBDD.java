@@ -138,7 +138,7 @@ public class UseBDD
             strategies.setId_race(1);
 
         strats.insertStrategies(strategies);
-
+        //strategies.getId()
         //TODO a voir pour ameliorer la recuperation de l'id
         strategies = strats.getStrategiesWithName(objetStrategie.getName());
 
