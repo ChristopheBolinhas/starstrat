@@ -1,6 +1,7 @@
 package hearc.ch.starstrat.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +17,12 @@ import hearc.ch.starstrat.R;
 public class SpinnerUnitAdapter extends ArrayAdapter<String> {
     private Context mContext;
     private String[] mTitles;
-    private Integer[] mIcons;
+    private Drawable[] mIcons;
     private Integer[] unitIds;
 
 
 
-    public SpinnerUnitAdapter(Context context, int textViewResId, String[] titles, Integer[] icons, Integer[] ids)
+    public SpinnerUnitAdapter(Context context, int textViewResId, String[] titles, Drawable[] icons, Integer[] ids)
     {
         super(context,textViewResId,titles);
         this.mContext = context;
@@ -59,7 +60,8 @@ public class SpinnerUnitAdapter extends ArrayAdapter<String> {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View spinnerRow = inflater.inflate(R.layout.spinner_units_style, parent, false);
         ImageView imgView = (ImageView)spinnerRow.findViewById(R.id.spinner_unit_image);
-        imgView.setImageResource(mIcons[position]);
+        //imgView.setImageResource(mIcons[position]);
+        imgView.setImageDrawable(mIcons[position]);
         TextView textView = (TextView)spinnerRow.findViewById(R.id.spinner_unit_text);
         textView.setText(mTitles[position]);
 
