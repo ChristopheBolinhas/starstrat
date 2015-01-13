@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hearc.ch.starstrat.adapter.StrategyListAdapter;
+import hearc.ch.starstrat.dataBase.Use.UseBDD;
 import hearc.ch.starstrat.model.StrategyListItem;
 
 
@@ -31,6 +32,8 @@ public class StrategieFragment extends ListFragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private UseBDD bdd;
 
     private List<StrategyListItem> mItems;
 
@@ -57,9 +60,17 @@ public class StrategieFragment extends ListFragment {
     public static StrategieFragment newInstance(String param1, String param2) {
         StrategieFragment fragment = new StrategieFragment();
         Bundle args = new Bundle();
+
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
+        return fragment;
+    }
+
+
+    public static StrategieFragment newInstance(UseBDD bdd) {
+        StrategieFragment fragment = new StrategieFragment();
+        fragment.bdd = bdd;
         return fragment;
     }
 
@@ -80,8 +91,10 @@ public class StrategieFragment extends ListFragment {
         }*/
         mItems = new ArrayList<StrategyListItem>();
         mItems.add(new StrategyListItem(R.drawable.ic_add,"Nouvelle stratégie", "Composer une stratégie", -1));
+
+        //for(bdd.)
         mItems.add(new StrategyListItem(R.drawable.ic_zerg,"Strat 1", "Yolo strat",0));
-        mItems.add(new StrategyListItem(R.drawable.ic_protoss,"Strat 2", "Yolo strat 2",1));
+
 
         setListAdapter(new StrategyListAdapter(getActivity(),mItems));
     }
@@ -101,8 +114,14 @@ public class StrategieFragment extends ListFragment {
         StrategyListItem item = mItems.get(position);
         if(position == 0)
         {
-            ((MainActivity)getActivity()).setConfigFragement(this,null);
+            ((MainActivity)getActivity()).setStrategieMakerFragement(null);
         }
+        else
+        {
+            //TODO LancerStrategie
+
+        }
+
 
         Toast.makeText(getActivity(),item.title,Toast.LENGTH_LONG).show();
 

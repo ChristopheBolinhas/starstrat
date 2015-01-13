@@ -179,71 +179,38 @@ public class LaunchGameFragment extends Fragment {
 
                     int time = 10;
 
-                    //Foreach strategy item in strategylistitem
-                    for(UnitItem unit : myStrategy.getListUnits())
+                    ArrayList<UnitItem> listUnite = new ArrayList<UnitItem>();
+
+                    //Foreach strategy item in strategylistitem (liste trié dans l'ordre du temps)
+                    for(UnitItem unit : myStrategy.getListUnits(true))
                     {
-                        ArrayList<UnitItem> listUnite = new ArrayList<UnitItem>();
-                        if(unit.getSecondes() >= time-10)
+                        if(unit.getSecondes() <= time)
                         {
                             //on regroupe les unites par tranche de 10 secondes
                             listUnite.add(unit);
-                            buttonLaunchGame.setText("nn " + unit.getSecondes());
                         }
                         else
                         {
                             //On crée l'élément a afficher avec les bonnes unités
                             ImagesViewLaunch imgGroup = new ImagesViewLaunch(listUnite,getActivity());
                             imgGroup.constructImagesView(sizeHeight);
-                            listImagesAnimation.addLast(imgGroup);
+                            listImagesAnimation.add(imgGroup);
 
-                            time += time;
+                            listUnite = new ArrayList<UnitItem>();
+
+                            time += 10;
                         }
-
                     }
 
                     //On place toutes les images en dehors de l'écran en format petit
                     for(ImagesViewLaunch im : listImagesAnimation)
                     {
                         layoutAnimation.addView(im.getLinearAnimation());
-                        im.getLinearAnimation().animate().scaleX(littleScale).setDuration(0).scaleY(littleScale).alpha(0.2f).withLayer();
+                        im.getLinearAnimation().animate().scaleX(littleScale).scaleY(littleScale).setDuration(0).alpha(0.2f).withLayer();
                     }
 
                     nbAnimation = listImagesAnimation.size();
 
-                    /*
-                    //Construction des vues avec les images
-                    for (int i = 0; i < nbAnimation; i++) {
-                        //TODO : TAILLE MAX = HAUTEUR
-                        LinearLayout first = new LinearLayout(getActivity());
-                        first.setOrientation(LinearLayout.VERTICAL);
-
-                        for (int j = 0; j < nbImage; j += 2) {
-                            //TODO : MATCH HORIZONTAL PARENT
-                            LinearLayout l = new LinearLayout(getActivity());
-                            l.setOrientation(LinearLayout.HORIZONTAL);
-
-
-                            ImageView tmp = new ImageView(getActivity());
-                            tmp.setImageResource(R.drawable.ic_home_favs);
-                            sizeImage = tmp.getMeasuredWidth();
-                            l.addView(tmp);
-
-                            tmp = new ImageView(getActivity());
-                            tmp.setImageResource(R.drawable.ic_home_favs);
-
-                            l.addView(tmp);
-
-                            first.addView(l);
-                        }
-
-                        tabLayoutImage[i] = first;
-                        layoutAnimation.addView(tabLayoutImage[i]);
-                        tabLayoutImage[i].animate().scaleX(littleScale).setDuration(0).scaleY(littleScale).alpha(0.2f).withLayer();
-
-                    }
-                    */
-                    //tabLayoutImage[0].animate().alpha(1).scaleX(bigScale).scaleY(bigScale).setDuration(0).withLayer();
-                    //tabLayoutImage[1].animate().translationX(transX + marginLeftLayout).alpha(0.5f).scaleX(littleScale).scaleY(littleScale).setDuration(0).withLayer();
                     isFirst = false;
                 }
                 else {

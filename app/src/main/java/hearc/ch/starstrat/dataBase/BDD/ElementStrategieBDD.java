@@ -6,9 +6,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.sax.ElementListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import hearc.ch.starstrat.dataBase.Use.MaBaseSQLite;
 import hearc.ch.starstrat.dataBase.models.ElementStrategie;
 import hearc.ch.starstrat.dataBase.models.Race;
+import hearc.ch.starstrat.dataBase.models.Race_entities;
 
 /**
  * Created by Kevin on 06/01/2015.
@@ -109,6 +113,12 @@ public class ElementStrategieBDD
         return cursorToElement(c);
     }
 
+    public List<ElementStrategie> getListElementStrategieWithIDStrat(int id)
+    {
+        Cursor c = bdd.query(TABLE_ElementStrategie, new String[] {COL_ID, COL_ID_Strat,COL_ID_RaceEntities,COL_Minute,COL_Seconde,COL_Vibrate}, COL_ID_Strat + " = " + id, null, null, null, null);
+        return cursorToListElementStrategie(c);
+    }
+
     private ElementStrategie cursorToElement(Cursor c)
     {
         //si aucun élément n'a été retourné dans la requête, on renvoie null
@@ -133,6 +143,33 @@ public class ElementStrategieBDD
 
         //On retourne la Race
         return element;
+    }
+
+    private List<ElementStrategie> cursorToListElementStrategie(Cursor c)
+    {
+        if (c.getCount() == 0)
+            return null;
+
+        ArrayList<ElementStrategie> list = new ArrayList<ElementStrategie>();
+
+
+        c.moveToFirst();
+        while(!c.isAfterLast())
+        {
+            ElementStrategie element = new ElementStrategie();
+
+            element.setId(c.getInt(NUM_COL_ID));
+            element.setId_Strat(c.getInt(NUM_COL_ID_Strat));
+            element.setId_Race_Entities(c.getInt(NUM_COL_ID_RaceEntities));
+            element.setMinute(c.getInt(NUM_COL_Minute));
+            element.setSecond(c.getInt(NUM_COL_Seconde));
+            element.setVibrate(c.getInt(NUM_COL_Vibrate));
+
+            list.add(element);
+            c.moveToNext();
+        }
+
+        return list;
     }
 
 }
