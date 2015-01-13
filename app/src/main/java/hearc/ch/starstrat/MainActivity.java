@@ -74,8 +74,8 @@ public class MainActivity extends ActionBarActivity {
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[1],navMenuIcons.getResourceId(1,0)));
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[2],navMenuIcons.getResourceId(2,0)));
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[3],navMenuIcons.getResourceId(3,0)));
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[4],navMenuIcons.getResourceId(4,0)));
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[5],navMenuIcons.getResourceId(5,0)));
+		//navDrawerItems.add(new NavDrawerItem(navMenuTitles[4],navMenuIcons.getResourceId(4,0)));
+        //navDrawerItems.add(new NavDrawerItem(navMenuTitles[5],navMenuIcons.getResourceId(5,0)));
         navMenuIcons.recycle();
 
         mDrawerList.setOnItemClickListener(new DrawerMenuClickListener() );
@@ -157,14 +157,25 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    public void setConfigFragement(Fragment fragmentOrigin, StrategyItem strat)
+    public void setStrategieMakerFragement(StrategyItem strat)
     {
         if(strat == null) {
             final Fragment fragment = new StrategieMakerFragment();
             ((StrategieMakerFragment)fragment).setUseBDD(useBDD);
 
+            final FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.frame_container, fragment);
+
+            transaction.addToBackStack(null);
+
+            transaction.commit();
 
 
+        }
+        else
+        {
+            final Fragment fragment = StrategieMakerFragment.newInstance(strat);
             final FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.frame_container, fragment);
@@ -174,14 +185,18 @@ public class MainActivity extends ActionBarActivity {
             transaction.commit();
         }
 
-// Replace whatever is in the fragment_container view with this fragment,
-// and add the transaction to the back stack so the user can navigate back
-
-
     }
     public void getUnitFromId(int unitId){
         //useBDD.g
     }
+
+    /*public void displayViewMaker(StrategyItem strat)
+    {
+        Fragment fragment = null;
+        fragment = StrategieMakerFragment.newInstance(strat);
+        ((StrategieMakerFragment)fragment).setUseBDD(useBDD);
+        setFragment(fragment, 3);
+    }*/
 
     /**
      * Diplaying fragment view for selected nav drawer list item
@@ -190,30 +205,33 @@ public class MainActivity extends ActionBarActivity {
         // update the main content by replacing fragments
         Fragment fragment = null;
         switch (position) {
-            case 0:
+            case 0: //Accueil
                 fragment = new HomeFragment();
                 break;
-            case 1:
-                fragment = new ExempleFragment();
+            case 1://StrategyList
+                fragment = StrategieFragment.newInstance("a","b"); //TODO ADAPT
                 break;
-            case 2:
+			case 2: //Speed choice
                 fragment = SpeedChooseFragment.newInstance();
-                break;
-            case 3:
-                fragment = new LaunchGameFragment();
-                break;
-			case 4:
 
+                break;
+            case 3://About
+
+                break;
+            case 4://Hidden - LauchGameFragment
+                //TODO LaunchGameFragment
+                break;
+            case 5://Hidden - StrategyMaker Fragment
                 fragment = new StrategieMakerFragment();
                 ((StrategieMakerFragment)fragment).setUseBDD(useBDD);
-                break;
-            case 5:
-                fragment = StrategieFragment.newInstance("a","b");
-
             default:
                 break;
         }
+        setFragment(fragment, position);
 
+    }
+    private void setFragment(Fragment fragment, int position)
+    {
         if (fragment != null) {
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
@@ -229,6 +247,7 @@ public class MainActivity extends ActionBarActivity {
             Log.e("MainActivity", "Error in creating fragment");
         }
     }
+
 
     /* *
 	 * Called when invalidateOptionsMenu() is triggered

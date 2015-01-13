@@ -1,7 +1,6 @@
 package hearc.ch.starstrat.dataBase.Use;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -12,12 +11,10 @@ import hearc.ch.starstrat.dataBase.BDD.RaceBDD;
 import hearc.ch.starstrat.dataBase.BDD.Race_entitiesBDD;
 import hearc.ch.starstrat.dataBase.BDD.StrategiesBDD;
 import hearc.ch.starstrat.dataBase.BDD.TypeBDD;
-import hearc.ch.starstrat.dataBase.Remplissage.InsertImages;
 import hearc.ch.starstrat.dataBase.Remplissage.InsertRace;
 import hearc.ch.starstrat.dataBase.Remplissage.InsertRaceEntities;
 import hearc.ch.starstrat.dataBase.Remplissage.InsertType;
 import hearc.ch.starstrat.dataBase.models.ElementStrategie;
-import hearc.ch.starstrat.dataBase.models.Image;
 import hearc.ch.starstrat.dataBase.models.Race;
 import hearc.ch.starstrat.dataBase.models.Race_entities;
 import hearc.ch.starstrat.dataBase.models.Strategies;
@@ -146,7 +143,7 @@ public class UseBDD
 
         int id = strategies.getId();
 
-        List<UnitItem> list = objetStrategie.getListUnits();
+        List<UnitItem> list = objetStrategie.getListUnits(false);
 
         for(int i=0;i<list.size();i++)
         {
