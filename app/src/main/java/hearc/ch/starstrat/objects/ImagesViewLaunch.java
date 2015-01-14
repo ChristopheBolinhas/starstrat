@@ -18,11 +18,13 @@ public class ImagesViewLaunch {
     List<UnitItem> myListOfUnit;
     Activity myActivity;
     float littleScale, bigScale, sizeImage;
-    int nbImagePerLine = 2;
+    int nbImagePerLine;
     boolean isVibrate;
     LinearLayout linearAnimation;
 
     public boolean getIsVibrate(){return isVibrate;}
+
+    public float getSizeImage(){return sizeImage;}
 
     public float getLittleScale()
     {
@@ -32,6 +34,14 @@ public class ImagesViewLaunch {
     public float getBigScale()
     {
         return bigScale;
+    }
+
+    public void setLittleScale(float scale){
+        littleScale = scale;
+    }
+
+    public void setBigScale(float scale){
+        bigScale = scale;
     }
 
     public LinearLayout getLinearAnimation()
@@ -54,22 +64,23 @@ public class ImagesViewLaunch {
         //Construction des vues avec les images
         linearAnimation.setOrientation(LinearLayout.VERTICAL);
 
-        //NBRE DIMAGE PR CHAQUE ANIMATION
-        int nbImage = 6;
-        //?????????
-        nbImagePerLine = 2;
+        //Number of image per line
+        if(myListOfUnit.size() < 6)
+            nbImagePerLine = 1;
+        else if(myListOfUnit.size() < 12)
+            nbImagePerLine = 2;
+        else
+            nbImagePerLine = 3;
 
-        //foreach unit
-        //if vibrate then isvibrate = true
-
-        for (int j = 0; j < nbImage; j += 2) {
-
+        //foreach unit, get the image
+        for(UnitItem unit : myListOfUnit)
+        {
             LinearLayout l = new LinearLayout(myActivity);
             l.setOrientation(LinearLayout.HORIZONTAL);
 
             for(int i = 0; i < nbImagePerLine; i++)
             {
-                //Création des images horizontales
+                //Creation of the horizontal image
                 ImageView tmp = new ImageView(myActivity);
                 //Image de myListOfUnit.get(j+i);
                 tmp.setImageResource(R.drawable.ic_home_favs);
@@ -77,12 +88,13 @@ public class ImagesViewLaunch {
                 l.addView(tmp);
             }
 
-
-            //Mettre les images horizontales a la suite verticalement
+            //Put the horizontal image in vertical layout
             linearAnimation.addView(l);
-        }
 
-        //Pas sur du bon endroit
-        //littleScale = (height/2)/linearAnimation.getMeasuredHeight();
+            //if vibrate then isvibrate = true
+            if(unit.getVibrate()) {
+                isVibrate = true;
+            }
+        }
     }
 }
