@@ -13,12 +13,418 @@ public class InsertRaceEntities
     public InsertRaceEntities(Race_entitiesBDD race)
     {
         unit(race);
-        // batiment(race);
+        batiment(race);
         //upgrade(race);
 
         //terran(race);
         //zerg(race);
         //protoss(race);
+    }
+
+    private void batiment(Race_entitiesBDD race)
+    {
+        String path = "images/build/";
+
+        //////////////////////TERRAN ///////////////////////
+        //Command Center
+        Race_entities cc = new Race_entities();
+        cc.setId_races(3);
+        cc.setName("Command Center");
+        cc.setId_type(1);
+        cc.setTime_creation(40);
+        cc.setPathImage(path+"1.jpg");
+        race.insertRaceEntities(cc);
+
+        //Refinery
+        Race_entities refinery = new Race_entities();
+        refinery.setId_races(3);
+        refinery.setName("Refinery");
+        refinery.setId_type(1);
+        refinery.setTime_creation(30);
+        refinery.setPathImage(path+"2.jpg");
+        race.insertRaceEntities(refinery);
+
+        //Supply Depot
+        Race_entities depot = new Race_entities();
+        depot.setId_races(3);
+        depot.setName("Supply Depot");
+        depot.setId_type(1);
+        depot.setTime_creation(30);
+        depot.setPathImage(path+"3.jpg");
+        race.insertRaceEntities(depot);
+
+        //Barracks
+        Race_entities barracks = new Race_entities();
+        barracks.setId_races(3);
+        barracks.setName("Barracks");
+        barracks.setId_type(1);
+        barracks.setTime_creation(65);
+        barracks.setPathImage(path+"4.jpg");
+        race.insertRaceEntities(barracks);
+
+        //Engineering Bay
+        Race_entities eb = new Race_entities();
+        eb.setId_races(3);
+        eb.setName("Engineering Bay");
+        eb.setId_type(1);
+        eb.setTime_creation(35);
+        eb.setPathImage(path+"5.jpg");
+        race.insertRaceEntities(eb);
+
+        //Bunker
+        Race_entities bunker = new Race_entities();
+        bunker.setId_races(3);
+        bunker.setName("Bunker");
+        bunker.setId_type(1);
+        bunker.setTime_creation(40);
+        bunker.setPathImage(path+"6.jpg");
+        race.insertRaceEntities(bunker);
+
+        //Missile Turret
+        Race_entities turret = new Race_entities();
+        turret.setId_races(3);
+        turret.setName("Missile Turret");
+        turret.setId_type(1);
+        turret.setTime_creation(25);
+        turret.setPathImage(path+"7.jpg");
+        race.insertRaceEntities(turret);
+
+        //Sensor Tower
+        Race_entities tower = new Race_entities();
+        tower.setId_races(3);
+        tower.setName("Sensor Tower");
+        tower.setId_type(1);
+        tower.setTime_creation(25);
+        tower.setPathImage(path+"8.jpg");
+        race.insertRaceEntities(tower);
+
+        //Ghost Academy
+        Race_entities ghostAcademy = new Race_entities();
+        ghostAcademy.setId_races(3);
+        ghostAcademy.setName("Ghost Academy");
+        ghostAcademy.setId_type(1);
+        ghostAcademy.setTime_creation(40);
+        ghostAcademy.setPathImage(path+"9.jpg");
+        race.insertRaceEntities(ghostAcademy);
+
+        //Factory
+        Race_entities factory = new Race_entities();
+        factory.setId_races(3);
+        factory.setName("Factory");
+        factory.setId_type(1);
+        factory.setTime_creation(60);
+        factory.setPathImage(path+"10.jpg");
+        race.insertRaceEntities(factory);
+
+        //Armory
+        Race_entities armory = new Race_entities();
+        armory.setId_races(3);
+        armory.setName("Armory");
+        armory.setId_type(1);
+        armory.setTime_creation(65);
+        armory.setPathImage(path+"11.jpg");
+        race.insertRaceEntities(armory);
+
+        //Starport
+        Race_entities starport = new Race_entities();
+        starport.setId_races(3);
+        starport.setName("Starport");
+        starport.setId_type(1);
+        starport.setTime_creation(50);
+        starport.setPathImage(path+"12.jpg");
+        race.insertRaceEntities(starport);
+
+        //Fusion Core
+        Race_entities fusionCore = new Race_entities();
+        fusionCore.setId_races(3);
+        fusionCore.setName("Fusion Core");
+        fusionCore.setId_type(1);
+        fusionCore.setTime_creation(65);
+        fusionCore.setPathImage(path+"13.jpg");
+        race.insertRaceEntities(fusionCore);
+
+
+        //////////////////////ZERG ///////////////////////
+        //Hatchery
+        Race_entities hatch = new Race_entities();
+        hatch.setId_races(1);
+        hatch.setName("Hatchery");
+        hatch.setId_type(1);
+        hatch.setTime_creation(100);
+        hatch.setPathImage(path+"14.jpg");
+        race.insertRaceEntities(hatch);
+
+        //Extractor
+        Race_entities extractor = new Race_entities();
+        extractor.setId_races(1);
+        extractor.setName("Extractor");
+        extractor.setId_type(1);
+        extractor.setTime_creation(30);
+        extractor.setPathImage(path+"15.jpg");
+        race.insertRaceEntities(extractor);
+
+        //Spawning Pool
+        Race_entities pool = new Race_entities();
+        pool.setId_races(1);
+        pool.setName("Spawning Pool");
+        pool.setId_type(1);
+        pool.setTime_creation(65);
+        pool.setPathImage(path+"16.jpg");
+        race.insertRaceEntities(pool);
+
+        //Evolution Chamber
+        Race_entities evolveChamber = new Race_entities();
+        evolveChamber.setId_races(1);
+        evolveChamber.setName("Evolution Chamber");
+        evolveChamber.setId_type(1);
+        evolveChamber.setTime_creation(35);
+        evolveChamber.setPathImage(path+"17.jpg");
+        race.insertRaceEntities(evolveChamber);
+
+        //Spine Crawler
+        Race_entities spineCrawler = new Race_entities();
+        spineCrawler.setId_races(1);
+        spineCrawler.setName("Spine Crawler");
+        spineCrawler.setId_type(1);
+        spineCrawler.setTime_creation(50);
+        spineCrawler.setPathImage(path+"18.jpg");
+        race.insertRaceEntities(spineCrawler);
+
+        //Spore Crawler
+        Race_entities sporeCrawler = new Race_entities();
+        sporeCrawler.setId_races(1);
+        sporeCrawler.setName("Spore Crawler");
+        sporeCrawler.setId_type(1);
+        sporeCrawler.setTime_creation(30);
+        sporeCrawler.setPathImage(path+"19.jpg");
+        race.insertRaceEntities(sporeCrawler);
+
+        //Roach Warren
+        Race_entities roachWarren = new Race_entities();
+        roachWarren.setId_races(1);
+        roachWarren.setName("Roach Warren");
+        roachWarren.setId_type(1);
+        roachWarren.setTime_creation(55);
+        roachWarren.setPathImage(path+"20.jpg");
+        race.insertRaceEntities(roachWarren);
+
+        //Banneling Nest
+        Race_entities bannelingNest = new Race_entities();
+        bannelingNest.setId_races(1);
+        bannelingNest.setName("Banneling Nest");
+        bannelingNest.setId_type(1);
+        bannelingNest.setTime_creation(60);
+        bannelingNest.setPathImage(path+"21.jpg");
+        race.insertRaceEntities(bannelingNest);
+
+        //Lair
+        Race_entities lair = new Race_entities();
+        lair.setId_races(1);
+        lair.setName("Lair");
+        lair.setId_type(1);
+        lair.setTime_creation(80);
+        lair.setPathImage(path+"22.jpg");
+        race.insertRaceEntities(lair);
+
+        //Hydralisk Den
+        Race_entities hydraDen = new Race_entities();
+        hydraDen.setId_races(1);
+        hydraDen.setName("Hydralisk Den");
+        hydraDen.setId_type(1);
+        hydraDen.setTime_creation(40);
+        hydraDen.setPathImage(path+"23.jpg");
+        race.insertRaceEntities(hydraDen);
+
+        //Infestation Pit
+        Race_entities infestPit = new Race_entities();
+        infestPit.setId_races(1);
+        infestPit.setName("Infestation Pit");
+        infestPit.setId_type(1);
+        infestPit.setTime_creation(50);
+        infestPit.setPathImage(path+"24.jpg");
+        race.insertRaceEntities(infestPit);
+
+        //Hive
+        Race_entities hive = new Race_entities();
+        hive.setId_races(1);
+        hive.setName("Hive");
+        hive.setId_type(1);
+        hive.setTime_creation(100);
+        hive.setPathImage(path+"25.jpg");
+        race.insertRaceEntities(hive);
+
+        //Spire
+        Race_entities spire = new Race_entities();
+        spire.setId_races(1);
+        spire.setName("Spire");
+        spire.setId_type(1);
+        spire.setTime_creation(100);
+        spire.setPathImage(path+"26.jpg");
+        race.insertRaceEntities(spire);
+
+        //Greater Spire
+        Race_entities greaterSpire = new Race_entities();
+        greaterSpire.setId_races(1);
+        greaterSpire.setName("Greater Spire");
+        greaterSpire.setId_type(1);
+        greaterSpire.setTime_creation(100);
+        greaterSpire.setPathImage(path+"27.jpg");
+        race.insertRaceEntities(greaterSpire);
+
+        //Nydus Network
+        Race_entities nydusNetwork = new Race_entities();
+        nydusNetwork.setId_races(1);
+        nydusNetwork.setName("Nydus Network");
+        nydusNetwork.setId_type(1);
+        nydusNetwork.setTime_creation(20);
+        nydusNetwork.setPathImage(path+"28.jpg");
+        race.insertRaceEntities(nydusNetwork);
+
+        //Nydus Worm
+        Race_entities nydusWorm = new Race_entities();
+        nydusWorm.setId_races(1);
+        nydusWorm.setName("Nydus Worm");
+        nydusWorm.setId_type(1);
+        nydusWorm.setTime_creation(20);
+        nydusWorm.setPathImage(path+"29.jpg");
+        race.insertRaceEntities(nydusWorm);
+
+        //////////////////////PROTOSS ///////////////////////
+        //Pylon
+        Race_entities pylon = new Race_entities();
+        pylon.setId_races(2);
+        pylon.setName("Pylon");
+        pylon.setId_type(1);
+        pylon.setTime_creation(25);
+        pylon.setPathImage(path+"30.jpg");
+        race.insertRaceEntities(pylon);
+
+        //Assimilator
+        Race_entities assimilator = new Race_entities();
+        assimilator.setId_races(2);
+        assimilator.setName("Assimilator");
+        assimilator.setId_type(1);
+        assimilator.setTime_creation(30);
+        assimilator.setPathImage(path+"31.jpg");
+        race.insertRaceEntities(assimilator);
+
+        //Nexus
+        Race_entities nexus = new Race_entities();
+        nexus.setId_races(2);
+        nexus.setName("Nexus");
+        nexus.setId_type(1);
+        nexus.setTime_creation(100);
+        nexus.setPathImage(path+"32.jpg");
+        race.insertRaceEntities(nexus);
+
+        //Gateway
+        Race_entities gateway = new Race_entities();
+        gateway.setId_races(2);
+        gateway.setName("Gateway");
+        gateway.setId_type(1);
+        gateway.setTime_creation(65);
+        gateway.setPathImage(path+"33.jpg");
+        race.insertRaceEntities(gateway);
+
+        //Warpgate
+        Race_entities warpgate = new Race_entities();
+        warpgate.setId_races(2);
+        warpgate.setName("Warpgate");
+        warpgate.setId_type(1);
+        warpgate.setTime_creation(10);
+        warpgate.setPathImage(path+"34.jpg");
+        race.insertRaceEntities(warpgate);
+
+        //Forge
+        Race_entities forge = new Race_entities();
+        forge.setId_races(2);
+        forge.setName("Forge");
+        forge.setId_type(1);
+        forge.setTime_creation(35);
+        forge.setPathImage(path+"35.jpg");
+        race.insertRaceEntities(forge);
+
+        //Photon Cannon
+        Race_entities photonCanon = new Race_entities();
+        photonCanon.setId_races(2);
+        photonCanon.setName("Photon Cannon");
+        photonCanon.setId_type(1);
+        photonCanon.setTime_creation(40);
+        photonCanon.setPathImage(path+"36.jpg");
+        race.insertRaceEntities(photonCanon);
+
+        //Cybernetics Core
+        Race_entities cyberneticsCore = new Race_entities();
+        cyberneticsCore.setId_races(2);
+        cyberneticsCore.setName("Cybernetics Core");
+        cyberneticsCore.setId_type(1);
+        cyberneticsCore.setTime_creation(50);
+        cyberneticsCore.setPathImage(path+"37.jpg");
+        race.insertRaceEntities(cyberneticsCore);
+
+        //Twilight Council
+        Race_entities twilight = new Race_entities();
+        twilight.setId_races(2);
+        twilight.setName("Twilight Council");
+        twilight.setId_type(1);
+        twilight.setTime_creation(50);
+        twilight.setPathImage(path+"38.jpg");
+        race.insertRaceEntities(twilight);
+
+        //Stargate
+        Race_entities stargate = new Race_entities();
+        stargate.setId_races(2);
+        stargate.setName("Stargate");
+        stargate.setId_type(1);
+        stargate.setTime_creation(60);
+        stargate.setPathImage(path+"39.jpg");
+        race.insertRaceEntities(stargate);
+
+        //Robotics Facility
+        Race_entities robot = new Race_entities();
+        robot.setId_races(2);
+        robot.setName("Robotics Facility");
+        robot.setId_type(1);
+        robot.setTime_creation(65);
+        robot.setPathImage(path+"40.jpg");
+        race.insertRaceEntities(robot);
+
+        //Templar Archives
+        Race_entities archive = new Race_entities();
+        archive.setId_races(2);
+        archive.setName("Templar Archives");
+        archive.setId_type(1);
+        archive.setTime_creation(50);
+        archive.setPathImage(path+"41.jpg");
+        race.insertRaceEntities(archive);
+
+        //Fleet Beacon
+        Race_entities baliseFlotte = new Race_entities();
+        baliseFlotte.setId_races(2);
+        baliseFlotte.setName("Fleet Beacon");
+        baliseFlotte.setId_type(1);
+        baliseFlotte.setTime_creation(60);
+        baliseFlotte.setPathImage(path+"42.jpg");
+        race.insertRaceEntities(baliseFlotte);
+
+        //Robotics Bay
+        Race_entities roboticBay = new Race_entities();
+        roboticBay.setId_races(2);
+        roboticBay.setName("Robotics Bay");
+        roboticBay.setId_type(1);
+        roboticBay.setTime_creation(65);
+        roboticBay.setPathImage(path+"43.jpg");
+        race.insertRaceEntities(roboticBay);
+
+        //Dark Shrine
+        Race_entities darkShrine = new Race_entities();
+        darkShrine.setId_races(2);
+        darkShrine.setName("Dark Shrine");
+        darkShrine.setId_type(1);
+        darkShrine.setTime_creation(100);
+        darkShrine.setPathImage(path+"44.jpg");
+        race.insertRaceEntities(darkShrine);
+
     }
 
     private void unit(Race_entitiesBDD race)
@@ -86,7 +492,7 @@ public class InsertRaceEntities
         tank.setName("Tank");
         tank.setId_type(2);
         tank.setTime_creation(45);
-        tank.setPathImage(path+"6.jpg");
+        tank.setPathImage(path+"7.jpg");
         race.insertRaceEntities(tank);
 
         //Thor

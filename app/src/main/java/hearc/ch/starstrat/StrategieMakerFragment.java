@@ -231,11 +231,7 @@ public class StrategieMakerFragment extends Fragment {
         for(int i=0;i<list.size();i++)
         {
             unitTab[i] = list.get(i).getName();
-            try {
-                iconTab[i] =  Drawable.createFromStream(useBDD.getContext().getAssets().open(list.get(i).getPathImage()), null);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            iconTab[i] =  useBDD.getDrawable(list.get(i));
             idTab[i] = list.get(i).getId();
         }
 

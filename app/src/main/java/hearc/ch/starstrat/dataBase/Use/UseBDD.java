@@ -1,7 +1,9 @@
 package hearc.ch.starstrat.dataBase.Use;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,6 +98,17 @@ public class UseBDD
         elementStrategie.close();
     }
 
+    public Drawable getDrawable(Race_entities r)
+    {
+        try
+        {
+            return Drawable.createFromStream(context.getAssets().open(r.getPathImage()), null);
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public List<Race_entities> getAllUnitTerran()
     {
