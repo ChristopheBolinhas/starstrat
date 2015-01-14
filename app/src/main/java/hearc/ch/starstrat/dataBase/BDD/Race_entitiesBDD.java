@@ -37,6 +37,9 @@ public class Race_entitiesBDD
     private static final String COL_Time_Creation = "Time_Creation";
     private static final int NUM_COL_Time_Creation = 4;
 
+    private static final String COL_Path_Image = "Path_Image";
+    private static final int NUM_COL_Path_Image = 5;
+
     private SQLiteDatabase bdd;
 
     private MaBaseSQLite maBaseSQLite;
@@ -74,6 +77,7 @@ public class Race_entitiesBDD
         values.put(COL_ID_Type, race.getId_type());
         values.put(COL_Name, race.getName());
         values.put(COL_Time_Creation, race.getTime_creation());
+        values.put(COL_Path_Image, race.getPathImage());
 
         //on insère l'objet dans la BDD via le ContentValues
         return bdd.insert(TABLE_Race_Entities, null, values);
@@ -89,6 +93,7 @@ public class Race_entitiesBDD
         values.put(COL_ID_Type, race.getId_type());
         values.put(COL_Name, race.getName());
         values.put(COL_Time_Creation, race.getTime_creation());
+        values.put(COL_Path_Image,race.getPathImage());
 
         return bdd.update(TABLE_Race_Entities, values, COL_ID + " = " +id, null);
     }
@@ -102,21 +107,21 @@ public class Race_entitiesBDD
     public Race_entities getRaceEntitiesWithID(int id)
     {
         //Récupère dans un Cursor les valeur correspondant à une RaceEntities contenu dans la BDD (ici on sélectionne la RaceEntities grâce à son titre)
-        Cursor c = bdd.query(TABLE_Race_Entities, new String[] {COL_ID, COL_ID_Race, COL_ID_Type,COL_Name,COL_Time_Creation}, COL_ID + "=" + id, null, null, null, null);
+        Cursor c = bdd.query(TABLE_Race_Entities, new String[] {COL_ID, COL_ID_Race, COL_ID_Type,COL_Name,COL_Time_Creation,COL_Path_Image}, COL_ID + "=" + id, null, null, null, null);
         return cursorToRaceEntities(c);
     }
 
     public Race_entities getRaceEntitiesWithName(String name)
     {
         //Récupère dans un Cursor les valeur correspondant à une RaceEntities contenu dans la BDD (ici on sélectionne la RaceEntities grâce à son titre)
-        Cursor c = bdd.query(TABLE_Race_Entities, new String[] {COL_ID, COL_ID_Race, COL_ID_Type,COL_Name,COL_Time_Creation}, COL_Name + "=" + name, null, null, null, null);
+        Cursor c = bdd.query(TABLE_Race_Entities, new String[] {COL_ID, COL_ID_Race, COL_ID_Type,COL_Name,COL_Time_Creation,COL_Path_Image}, COL_Name + " LIKE \"" + name +"\"", null, null, null, null);
         return cursorToRaceEntities(c);
     }
 
     public List<Race_entities> getRaceEntitiesByRace(int id)
     {
         //Cursor c = bdd.query(TABLE_Race_Entities, new String[] {COL_ID, COL_ID_Race, COL_ID_Type,COL_Name,COL_Time_Creation}, COL_ID_Race + "=" + id+"\"" , null, null, null, null);
-        Cursor c = bdd.rawQuery("SELECT "+COL_ID+", "+ COL_ID_Race+", "+ COL_ID_Type+", "+COL_Name+", "+COL_Time_Creation + " FROM "+TABLE_Race_Entities+" WHERE "+ COL_ID_Race + " = " + id , null );
+        Cursor c = bdd.rawQuery("SELECT "+COL_ID+", "+ COL_ID_Race+", "+ COL_ID_Type+", "+COL_Name+", "+COL_Time_Creation + ", "+ COL_Path_Image +" FROM "+TABLE_Race_Entities+" WHERE "+ COL_ID_Race + " = " + id , null );
         return cursorToListRaceEntities(c);
     }
 
@@ -138,6 +143,7 @@ public class Race_entitiesBDD
         race.setId_type(c.getInt(NUM_COL_ID_Type));
         race.setName(c.getString(NUM_COL_Name));
         race.setTime_creation(c.getInt(NUM_COL_Time_Creation));
+        race.setPathImage(c.getString(NUM_COL_Path_Image));
 
         //On ferme le cursor
         c.close();
@@ -164,6 +170,7 @@ public class Race_entitiesBDD
             race.setId_type(c.getInt(NUM_COL_ID_Type));
             race.setName(c.getString(NUM_COL_Name));
             race.setTime_creation(c.getInt(NUM_COL_Time_Creation));
+            race.setPathImage(c.getString(NUM_COL_Path_Image));
 
             list.add(race);
             c.moveToNext();

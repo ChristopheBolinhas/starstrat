@@ -49,6 +49,15 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
+    public UseBDD getDBInstance()
+    {
+        if(useBDD == null)
+            useBDD = new UseBDD(this);
+        return useBDD;
+    }
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -209,7 +218,7 @@ public class MainActivity extends ActionBarActivity {
                 fragment = new HomeFragment();
                 break;
             case 1://StrategyList
-                fragment = StrategieFragment.newInstance("a","b"); //TODO ADAPT
+                fragment = StrategieFragment.newInstance(useBDD); //TODO ADAPT
                 break;
 			case 2: //Speed choice
                 fragment = SpeedChooseFragment.newInstance();

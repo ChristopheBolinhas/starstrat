@@ -4,6 +4,7 @@ package hearc.ch.starstrat;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -180,6 +182,9 @@ public class StrategieMakerFragment extends Fragment {
 
                 int nbUnits = currentStrat.getListSize();
                 String stratName = ((EditText) getActivity().findViewById(R.id.editName)).getText().toString();
+                currentStrat.setName(stratName);
+                String stratDescription = ((EditText)getActivity().findViewById(R.id.editDescription)).getText().toString();
+                currentStrat.setDescription(stratDescription);
 
                 if(selectedRaceId != -1 && nbUnits > 0 && stratName != "")
                 {
@@ -221,12 +226,16 @@ public class StrategieMakerFragment extends Fragment {
 
 
         String[] unitTab = new String[list.size()];
-        Integer[] iconTab = new Integer[list.size()];
+        Drawable[] iconTab = new Drawable[list.size()];
         Integer[] idTab = new Integer[list.size()];
         for(int i=0;i<list.size();i++)
         {
             unitTab[i] = list.get(i).getName();
-            iconTab[i] = R.drawable.ic_zerg;
+            try {
+                iconTab[i] =  Drawable.createFromStream(useBDD.getContext().getAssets().open(list.get(i).getPathImage()), null);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             idTab[i] = list.get(i).getId();
         }
 

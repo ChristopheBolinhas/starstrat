@@ -23,6 +23,8 @@ public class InsertRaceEntities
 
     private void unit(Race_entitiesBDD race)
     {
+
+        String path = "images/unit/";
         //////////////////////TERRAN //////////////////////
         //SCV
         Race_entities scv = new Race_entities();
@@ -30,6 +32,7 @@ public class InsertRaceEntities
         scv.setName("SCV");
         scv.setId_type(2);
         scv.setTime_creation(17);
+        scv.setPathImage(path+"1.jpg");
         race.insertRaceEntities(scv);
 
         //MARINE
@@ -38,6 +41,7 @@ public class InsertRaceEntities
         marine.setName("Marine");
         marine.setId_type(2);
         marine.setTime_creation(25);
+        marine.setPathImage(path+"2.jpg");
         race.insertRaceEntities(marine);
 
         //Marauder
@@ -46,6 +50,7 @@ public class InsertRaceEntities
         marauder.setName("Marauder");
         marauder.setId_type(2);
         marauder.setTime_creation(30);
+        marauder.setPathImage(path+"3.jpg");
         race.insertRaceEntities(marauder);
 
         //Reaper
@@ -54,6 +59,7 @@ public class InsertRaceEntities
         reaper.setName("Reaper");
         reaper.setId_type(2);
         reaper.setTime_creation(45);
+        reaper.setPathImage(path+"4.jpg");
         race.insertRaceEntities(reaper);
 
         //Ghost
@@ -62,6 +68,7 @@ public class InsertRaceEntities
         ghost.setName("Ghost");
         ghost.setId_type(2);
         ghost.setTime_creation(40);
+        ghost.setPathImage(path+"5.jpg");
         race.insertRaceEntities(ghost);
 
         //Hellion
@@ -70,6 +77,7 @@ public class InsertRaceEntities
         hellion.setName("Hellion");
         hellion.setId_type(2);
         hellion.setTime_creation(30);
+        hellion.setPathImage(path+"6.jpg");
         race.insertRaceEntities(hellion);
 
         //Tank
@@ -78,6 +86,7 @@ public class InsertRaceEntities
         tank.setName("Tank");
         tank.setId_type(2);
         tank.setTime_creation(45);
+        tank.setPathImage(path+"6.jpg");
         race.insertRaceEntities(tank);
 
         //Thor
@@ -86,6 +95,7 @@ public class InsertRaceEntities
         thor.setName("Thor");
         thor.setId_type(2);
         thor.setTime_creation(60);
+        thor.setPathImage(path+"8.jpg");
         race.insertRaceEntities(thor);
 
         //Viking
@@ -94,6 +104,7 @@ public class InsertRaceEntities
         viking.setName("Viking");
         viking.setId_type(2);
         viking.setTime_creation(42);
+        viking.setPathImage(path+"9.jpg");
         race.insertRaceEntities(viking);
 
         //Medivac
@@ -102,6 +113,7 @@ public class InsertRaceEntities
         medivac.setName("Medivac");
         medivac.setId_type(2);
         medivac.setTime_creation(42);
+        medivac.setPathImage(path+"10.jpg");
         race.insertRaceEntities(medivac);
 
         //Raven
@@ -110,6 +122,7 @@ public class InsertRaceEntities
         raven.setName("Raven");
         raven.setId_type(2);
         raven.setTime_creation(60);
+        raven.setPathImage(path+"11.jpg");
         race.insertRaceEntities(raven);
 
         //Banshee
@@ -118,6 +131,7 @@ public class InsertRaceEntities
         banshee.setName("Banshee");
         banshee.setId_type(2);
         banshee.setTime_creation(60);
+        banshee.setPathImage(path+"12.jpg");
         race.insertRaceEntities(banshee);
 
         //Battlecruiser
@@ -126,6 +140,7 @@ public class InsertRaceEntities
         bc.setName("Battlecruiser");
         bc.setId_type(2);
         bc.setTime_creation(90);
+        bc.setPathImage(path+"13.jpg");
         race.insertRaceEntities(bc);
 
         //Hellbat
@@ -134,6 +149,7 @@ public class InsertRaceEntities
         hellbat.setName("Hellbat");
         hellbat.setId_type(2);
         hellbat.setTime_creation(30);
+        hellbat.setPathImage(path+"14.jpg");
         race.insertRaceEntities(hellbat);
 
         //Widow Mine
@@ -142,6 +158,7 @@ public class InsertRaceEntities
         mine.setName("Widow Mine");
         mine.setId_type(2);
         mine.setTime_creation(40);
+        mine.setPathImage(path+"15.jpg");
         race.insertRaceEntities(mine);
 
         //////////////////////ZERG //////////////////////
@@ -151,6 +168,7 @@ public class InsertRaceEntities
         drone.setName("Drone");
         drone.setId_type(2);
         drone.setTime_creation(17);
+        drone.setPathImage(path+"16.jpg");
         race.insertRaceEntities(drone);
 
         //Overlord
@@ -159,6 +177,7 @@ public class InsertRaceEntities
         overlord.setName("Overlord");
         overlord.setId_type(2);
         overlord.setTime_creation(25);
+        overlord.setPathImage(path+"17.jpg");
         race.insertRaceEntities(overlord);
 
         //Zergling
@@ -167,6 +186,7 @@ public class InsertRaceEntities
         zergling.setName("Zergling");
         zergling.setId_type(2);
         zergling.setTime_creation(24);
+        zergling.setPathImage(path+"18.jpg");
         race.insertRaceEntities(zergling);
 
         //Queen
@@ -175,6 +195,7 @@ public class InsertRaceEntities
         queen.setName("Queen");
         queen.setId_type(2);
         queen.setTime_creation(50);
+        queen.setPathImage(path+"19.jpg");
         race.insertRaceEntities(queen);
 
         //Hydralisk
@@ -183,6 +204,7 @@ public class InsertRaceEntities
         hydra.setName("Hydralisk");
         hydra.setId_type(2);
         hydra.setTime_creation(33);
+        hydra.setPathImage(path+"20.jpg");
         race.insertRaceEntities(hydra);
 
         //Baneling
@@ -191,6 +213,7 @@ public class InsertRaceEntities
         baneling.setName("Baneling");
         baneling.setId_type(2);
         baneling.setTime_creation(20);
+        baneling.setPathImage(path+"21.jpg");
         race.insertRaceEntities(baneling);
 
         //Overseer
@@ -199,6 +222,7 @@ public class InsertRaceEntities
         overseer.setName("Overseer");
         overseer.setId_type(2);
         overseer.setTime_creation(17);
+        overseer.setPathImage(path+"22.jpg");
         race.insertRaceEntities(overseer);
 
         //Roach
@@ -207,6 +231,7 @@ public class InsertRaceEntities
         roach.setName("Roach");
         roach.setId_type(2);
         roach.setTime_creation(27);
+        roach.setPathImage(path+"23.jpg");
         race.insertRaceEntities(roach);
 
         //Infestor
@@ -215,6 +240,7 @@ public class InsertRaceEntities
         infest.setName("Infestor");
         infest.setId_type(2);
         infest.setTime_creation(50);
+        infest.setPathImage(path+"24.jpg");
         race.insertRaceEntities(infest);
 
         //Mutalisk
@@ -223,6 +249,7 @@ public class InsertRaceEntities
         muta.setName("Mutalisk");
         muta.setId_type(2);
         muta.setTime_creation(33);
+        muta.setPathImage(path+"25.jpg");
         race.insertRaceEntities(muta);
 
         //Corruptor
@@ -231,6 +258,7 @@ public class InsertRaceEntities
         corruptor.setName("Corruptor");
         corruptor.setId_type(2);
         corruptor.setTime_creation(40);
+        corruptor.setPathImage(path+"26.jpg");
         race.insertRaceEntities(corruptor);
 
         //Ultralisk
@@ -239,6 +267,7 @@ public class InsertRaceEntities
         ultra.setName("Ultralisk");
         ultra.setId_type(2);
         ultra.setTime_creation(55);
+        ultra.setPathImage(path+"27.jpg");
         race.insertRaceEntities(ultra);
 
         //Brood Lord
@@ -247,6 +276,7 @@ public class InsertRaceEntities
         broodLord.setName("Brood Lord");
         broodLord.setId_type(2);
         broodLord.setTime_creation(34);
+        broodLord.setPathImage(path+"28.jpg");
         race.insertRaceEntities(broodLord);
 
         //Swarm Host
@@ -255,6 +285,7 @@ public class InsertRaceEntities
         sh.setName("Swarm Host");
         sh.setId_type(2);
         sh.setTime_creation(40);
+        sh.setPathImage(path+"29.jpg");
         race.insertRaceEntities(sh);
 
         //Viper
@@ -263,6 +294,7 @@ public class InsertRaceEntities
         viper.setName("Viper");
         viper.setId_type(2);
         viper.setTime_creation(40);
+        viper.setPathImage(path+"30.jpg");
         race.insertRaceEntities(viper);
 
         //////////////////////PROTOSS //////////////////////
@@ -272,6 +304,7 @@ public class InsertRaceEntities
         probe.setName("Probe");
         probe.setId_type(2);
         probe.setTime_creation(17);
+        probe.setPathImage(path+"31.jpg");
         race.insertRaceEntities(probe);
 
         //Zealot
@@ -280,6 +313,7 @@ public class InsertRaceEntities
         zealot.setName("Zealot");
         zealot.setId_type(2);
         zealot.setTime_creation(38);
+        zealot.setPathImage(path+"32.jpg");
         race.insertRaceEntities(zealot);
 
         //Stalker
@@ -288,6 +322,7 @@ public class InsertRaceEntities
         stalker.setName("Stalker");
         stalker.setId_type(2);
         stalker.setTime_creation(42);
+        stalker.setPathImage(path+"33.jpg");
         race.insertRaceEntities(stalker);
 
         //Sentry
@@ -296,6 +331,7 @@ public class InsertRaceEntities
         sentry.setName("Sentry");
         sentry.setId_type(2);
         sentry.setTime_creation(37);
+        sentry.setPathImage(path+"34.jpg");
         race.insertRaceEntities(sentry);
 
         //Observer
@@ -304,6 +340,7 @@ public class InsertRaceEntities
         observer.setName("Observer");
         observer.setId_type(2);
         observer.setTime_creation(30);
+        observer.setPathImage(path+"35.jpg");
         race.insertRaceEntities(observer);
 
         //Immortal
@@ -312,6 +349,7 @@ public class InsertRaceEntities
         immo.setName("Immortal");
         immo.setId_type(2);
         immo.setTime_creation(55);
+        immo.setPathImage(path+"36.jpg");
         race.insertRaceEntities(immo);
 
         //Warp Prism
@@ -320,6 +358,7 @@ public class InsertRaceEntities
         warpPrism.setName("Warp Prism");
         warpPrism.setId_type(2);
         warpPrism.setTime_creation(50);
+        warpPrism.setPathImage(path+"37.jpg");
         race.insertRaceEntities(warpPrism);
 
         //Colossus
@@ -328,6 +367,7 @@ public class InsertRaceEntities
         coloss.setName("Colossus");
         coloss.setId_type(2);
         coloss.setTime_creation(75);
+        coloss.setPathImage(path+"38.jpg");
         race.insertRaceEntities(coloss);
 
         //Phoenix
@@ -336,6 +376,7 @@ public class InsertRaceEntities
         phoenix.setName("Phoenix");
         phoenix.setId_type(2);
         phoenix.setTime_creation(35);
+        phoenix.setPathImage(path+"39.jpg");
         race.insertRaceEntities(phoenix);
 
         //Void Ray
@@ -344,6 +385,7 @@ public class InsertRaceEntities
         violRay.setName("Void Ray");
         violRay.setId_type(2);
         violRay.setTime_creation(60);
+        violRay.setPathImage(path+"40.jpg");
         race.insertRaceEntities(violRay);
 
         //High Templar
@@ -352,6 +394,7 @@ public class InsertRaceEntities
         ht.setName("High Templar");
         ht.setId_type(2);
         ht.setTime_creation(55);
+        ht.setPathImage(path+"41.jpg");
         race.insertRaceEntities(ht);
 
         //Dark Templar
@@ -360,6 +403,7 @@ public class InsertRaceEntities
         dt.setName("Dark Templar");
         dt.setId_type(2);
         dt.setTime_creation(55);
+        dt.setPathImage(path+"42.jpg");
         race.insertRaceEntities(dt);
 
         //Archon
@@ -368,6 +412,7 @@ public class InsertRaceEntities
         archon.setName("Archon");
         archon.setId_type(2);
         archon.setTime_creation(12);
+        archon.setPathImage(path+"43.jpg");
         race.insertRaceEntities(archon);
 
         //Carrier
@@ -376,6 +421,7 @@ public class InsertRaceEntities
         carrier.setName("Carrier");
         carrier.setId_type(2);
         carrier.setTime_creation(120);
+        carrier.setPathImage(path+"44.jpg");
         race.insertRaceEntities(carrier);
 
         //Mothership
@@ -384,6 +430,7 @@ public class InsertRaceEntities
         mothership.setName("Mothership");
         mothership.setId_type(2);
         mothership.setTime_creation(100);
+        mothership.setPathImage(path+"45.jpg");
         race.insertRaceEntities(mothership);
 
         //Mothership Core
@@ -392,6 +439,7 @@ public class InsertRaceEntities
         mothershipCorps.setName("Mothership Core");
         mothershipCorps.setId_type(2);
         mothershipCorps.setTime_creation(30);
+        mothershipCorps.setPathImage(path+"46.jpg");
         race.insertRaceEntities(mothershipCorps);
 
         //Oracle
@@ -400,6 +448,7 @@ public class InsertRaceEntities
         oracle.setName("Oracle");
         oracle.setId_type(2);
         oracle.setTime_creation(50);
+        oracle.setPathImage(path+"47.jpg");
         race.insertRaceEntities(oracle);
 
         //Tempest
@@ -408,6 +457,7 @@ public class InsertRaceEntities
         tempest.setName("Tempest");
         tempest.setId_type(2);
         tempest.setTime_creation(60);
+        tempest.setPathImage(path+"48.jpg");
         race.insertRaceEntities(tempest);
     }
 

@@ -32,12 +32,14 @@ public class MaBaseSQLite extends SQLiteOpenHelper {
     private static final String COL_ID_Type_Race_Entities = "ID_Type";
     private static final String COL_Name_Race_Entities = "name";
     private static final String COL_Time_Creation_Race_Entities = "Time_Creation";
+    private static final String COL_Path_Image_Race_Entities = "Path_Image";
 
     private static final String CREATE_Race_Entities = "CREATE TABLE "+ TABLE_Race_Entities + "("
             + COL_ID_Race_Entities + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COL_ID_Race_Race_Entities + " INTEGER,"
             + COL_ID_Type_Race_Entities + " INTEGER,"
             + COL_Name_Race_Entities + " TEXT,"
+            + COL_Path_Image_Race_Entities+ " TEXT,"
             + COL_Time_Creation_Race_Entities + " INTEGER);";
 
 
@@ -54,15 +56,17 @@ public class MaBaseSQLite extends SQLiteOpenHelper {
     private static final String COL_ID_Strategies = "ID";
     private static final String COL_ID_Race_Strategies = "ID_Race";
     private static final String COL_Name_Strategies = "Name";
+    private static final String COL_Description_Strategies = "Description";
     private static final String COL_Game_Tried_Strategies = "Game_Tried";
     private static final String COL_Game_Won_Strategies = "Game_Won";
 
     private static final String CREATE_Strategies = "CREATE TABLE "+ TABLE_Strategies + "("
             + COL_ID_Strategies + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COL_ID_Race_Strategies + "INTEGER,"
+            + COL_ID_Race_Strategies + " INTEGER,"
             + COL_Name_Strategies + " TEXT,"
+            + COL_Description_Strategies + " TEXT,"
             + COL_Game_Tried_Strategies + " INTEGER,"
-            + COL_Game_Won_Strategies + "INTEGER);";
+            + COL_Game_Won_Strategies + " INTEGER);";
 
 
     private static final String TABLE_TYPE = "type";
@@ -72,18 +76,6 @@ public class MaBaseSQLite extends SQLiteOpenHelper {
     private static final String CREATE_Type = "CREATE TABLE "+ TABLE_TYPE + "("
             + COL_ID_Type + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COL_NAME_Type + " TEXT);";
-
-
-    private static final String TABLE_IMAGE = "images";
-    private static final String COL_ID_Image = "ID";
-    private static final String COL_ImageTexte_Image = "Image_Texte";
-    private static final String COL_IDRaceEntities_Image = "ID_Race_Entities";
-
-    private static final String CREATE_Image = "CREATE TABLE "+ TABLE_IMAGE + "("
-            + COL_ID_Image + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COL_ImageTexte_Image + " BLOB, "
-            + COL_IDRaceEntities_Image + " INTEGER );";
-
 
     private static final String TABLE_ELEMENT_Strategie = "elementStrategie";
     private static final String COL_ID_Element = "ID";
@@ -115,7 +107,6 @@ public class MaBaseSQLite extends SQLiteOpenHelper {
         db.execSQL(CREATE_Race);
         db.execSQL(CREATE_Strategies);
         db.execSQL(CREATE_Type);
-        db.execSQL(CREATE_Image);
         db.execSQL(CREATE_Element_Strategie);
 
     }

@@ -7,7 +7,6 @@ import java.util.List;
 
 import hearc.ch.starstrat.dataBase.BDD.ElementStrategieBDD;
 import hearc.ch.starstrat.dataBase.BDD.EventsBDD;
-import hearc.ch.starstrat.dataBase.BDD.ImageBDD;
 import hearc.ch.starstrat.dataBase.BDD.RaceBDD;
 import hearc.ch.starstrat.dataBase.BDD.Race_entitiesBDD;
 import hearc.ch.starstrat.dataBase.BDD.StrategiesBDD;
@@ -34,7 +33,6 @@ public class UseBDD
     private Race_entitiesBDD raceEntities;
     private EventsBDD events;
     private StrategiesBDD strats;
-    private ImageBDD image;
     private ElementStrategieBDD elementStrategie;
 
     private Context context;
@@ -46,7 +44,6 @@ public class UseBDD
         this.raceEntities = new Race_entitiesBDD(context);
         this.events = new EventsBDD(context);
         this.strats = new StrategiesBDD(context);
-        this.image = new ImageBDD(context);
         this.elementStrategie = new ElementStrategieBDD(context);
 
         this.context = context;
@@ -70,12 +67,11 @@ public class UseBDD
         if(re==null)
             new InsertRaceEntities(raceEntities);
 
-        //TODO Image
-        /*Image im = image.getImageWithID(1);
-        //Toast.makeText(context, ""+im.getImage_Texte(), Toast.LENGTH_LONG).show();
-        if(im==null)
-            new InsertImages(image, context);*/
+    }
 
+    public Context getContext()
+    {
+        return context;
     }
 
     //Fonction pour ouvrir les tables
@@ -86,7 +82,6 @@ public class UseBDD
         raceEntities.open();
         events.open();
         strats.open();
-        image.open();
         elementStrategie.open();
     }
 
@@ -98,7 +93,6 @@ public class UseBDD
         raceEntities.close();
         events.close();
         strats.close();
-        image.close();
         elementStrategie.close();
     }
 
@@ -137,12 +131,11 @@ public class UseBDD
         else if(objetStrategie.getRace()==2)
             strategies.setId_race(1);
 
-        strats.insertStrategies(strategies);
 
-        //TODO a voir pour ameliorer la recuperation de l'id
-        strategies = strats.getStrategiesWithName(objetStrategie.getName());
+        long l = strats.insertStrategies(strategies);
 
-        int id = strategies.getId();
+
+        int id = (int)l;
 
         List<UnitItem> list = objetStrategie.getListUnits(false);
 
@@ -166,26 +159,46 @@ public class UseBDD
         List<StrategyItem> listFinal = new ArrayList<StrategyItem>();
 
         List<Strategies> listStrats = strats.getAllStrategie();
-        List<ElementStrategie> listElement = null;
-        for(int i = 0;i<listStrats.size();i++)
-        {
-            listElement = elementStrategie.getListElementStrategieWithIDStrat(listStrats.get(i).getId());
+        List<ElementStrategie> listElement = new ArrayList<ElementStrategie>();
+        if(listStrats != null) {
+            for (int i = 0; i < listStrats.size(); i++) {
+                listElement = elementStrategie.getListElementStrategieWithIDStrat(listStrats.get(i).getId());
 
-            List<UnitItem> listUnit = new ArrayList<UnitItem>();
-            for(int j=0;j<listElement.size();j++)
-            {
-                ElementStrategie el = listElement.get(i);
-                Race_entities entities = raceEntities.getRaceEntitiesWithID(el.getId_Race_Entities());
+                List<UnitItem> listUnit = new ArrayList<UnitItem>();
+                for (int j = 0; j < listElement.size(); j++) {
+                    ElementStrategie el = listElement.get(i);
+                    Race_entities entities = raceEntities.getRaceEntitiesWithID(el.getId_Race_Entities());
 
-                UnitItem item = new UnitItem(el.getId(),el.getMinute(),el.getSecond(),el.isVibrate(),entities.getName());
-                listUnit.add(item);
+                    UnitItem item = new UnitItem(el.getId(), el.getMinute(), el.getSecond(), el.isVibrate(), entities.getName());
+                    listUnit.add(item);
+                }
+                StrategyItem item = new StrategyItem();
+                Strategies stratref = listStrats.get(i);
+                item.setName(stratref.getName());
+                item.setDescription(stratref.getDescription());
+                item.setDbId(stratref.getId());
+                item.setRace(convertRaceId(stratref.getId_race()));
+
+                item.setListUnits(listUnit);
+                listFinal.add(item);
             }
-
-            listFinal.add(new StrategyItem());
-            listFinal.get(listFinal.size()-1).setListUnits(listUnit);
         }
-        
+
         return listFinal;
+    }
+
+    private int convertRaceId(int id)
+    {
+        switch(id)
+        {
+            case 3://Terran
+                return 0;
+            case 2://Protoss
+                return 1;
+            case 1://zergs
+                return 2;
+        }
+        return -1;
     }
 
 }
