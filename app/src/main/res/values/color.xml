@@ -12,4 +12,13 @@
     <color name="fragment_text_1">#BDCBE0</color>
     <color name="fragment_text_2">#4970AD</color>
     <color name="fragment_borders_1">#011534</color>
+
+    <!-- ui colors
+    <color name="button_bg_color"></color>
+    <color name="button_text_color"></color>
+    <color name="fragment_text"></color>-->
+
+
+
+
 </resources>
