@@ -2,6 +2,7 @@ package hearc.ch.starstrat.dataBase.Use;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -158,7 +159,6 @@ public class UseBDD
 
             long l = strats.insertStrategies(strategies);
 
-
             int id = (int)l;
 
             List<UnitItem> list = objetStrategie.getListUnits(false);
@@ -174,6 +174,8 @@ public class UseBDD
                 Race_entities entities = raceEntities.getRaceEntitiesWithName(list.get(i).getNom());
                 element.setId_Race_Entities(entities.getId());
 
+                //Toast.makeText(context, list.get(i).getId(), Toast.LENGTH_LONG).show();
+
                 elementStrategie.insertElement(element);
             }
         }
@@ -181,7 +183,7 @@ public class UseBDD
         {
             Strategies strategie = strats.getStrategiesWithID(idStrat);
             strategie.setName(objetStrategie.getName());
-            strategie.setId_race(objetStrategie.getRace());
+            strategie.setId_race(convertRaceIdAppToDb(objetStrategie.getRace()));
             strategie.setDescription(objetStrategie.getDescription());
 
             strats.updateStrategies(idStrat,strategie);
@@ -194,21 +196,21 @@ public class UseBDD
                 boolean exist = false;
                 for(int j=0;j<listElementStrat.size();j++)
                 {
-                    if(listElementStrat.get(j).getId()==list.get(i).getId())
+                    if(listElementStrat.get(j).getId()==list.get(i).getIdDB())
                         exist = true;
                 }
                 UnitItem item = list.get(i);
                 if(exist)
                 {
-                    ElementStrategie element = elementStrategie.getElementWithID(item.getId());
+                    ElementStrategie element = elementStrategie.getElementWithID(item.getIdDB());
 
                     element.setMinute(item.getMinutes());
                     element.setSecond(item.getSecondes());
                     element.setVibrate(item.getVibrate());
                     Race_entities entities = raceEntities.getRaceEntitiesWithName(item.getNom());
-                    element.setId_Race_Entities(convertRaceIdAppToDb(entities.getId()));
+                    element.setId_Race_Entities(entities.getId());
 
-                    elementStrategie.updateElement(item.getId(),element);
+                    elementStrategie.updateElement(entities.getId(),element);
                 }
                 else
                 {
@@ -219,7 +221,7 @@ public class UseBDD
                     element.setVibrate(item.getVibrate());
 
                     Race_entities entities = raceEntities.getRaceEntitiesWithName(item.getNom());
-                    element.setId_Race_Entities(convertRaceIdAppToDb(entities.getId()));
+                    element.setId_Race_Entities(entities.getId());
 
                     elementStrategie.insertElement(element);
                 }
@@ -244,8 +246,8 @@ public class UseBDD
                     ElementStrategie el = listElement.get(j);
                     Race_entities entities = raceEntities.getRaceEntitiesWithID(el.getId_Race_Entities());
 
-
-                    UnitItem item = new UnitItem(el.getId(), el.getMinute(), el.getSecond(), el.isVibrate(), entities.getName());
+                    UnitItem item = new UnitItem(el.getId_Race_Entities(), el.getMinute(), el.getSecond(), el.isVibrate(), entities.getName());
+                    item.setIdDB(el.getId());
                     item.setIcon(getDrawable(entities));
                     listUnit.add(item);
                 }
