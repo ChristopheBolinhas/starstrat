@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Vibrator;
 import android.text.format.Time;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import hearc.ch.starstrat.objects.ImagesViewLaunch;
 import hearc.ch.starstrat.objects.StrategyItem;
@@ -147,7 +149,7 @@ public class LaunchGameFragment extends Fragment {
 
         Time timeAffichage = new Time();
         timeAffichage.set(tmp);
-        textStepTime.setText(""+timeAffichage.toMillis(false));
+        textStepTime.setText(timeAffichage.minute + ":" + timeAffichage.second);
 
         //Set the time every 100ms
         if(totalTime > tmp && !isPause)
@@ -191,43 +193,36 @@ public class LaunchGameFragment extends Fragment {
 
                 if(isFirst) {
 
-                    int time = timeForUnit;
+                    int totalUnit = myStrategy.getListSize();
 
-                    ArrayList<UnitItem> listUnite = new ArrayList<UnitItem>();
+                    List<UnitItem> listUnite = myStrategy.getListUnits(true);
+                    UnitItem lastUnit = listUnite.get(totalUnit-1);
 
-                    //Foreach strategy item in strategylistitem (list sort by time)
-                    for(UnitItem unit : myStrategy.getListUnits(true))
+                    int create = ((lastUnit.getMinutes()*60)+lastUnit.getSecondes())/timeForUnit;
+
+                    Log.d("LALALA","TIME " + (lastUnit.getMinutes()*60)+lastUnit.getSecondes() + "  CREATE " +create);
+
+                    for(int i = 0 ; i <= create; i++)
                     {
-                        //Toast.makeText(getActivity(),"size " +unit.getSecondes(),Toast.LENGTH_LONG).show();
+                        ImagesViewLaunch imgGroup = new ImagesViewLaunch(getActivity());
+                        listImagesAnimation.add(imgGroup);
+                    }
 
-                        int timeUnit = unit.getMinutes()*60+unit.getSecondes();
-                        //Toast.makeText(getActivity(),"size " +timeUnit,Toast.LENGTH_LONG).show();
+                    for(UnitItem unit : listUnite)
+                    {
+                        int indexUnit = ((unit.getMinutes()*60)+unit.getSecondes())/timeForUnit;
 
-                        if(timeUnit <= timeForUnit)
-                        {
-                            //we group the unit that have the same field of time
-                            listUnite.add(unit);
-                        }
-                        else
-                        {
-                            //We create element to draw with right units
-                            ImagesViewLaunch imgGroup = new ImagesViewLaunch(listUnite,getActivity());
-                            imgGroup.constructImagesView(sizeHeight);
-                            listImagesAnimation.add(imgGroup);
-
-                            listUnite = new ArrayList<UnitItem>();
-
-                            //Increment the time for next units field of time
-                            time += timeForUnit;
-                        }
+                        (listImagesAnimation.get(indexUnit)).addUnit(unit);
                     }
 
                     //We move all image outside view
                     for(ImagesViewLaunch im : listImagesAnimation)
                     {
+                        im.constructImagesView(sizeHeight);
                         layoutAnimation.addView(im.getLinearAnimation());
                         im.getLinearAnimation().animate().scaleX(miniScale).scaleY(miniScale).setDuration(0).alpha(0.2f).withLayer();
                     }
+
 
                     nbAnimation = listImagesAnimation.size();
                     totalTime = nbAnimation*timeBetweenAnimation;
@@ -239,11 +234,18 @@ public class LaunchGameFragment extends Fragment {
                     //Calculate the scale for each image
                     for(ImagesViewLaunch im : listImagesAnimation)
                     {
-                        float lScale = (sizeHeight/2)/im.getLinearAnimation().getMeasuredHeight();
-                        float bScale = (sizeHeight)/im.getLinearAnimation().getMeasuredHeight();
+                        float lScale = 1;
+                        float bScale = 1;
+                        if(im.getNBUnit() > 0)
+                        {
+                            lScale = (sizeHeight/4)/(im.getLinearAnimation().getMeasuredHeight());
+                            bScale = (sizeHeight/2)/(im.getLinearAnimation().getMeasuredHeight());
+                        }
+
                         im.setLittleScale(lScale);
                         im.setBigScale(bScale);
                     }
+
                     //We move the first and second image to 1/2 and 1/4 screen to be ready
                     listImagesAnimation.get(0).getLinearAnimation().animate().alpha(1).translationX(marginLeftLayout + (widthScreen/2) - (listImagesAnimation.get(0).getLinearAnimation().getMeasuredWidth()/2)).scaleX(listImagesAnimation.get(0).getBigScale()).scaleY(listImagesAnimation.get(0).getBigScale()).setDuration(0).withLayer();
 
@@ -332,7 +334,7 @@ public class LaunchGameFragment extends Fragment {
     private void firstAnimation(int index)
     {
         //Animate the object from outside screen to 1/4 screen
-        (listImagesAnimation.get(index).getLinearAnimation()).animate().translationX(transX + marginLeftLayout).alpha(0.5f).scaleX(listImagesAnimation.get(index).getLittleScale()).scaleY(listImagesAnimation.get(index).getLittleScale()).setDuration(timeAnimate).withLayer();
+        (listImagesAnimation.get(index).getLinearAnimation()).animate().translationX(marginLeftLayout).alpha(0.5f).scaleX(listImagesAnimation.get(index).getLittleScale()).scaleY(listImagesAnimation.get(index).getLittleScale()).setDuration(timeAnimate).withLayer();
 
         if(index < nbAnimation)
             hAnimation.postDelayed(launchFirst,timeBetweenAnimation);
@@ -355,7 +357,7 @@ public class LaunchGameFragment extends Fragment {
         }
 
         //Animate the object from 1/2 screen to 3/4 screen
-        (listImagesAnimation.get(index).getLinearAnimation()).animate().translationX(marginLeftLayout+widthScreen-transX-(listImagesAnimation.get(index).getLinearAnimation().getMeasuredWidth()/2)).alpha(0.5f).scaleX(listImagesAnimation.get(index).getLittleScale()).scaleY(listImagesAnimation.get(index).getLittleScale()).setDuration(timeAnimate).withLayer();
+        (listImagesAnimation.get(index).getLinearAnimation()).animate().translationX(marginLeftLayout+widthScreen-(listImagesAnimation.get(index).getLinearAnimation().getMeasuredWidth())).alpha(0.5f).scaleX(listImagesAnimation.get(index).getLittleScale()).scaleY(listImagesAnimation.get(index).getLittleScale()).setDuration(timeAnimate).withLayer();
         hAnimation4.postDelayed(launchFourth,timeBetweenAnimation);
     }
 

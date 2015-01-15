@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import hearc.ch.starstrat.R;
@@ -23,6 +24,16 @@ public class ImagesViewLaunch {
     int nbImagePerLine;
     boolean isVibrate;
     LinearLayout linearAnimation;
+
+    public int getNBUnit()
+    {
+        return myListOfUnit.size();
+    }
+
+    public void addUnit(UnitItem unit)
+    {
+        myListOfUnit.add(unit);
+    }
 
     public boolean getIsVibrate(){return isVibrate;}
 
@@ -49,11 +60,10 @@ public class ImagesViewLaunch {
         return linearAnimation;
     }
 
-    public ImagesViewLaunch(List<UnitItem> listUnit, Activity activity)
+    public ImagesViewLaunch(Activity activity)
     {
-        myListOfUnit = listUnit;
         myActivity = activity;
-
+        myListOfUnit = new ArrayList<UnitItem>();
         isVibrate = false;
     }
 
@@ -72,7 +82,6 @@ public class ImagesViewLaunch {
         else
             nbImagePerLine = 3;
 
-        //Toast.makeText(myActivity,"size " +myListOfUnit.size(),Toast.LENGTH_LONG).show();
         //foreach unit, get the image
         for(int j = 0; j < myListOfUnit.size(); j+= nbImagePerLine)
         {
@@ -81,27 +90,28 @@ public class ImagesViewLaunch {
 
             for(int i = 0; i < nbImagePerLine; i++)
             {
-                //Creation of the horizontal image
-                ImageView tmp = new ImageView(myActivity);
-                /*
-                if(myListOfUnit.get(j+i).getIcon() != null)
-                    tmp.setImageDrawable(myListOfUnit.get(j+i).getIcon());
-                */
-                tmp.setImageResource(R.drawable.ic_about);
-                l.addView(tmp);
+                if((j+i) < myListOfUnit.size()) {
 
-                //if vibrate then isvibrate = true
-                if(myListOfUnit.get(i+j).getVibrate()) {
-                    isVibrate = true;
+                    //Creation of the horizontal image
+                    ImageView tmp = new ImageView(myActivity);
+
+                    tmp.setImageDrawable(myListOfUnit.get(j + i).getIcon());
+                    tmp.setMinimumWidth(30);
+                    tmp.setMinimumHeight(30);
+                    tmp.setMaxHeight(60);
+                    tmp.setMaxWidth(60);
+                    l.addView(tmp);
+
+                    //if vibrate then isvibrate = true
+                    if(myListOfUnit.get(i+j).getVibrate()) {
+                        isVibrate = true;
+                    }
                 }
-            }
 
+            }
             //Put the horizontal image in vertical layout
             linearAnimation.addView(l);
-            /*
-            linearAnimation.setMinimumWidth(60);
-            linearAnimation.setMinimumHeight(60);
-            */
+
         }
     }
 }
