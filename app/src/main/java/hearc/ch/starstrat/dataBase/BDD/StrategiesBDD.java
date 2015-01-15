@@ -104,6 +104,12 @@ public class StrategiesBDD
         return cursorToStrategies(c);
     }
 
+    public Strategies getStrategiesWithID(int id)
+    {
+        Cursor c = bdd.query(TABLE_Strategies, new String[] {COL_ID, COL_ID_Race, COL_Name, COL_Description , COL_Game_Tried, COL_Game_Won}, COL_ID + " = "+id, null, null, null, null);
+        return cursorToStrategies(c);
+    }
+
     public List<Strategies> getAllStrategie()
     {
         Cursor c = bdd.rawQuery("SELECT "+COL_ID+", "+ COL_ID_Race+", "+ COL_Name+", "+COL_Description+", "+COL_Game_Tried + ","+COL_Game_Won+" FROM "+TABLE_Strategies, null );
