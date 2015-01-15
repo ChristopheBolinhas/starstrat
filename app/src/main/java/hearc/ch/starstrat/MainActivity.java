@@ -44,6 +44,12 @@ public class MainActivity extends ActionBarActivity {
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
     private UseBDD useBDD;
+    private float speedOfGame = SpeedChooseFragment.fastSpeed;
+
+    public void setSpeedOfGame(float speed)
+    {
+        speedOfGame = speed;
+    }
 
     private StrategieFragment stratListFrag = null;
 
@@ -158,7 +164,14 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void setLaunchGameFragment(StrategyItem strat) {
-        //TODO
+        final Fragment fragment = LaunchGameFragment.newInstance(strat,speedOfGame);
+        final FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.frame_container, fragment);
+
+        transaction.addToBackStack(null);
+
+        transaction.commit();
     }
 
     public void editStrat(StrategyItem strat)
@@ -248,8 +261,13 @@ public class MainActivity extends ActionBarActivity {
 
                 break;
             case 3://About
-
-                break;
+                StrategyItem strat = new StrategyItem();
+                for(int i = 0; i < 40; i+=2)
+                {
+                    strat.addItem("Zerg",0,0,i,true);
+                }
+                fragment = LaunchGameFragment.newInstance(strat,speedOfGame);
+            break;
             case 4://Hidden - LauchGameFragment
                 //TODO LaunchGameFragment
                 break;

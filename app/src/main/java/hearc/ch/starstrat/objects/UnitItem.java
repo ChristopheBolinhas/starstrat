@@ -14,10 +14,6 @@ public class UnitItem {
     private Drawable icon;
     private int idDB = -1;
 
-    public Drawable getIcon() {
-        return icon;
-    }
-
     public void setIcon(Drawable icon) {
         this.icon = icon;
     }
@@ -31,6 +27,9 @@ public class UnitItem {
         this.name = name;
     }
 
+    public Drawable getIcon() {
+        return icon;
+    }
     public int getIdDB() {
         return idDB;
     }
