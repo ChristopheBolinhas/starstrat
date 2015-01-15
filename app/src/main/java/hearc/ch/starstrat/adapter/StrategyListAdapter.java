@@ -43,7 +43,7 @@ public class StrategyListAdapter extends ArrayAdapter<StrategyListItem>
         ImageButton playButton = (ImageButton) convertView.findViewById(R.id.playButton);
         ImageButton editButton = (ImageButton) convertView.findViewById(R.id.editButton);
         ImageButton removeButton = (ImageButton) convertView.findViewById(R.id.removeButton);
-        StrategyListItem item = getItem(position);
+        final StrategyListItem item = getItem(position);
         titleText.setText(item.title);
         descriptionText.setText(item.description);
         if(position == 0)
@@ -72,9 +72,22 @@ public class StrategyListAdapter extends ArrayAdapter<StrategyListItem>
             playButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //((MainActivity)getContext());
+                    ((MainActivity)getContext()).playStrat(item.getItem());
                 }
             });
+            editButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((MainActivity)getContext()).editStrat(item.getItem());
+                }
+            });
+            removeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((MainActivity)getContext()).removeStrat(item.getItem());
+                }
+            });
+
         }
 
         return convertView;

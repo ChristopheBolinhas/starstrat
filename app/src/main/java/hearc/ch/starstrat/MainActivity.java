@@ -142,6 +142,27 @@ public class MainActivity extends ActionBarActivity {
         return true;
     }
 
+    public void playStrat(StrategyItem strat)
+    {
+        setLaunchGameFragment(strat);
+
+    }
+
+    private void setLaunchGameFragment(StrategyItem strat) {
+        //TODO
+    }
+
+    public void editStrat(StrategyItem strat)
+    {
+        setStrategieMakerFragement(strat);
+    }
+    public void removeStrat(StrategyItem strat)
+    {
+        useBDD.removeStrat(strat);
+        stratListFrag.updateList();
+    }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
