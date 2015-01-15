@@ -41,18 +41,22 @@ public class StrategieMakerFragment extends Fragment {
 
     private List<UnitItem> unitList;
     private UseBDD useBDD;
-    StrategyItem currentStrat;
+    private StrategyItem currentStrat;
     private int selectedRaceId;
+    private boolean configurationInProgress = false;
 
     public StrategieMakerFragment() {
         unitList = new ArrayList<UnitItem>();
         currentStrat = new StrategyItem();
     }
-    public static StrategieMakerFragment newInstance(StrategyItem strat)
+    public static StrategieMakerFragment newInstance(StrategyItem strat, UseBDD bdd)
     {
         StrategieMakerFragment frag = new StrategieMakerFragment();
-        frag.currentStrat = strat;
-        frag.setControls();
+        frag.useBDD = bdd;
+        if(strat != null) {
+            frag.currentStrat = strat;
+            //frag.setControls();
+        }
         return frag;
     }
 
@@ -82,53 +86,55 @@ public class StrategieMakerFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 String selectedRace = (String)adapterView.getItemAtPosition(position);
-                switch(selectedRace)
-                {
-                    case "Terran":
-                        selectedRaceId = 0;
-                        break;
-                    case "Protoss":
-                        selectedRaceId = 1;
-                        break;
-                    case "Zerg":
-                        selectedRaceId = 2;
-                        break;
-                    default:
-                        selectedRaceId = 0;
+                if(!configurationInProgress) {
+                    switch (selectedRace) {
+                        case "Terran":
+                            selectedRaceId = 0;
+                            break;
+                        case "Protoss":
+                            selectedRaceId = 1;
+                            break;
+                        case "Zerg":
+                            selectedRaceId = 2;
+                            break;
+                        default:
+                            selectedRaceId = 0;
 
-                }
-                if(currentStrat.getRace() == -1)
-                {
-                    resetConfiguration();
+                    }
+                    if (currentStrat.getRace() == -1) {
+                        resetConfiguration();
+                    } else {
+                        if (currentStrat.getRace() != selectedRaceId && currentStrat.getListSize() > 0) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder.setMessage("Changer de race supprimera la configuration actuelle")
+                                    .setTitle("Changer de race ?");
+                            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    resetConfiguration();
+                                }
+                            });
+
+                            builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    spinner.setSelection(currentStrat.getRace());
+                                }
+                            });
+
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        } else {
+                            resetConfiguration();
+                        }
+                    }
+                    if (currentStrat.getDbId() != -1)
+                        setControls();
                 }
                 else
+
                 {
-                    if(currentStrat.getRace() != selectedRaceId && currentStrat.getListSize() > 0)
-                    {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setMessage("Changer de race supprimera la configuration actuelle")
-                                .setTitle("Changer de race ?");
-                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                resetConfiguration();
-                            }
-                        });
-
-                        builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                spinner.setSelection(currentStrat.getRace());
-                            }
-                        });
-
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
-                    }
-                    else
-                    {
-                        resetConfiguration();
-                    }
+                    configurationInProgress = false;
                 }
 
             }
@@ -339,15 +345,18 @@ public class StrategieMakerFragment extends Fragment {
 
         selectedRaceId = currentStrat.getRace();
         Spinner spinner = (Spinner) getActivity().findViewById(R.id.spinner_race);
-        if(selectedRaceId != 0)
-            spinner.setSelection(selectedRaceId);
+
+        configurationInProgress = true;
+
+        spinner.setSelection(selectedRaceId);
 
         ((EditText ) getActivity().findViewById(R.id.editName)).setText(currentStrat.getName());
+        ((EditText ) getActivity().findViewById(R.id.editDescription)).setText(currentStrat.getDescription());
 
-
-        resetConfiguration();
+        //resetConfiguration();
 
         remakeUnitList();
+
     }
 
 

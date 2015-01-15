@@ -200,7 +200,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void setStrategieMakerFragement(StrategyItem strat)
     {
-        if(strat == null) {
+        /*if(strat == null) {
             final Fragment fragment = new StrategieMakerFragment();
             ((StrategieMakerFragment)fragment).setUseBDD(useBDD);
 
@@ -216,8 +216,8 @@ public class MainActivity extends ActionBarActivity {
 
         }
         else
-        {
-            final Fragment fragment = StrategieMakerFragment.newInstance(strat);
+        {*/
+            final Fragment fragment = StrategieMakerFragment.newInstance(strat,useBDD);
             final FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.frame_container, fragment);
@@ -225,7 +225,7 @@ public class MainActivity extends ActionBarActivity {
             transaction.addToBackStack(null);
 
             transaction.commit();
-        }
+        //}
 
     }
     public void getUnitFromId(int unitId){

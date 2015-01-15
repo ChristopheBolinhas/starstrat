@@ -206,7 +206,7 @@ public class UseBDD
                     element.setSecond(item.getSecondes());
                     element.setVibrate(item.getVibrate());
                     Race_entities entities = raceEntities.getRaceEntitiesWithName(item.getNom());
-                    element.setId_Race_Entities(entities.getId());
+                    element.setId_Race_Entities(convertRaceIdAppToDb(entities.getId()));
 
                     elementStrategie.updateElement(item.getId(),element);
                 }
@@ -219,7 +219,7 @@ public class UseBDD
                     element.setVibrate(item.getVibrate());
 
                     Race_entities entities = raceEntities.getRaceEntitiesWithName(item.getNom());
-                    element.setId_Race_Entities(entities.getId());
+                    element.setId_Race_Entities(convertRaceIdAppToDb(entities.getId()));
 
                     elementStrategie.insertElement(element);
                 }
@@ -253,7 +253,7 @@ public class UseBDD
                 item.setName(stratref.getName());
                 item.setDescription(stratref.getDescription());
                 item.setDbId(stratref.getId());
-                item.setRace(convertRaceId(stratref.getId_race()));
+                item.setRace(convertRaceIdDbToApp(stratref.getId_race()));
 
                 item.setListUnits(listUnit);
                 listFinal.add(item);
@@ -263,7 +263,7 @@ public class UseBDD
         return listFinal;
     }
 
-    private int convertRaceId(int id)
+    private int convertRaceIdDbToApp(int id)
     {
         switch(id)
         {
@@ -273,6 +273,20 @@ public class UseBDD
                 return 1;
             case 1://zergs
                 return 2;
+        }
+        return -1;
+    }
+
+    private int convertRaceIdAppToDb(int id)
+    {
+        switch(id)
+        {
+            case 0://Terran
+                return 3;
+            case 1://Protoss
+                return 2;
+            case 2://zergs
+                return 1;
         }
         return -1;
     }
