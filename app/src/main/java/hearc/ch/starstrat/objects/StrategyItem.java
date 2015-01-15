@@ -123,6 +123,7 @@ public class StrategyItem {
     }
 
 
-
-
+    public void removeUnit(UnitItem unit) {
+        listUnits.remove(unit);
+    }
 }

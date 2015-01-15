@@ -39,14 +39,14 @@ import hearc.ch.starstrat.objects.UnitItem;
 public class StrategieMakerFragment extends Fragment {
 
 
-    private List<UnitItem> unitList;
+    //private List<UnitItem> unitList;
     private UseBDD useBDD;
     private StrategyItem currentStrat;
     private int selectedRaceId;
     private boolean configurationInProgress = false;
 
     public StrategieMakerFragment() {
-        unitList = new ArrayList<UnitItem>();
+        //unitList = new ArrayList<UnitItem>();
         currentStrat = new StrategyItem();
     }
     public static StrategieMakerFragment newInstance(StrategyItem strat, UseBDD bdd)
@@ -344,7 +344,8 @@ public class StrategieMakerFragment extends Fragment {
 
     private void removeUnit(UnitItem unit)
     {
-        unitList.remove(unit);
+        //unitList.remove(unit);
+        currentStrat.removeUnit(unit);
     }
 
 
