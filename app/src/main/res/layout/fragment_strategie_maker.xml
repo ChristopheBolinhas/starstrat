@@ -148,14 +148,15 @@
                 android:layout_width="0dp"
                 android:layout_weight="4"/>
 
-            <Button
-                android:background="@drawable/button_stratmake_style_normal"
+            <ImageButton
+                android:background="@null"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_gravity="center"
                 android:layout_weight="2"
                 android:id="@+id/button_add_unit"
-                android:text="Ajouter"/>
+                android:src="@drawable/ic_add"
+                />
         </LinearLayout>
         <TableLayout
             android:id="@+id/table_units"

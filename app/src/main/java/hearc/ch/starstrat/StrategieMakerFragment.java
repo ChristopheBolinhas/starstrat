@@ -15,6 +15,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TableLayout;
@@ -156,14 +158,14 @@ public class StrategieMakerFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                Toast.makeText(getActivity(),"Nothing",Toast.LENGTH_LONG).show();
+
             }
         });
 
 
 
 
-        Button buttonAddUnit = (Button) getActivity().findViewById(R.id.button_add_unit);
+        ImageButton buttonAddUnit = (ImageButton) getActivity().findViewById(R.id.button_add_unit);
         buttonAddUnit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -211,7 +213,6 @@ public class StrategieMakerFragment extends Fragment {
                // useBDD.open();
                 if(selectedRaceId != -1 && nbUnits > 0 && stratName != "")
                 {
-                    Toast.makeText(getActivity(),"Strat :" + currentStrat.getDescription(),Toast.LENGTH_LONG).show();
                     //useBDD.addStrat(currentStrat);
                     ((MainActivity)getActivity()).addStrat(currentStrat);
                     ((MainActivity)getActivity()).updateStratFrag();
@@ -265,7 +266,7 @@ public class StrategieMakerFragment extends Fragment {
         spinnerUnits.setAdapter(new SpinnerUnitAdapter(getView().getContext(),R.layout.spinner_units_style, unitTab, iconTab, idTab));
 
 
-        //Toast.makeText(getActivity(),"Set race : " + currentStrat.getRace(),Toast.LENGTH_LONG).show();
+
     }
 
 
@@ -331,10 +332,14 @@ public class StrategieMakerFragment extends Fragment {
         textView2.setText(unit.getMinutes() + ":" + unit.getSecondes());
         textView2.setGravity(TextView.TEXT_ALIGNMENT_CENTER);
         textView2.setPadding(padding,padding,padding,padding);
-        Button buttonRemove = new Button(getView().getContext());
-        buttonRemove.setText("x");
-        buttonRemove.setWidth(20);
-        buttonRemove.setBackgroundResource(R.drawable.button_stratmake_style_normal);
+        ImageButton buttonRemove = new ImageButton(getView().getContext());
+        //buttonRemove.setText("x");
+        //buttonRemove.setWidth(20);
+        buttonRemove.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        buttonRemove.setImageResource(R.drawable.ic_remove);
+        buttonRemove.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        buttonRemove.setBackground(null);
+        //buttonRemove.setBackgroundResource(R.drawable.button_stratmake_style_normal);
         buttonRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -6,9 +6,9 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
 import android.view.Menu;
@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -86,7 +85,7 @@ public class MainActivity extends ActionBarActivity {
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[0],navMenuIcons.getResourceId(0,0)));
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[1],navMenuIcons.getResourceId(1,0)));
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[2],navMenuIcons.getResourceId(2,0)));
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3],navMenuIcons.getResourceId(3,0)));
+        //navDrawerItems.add(new NavDrawerItem(navMenuTitles[3],navMenuIcons.getResourceId(3,0)));
         navMenuIcons.recycle();
 
         mDrawerList.setOnItemClickListener(new DrawerMenuClickListener() );
@@ -210,25 +209,10 @@ public class MainActivity extends ActionBarActivity {
 
     public void setStrategieMakerFragement(StrategyItem strat)
     {
-        /*if(strat == null) {
-            final Fragment fragment = new StrategieMakerFragment();
-            ((StrategieMakerFragment)fragment).setUseBDD(useBDD);
 
-            final FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-            transaction.replace(R.id.frame_container, fragment);
-
-            transaction.addToBackStack(null);
-
-            transaction.commit();
-
-
-        }
-        else
-        {*/
             final Fragment fragment = StrategieMakerFragment.newInstance(strat);
             final FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.frame_container, fragment);
 
