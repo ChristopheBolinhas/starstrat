@@ -77,7 +77,7 @@ public class UseBDD
     }
 
     //Fonction pour ouvrir les tables
-    private void open()
+    public void open()
     {
         race.open();
         type.open();
@@ -241,8 +241,9 @@ public class UseBDD
 
                 List<UnitItem> listUnit = new ArrayList<UnitItem>();
                 for (int j = 0; j < listElement.size(); j++) {
-                    ElementStrategie el = listElement.get(i);
+                    ElementStrategie el = listElement.get(j);
                     Race_entities entities = raceEntities.getRaceEntitiesWithID(el.getId_Race_Entities());
+
 
                     UnitItem item = new UnitItem(el.getId(), el.getMinute(), el.getSecond(), el.isVibrate(), entities.getName());
                     item.setIcon(getDrawable(entities));

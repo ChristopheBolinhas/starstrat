@@ -80,12 +80,18 @@ public class StrategieMakerFragment extends Fragment {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getView().getContext(),R.array.races_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-
+        if(currentStrat.getDbId() != -1) {
+            spinner.setSelection(currentStrat.getRace());
+            setControls();
+        }
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
 
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 String selectedRace = (String)adapterView.getItemAtPosition(position);
+                /*if (currentStrat.getDbId() != -1)
+                    setControls();*/
+
                 if(!configurationInProgress) {
                     switch (selectedRace) {
                         case "Terran":
@@ -128,8 +134,7 @@ public class StrategieMakerFragment extends Fragment {
                             resetConfiguration();
                         }
                     }
-                    if (currentStrat.getDbId() != -1)
-                        setControls();
+
                 }
                 else
 
@@ -190,11 +195,13 @@ public class StrategieMakerFragment extends Fragment {
                 currentStrat.setName(stratName);
                 String stratDescription = ((EditText)getActivity().findViewById(R.id.editDescription)).getText().toString();
                 currentStrat.setDescription(stratDescription);
-
+                useBDD.close();
+                useBDD.open();
                 if(selectedRaceId != -1 && nbUnits > 0 && stratName != "")
                 {
-                    useBDD.addStrat(currentStrat);
-                    Toast.makeText(getActivity(),"Stratégie ajoutée !",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(),"Strat :" + currentStrat.getDescription(),Toast.LENGTH_LONG).show();
+                    //useBDD.addStrat(currentStrat);
+                    ((MainActivity)getActivity()).addStrat(currentStrat);
                     ((MainActivity)getActivity()).updateStratFrag();
                     getFragmentManager().popBackStack();
                 }
@@ -239,6 +246,7 @@ public class StrategieMakerFragment extends Fragment {
             unitTab[i] = list.get(i).getName();
             iconTab[i] =  useBDD.getDrawable(list.get(i));
             idTab[i] = list.get(i).getId();
+            //idTab[i] = list.get(i).get
         }
 
         Spinner spinnerUnits = (Spinner) getActivity().findViewById(R.id.spinner_unit_choice);
@@ -344,16 +352,16 @@ public class StrategieMakerFragment extends Fragment {
     {
 
         selectedRaceId = currentStrat.getRace();
-        Spinner spinner = (Spinner) getActivity().findViewById(R.id.spinner_race);
+        //Spinner spinner = (Spinner) getActivity().findViewById(R.id.spinner_race);
 
-        configurationInProgress = true;
+        //configurationInProgress = true;
 
-        spinner.setSelection(selectedRaceId);
+        //spinner.setSelection(selectedRaceId);
 
         ((EditText ) getActivity().findViewById(R.id.editName)).setText(currentStrat.getName());
         ((EditText ) getActivity().findViewById(R.id.editDescription)).setText(currentStrat.getDescription());
 
-        //resetConfiguration();
+        resetConfiguration();
 
         remakeUnitList();
 

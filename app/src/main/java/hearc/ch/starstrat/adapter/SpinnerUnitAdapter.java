@@ -30,7 +30,7 @@ public class SpinnerUnitAdapter extends ArrayAdapter<String> {
         this.mIcons = icons;
 
         this.unitIds = ids;
-        //TODO : Adapter au remplissage automatique
+
     }
 
     public int getSelectedUnitId(int position)

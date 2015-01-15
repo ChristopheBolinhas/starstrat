@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -65,8 +66,8 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        useBDD = new UseBDD(this);
+        if(useBDD == null)
+            useBDD = new UseBDD(this);
 
 
 
@@ -98,6 +99,9 @@ public class MainActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        //getSupportActionBar().setDisplayOptions(0);
+        //getSupportActionBar().get
+
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,R.string.drawer_open,R.string.drawer_close);
         mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +125,11 @@ public class MainActivity extends ActionBarActivity {
             stratListFrag.updateList();
     }
 
+    public void addStrat(StrategyItem strat) {
+        useBDD.addStrat(strat);
+        Toast.makeText(this,strat.getName() + " | " + strat.getDescription() + " | "  + strat.getListSize(), Toast.LENGTH_LONG).show();
+    }
+
     /**
      * Slide menu item click listener
      * */
@@ -139,6 +148,7 @@ public class MainActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        menu.removeItem(0);
         return true;
     }
 
