@@ -166,6 +166,9 @@ public class MainActivity extends ActionBarActivity {
     private void setLaunchGameFragment(StrategyItem strat) {
         final Fragment fragment = LaunchGameFragment.newInstance(strat,speedOfGame);
         final FragmentManager fragmentManager = getFragmentManager();
+        if(fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
 
@@ -225,7 +228,9 @@ public class MainActivity extends ActionBarActivity {
 
             final Fragment fragment = StrategieMakerFragment.newInstance(strat);
             final FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            if(fragmentManager.getBackStackEntryCount() > 0) {
+                fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            }
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.frame_container, fragment);
 
@@ -249,10 +254,20 @@ public class MainActivity extends ActionBarActivity {
                 fragment = new HomeFragment();
                 break;
             case 1://StrategyList
-                if(stratListFrag == null)
+                FragmentManager manager = getFragmentManager();
+                Fragment frag_strat = manager.findFragmentById(R.layout.fragment_strategie);
+                if(stratListFrag == null) {
                     stratListFrag = StrategieFragment.newInstance();
-                    //stratListFrag.updateList();
-                fragment = stratListFrag;
+                    fragment = stratListFrag;
+                }
+                else if(frag_strat != null) {
+                    fragment = frag_strat;
+                }
+                else
+                {
+                    fragment = stratListFrag;
+                }
+
 
 
                 break;
@@ -283,6 +298,9 @@ public class MainActivity extends ActionBarActivity {
     {
         if (fragment != null) {
             FragmentManager fragmentManager = getFragmentManager();
+            if(fragmentManager.getBackStackEntryCount() > 0) {
+                fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            }
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_container, fragment).commit();
 
