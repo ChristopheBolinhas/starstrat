@@ -191,6 +191,8 @@ public class StrategieMakerFragment extends Fragment {
                 String stratDescription = ((EditText)getActivity().findViewById(R.id.editDescription)).getText().toString();
                 currentStrat.setDescription(stratDescription);
 
+               // useBDD.close();
+               // useBDD.open();
                 if(selectedRaceId != -1 && nbUnits > 0 && stratName != "")
                 {
                     useBDD.addStrat(currentStrat);
