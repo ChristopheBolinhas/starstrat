@@ -82,7 +82,7 @@ public class ImagesViewLaunch {
                 //Creation of the horizontal image
                 ImageView tmp = new ImageView(myActivity);
                 //Image de myListOfUnit.get(j+i);
-                tmp.setImageResource(R.drawable.ic_about);
+                tmp.setImageDrawable(unit.getIcon());
                 l.addView(tmp);
             }
 

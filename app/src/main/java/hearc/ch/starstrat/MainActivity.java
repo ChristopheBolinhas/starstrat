@@ -234,7 +234,7 @@ public class MainActivity extends ActionBarActivity {
                 StrategyItem strat = new StrategyItem();
                 for(int i = 0; i < 40; i+=2)
                 {
-                    strat.addItem("",0,0,i,true);
+                    strat.addItem("Zerg",0,0,i,true);
                 }
                 fragment = LaunchGameFragment.newInstance(strat,speedOfGame);
             break;
