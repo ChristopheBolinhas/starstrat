@@ -174,8 +174,6 @@ public class UseBDD
                 Race_entities entities = raceEntities.getRaceEntitiesWithName(list.get(i).getNom());
                 element.setId_Race_Entities(entities.getId());
 
-                //Toast.makeText(context, list.get(i).getId(), Toast.LENGTH_LONG).show();
-
                 elementStrategie.insertElement(element);
             }
         }
@@ -189,44 +187,22 @@ public class UseBDD
             strats.updateStrategies(idStrat,strategie);
 
             List<UnitItem> list = objetStrategie.getListUnits(false);
-            List<ElementStrategie> listElementStrat = elementStrategie.getListElementStrategieWithIDStrat(idStrat);
+
+            elementStrategie.removeElementWithIDStrat(strategie.getId());
 
             for(int i=0;i<list.size();i++)
             {
-                boolean exist = false;
-                for(int j=0;j<listElementStrat.size();j++)
-                {
-                    if(listElementStrat.get(j).getId()==list.get(i).getIdDB())
-                        exist = true;
-                }
-                UnitItem item = list.get(i);
-                if(exist)
-                {
-                    ElementStrategie element = elementStrategie.getElementWithID(item.getIdDB());
+                ElementStrategie element = new ElementStrategie();
+                element.setId_Strat(strategie.getId());
+                element.setMinute(list.get(i).getMinutes());
+                element.setSecond(list.get(i).getSecondes());
+                element.setVibrate(list.get(i).getVibrate());
 
-                    element.setMinute(item.getMinutes());
-                    element.setSecond(item.getSecondes());
-                    element.setVibrate(item.getVibrate());
-                    Race_entities entities = raceEntities.getRaceEntitiesWithName(item.getNom());
-                    element.setId_Race_Entities(entities.getId());
+                Race_entities entities = raceEntities.getRaceEntitiesWithName(list.get(i).getNom());
+                element.setId_Race_Entities(entities.getId());
 
-                    elementStrategie.updateElement(entities.getId(),element);
-                }
-                else
-                {
-                    ElementStrategie element = new ElementStrategie();
-                    element.setId_Strat(idStrat);
-                    element.setMinute(item.getMinutes());
-                    element.setSecond(item.getSecondes());
-                    element.setVibrate(item.getVibrate());
-
-                    Race_entities entities = raceEntities.getRaceEntitiesWithName(item.getNom());
-                    element.setId_Race_Entities(entities.getId());
-
-                    elementStrategie.insertElement(element);
-                }
+                elementStrategie.insertElement(element);
             }
-
         }
 
     }
