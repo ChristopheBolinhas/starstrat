@@ -10,6 +10,15 @@ public class Race_entities
     private int id_type;
     private String name;
     private int time_creation;
+    private String pathImage;
+
+    public String getPathImage() {
+        return pathImage;
+    }
+
+    public void setPathImage(String pathImage) {
+        this.pathImage = pathImage;
+    }
 
     public int getId() {
         return id;

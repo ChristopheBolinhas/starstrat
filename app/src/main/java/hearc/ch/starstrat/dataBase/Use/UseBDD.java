@@ -1,13 +1,14 @@
 package hearc.ch.starstrat.dataBase.Use;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import hearc.ch.starstrat.dataBase.BDD.ElementStrategieBDD;
 import hearc.ch.starstrat.dataBase.BDD.EventsBDD;
-import hearc.ch.starstrat.dataBase.BDD.ImageBDD;
 import hearc.ch.starstrat.dataBase.BDD.RaceBDD;
 import hearc.ch.starstrat.dataBase.BDD.Race_entitiesBDD;
 import hearc.ch.starstrat.dataBase.BDD.StrategiesBDD;
@@ -34,7 +35,6 @@ public class UseBDD
     private Race_entitiesBDD raceEntities;
     private EventsBDD events;
     private StrategiesBDD strats;
-    private ImageBDD image;
     private ElementStrategieBDD elementStrategie;
 
     private Context context;
@@ -46,7 +46,6 @@ public class UseBDD
         this.raceEntities = new Race_entitiesBDD(context);
         this.events = new EventsBDD(context);
         this.strats = new StrategiesBDD(context);
-        this.image = new ImageBDD(context);
         this.elementStrategie = new ElementStrategieBDD(context);
 
         this.context = context;
@@ -70,44 +69,11 @@ public class UseBDD
         if(re==null)
             new InsertRaceEntities(raceEntities);
 
+    }
 
-        //TEST
-        /*DataBaseHelper myDbHelper = new DataBaseHelper(context);
-
-        try {
-
-            myDbHelper.createDataBase();
-
-        } catch (IOException ioe) {
-
-            throw new Error(ioe);
-
-        }
-
-        try {
-
-            myDbHelper.openDataBase();
-
-        }catch(SQLException sqle){
-
-            throw new Error(sqle);
-
-        }*/
-
-        /*try {
-            InputStream in = context.getAssets().open("testImage");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
-
-        //TODO Image
-        /*Image im = image.getImageWithID(1);
-        //Toast.makeText(context, ""+im.getImage_Texte(), Toast.LENGTH_LONG).show();
-        if(im==null)
-            new InsertImages(image, context);*/
-
+    public Context getContext()
+    {
+        return context;
     }
 
     //Fonction pour ouvrir les tables
@@ -118,7 +84,6 @@ public class UseBDD
         raceEntities.open();
         events.open();
         strats.open();
-        image.open();
         elementStrategie.open();
     }
 
@@ -130,10 +95,20 @@ public class UseBDD
         raceEntities.close();
         events.close();
         strats.close();
-        image.close();
         elementStrategie.close();
     }
 
+    public Drawable getDrawable(Race_entities r)
+    {
+        try
+        {
+            return Drawable.createFromStream(context.getAssets().open(r.getPathImage()), null);
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public List<Race_entities> getAllUnitTerran()
     {
@@ -221,7 +196,7 @@ public class UseBDD
                 listFinal.add(item);
             }
         }
-        
+
         return listFinal;
     }
 

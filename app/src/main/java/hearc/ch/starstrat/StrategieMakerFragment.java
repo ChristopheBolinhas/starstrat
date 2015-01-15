@@ -4,6 +4,7 @@ package hearc.ch.starstrat;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -224,12 +226,12 @@ public class StrategieMakerFragment extends Fragment {
 
 
         String[] unitTab = new String[list.size()];
-        Integer[] iconTab = new Integer[list.size()];
+        Drawable[] iconTab = new Drawable[list.size()];
         Integer[] idTab = new Integer[list.size()];
         for(int i=0;i<list.size();i++)
         {
             unitTab[i] = list.get(i).getName();
-            iconTab[i] = R.drawable.ic_zerg;
+            iconTab[i] =  useBDD.getDrawable(list.get(i));
             idTab[i] = list.get(i).getId();
         }
 
