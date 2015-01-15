@@ -24,51 +24,38 @@ tools:context="hearc.ch.starstrat.SpeedChooseFragment">
     android:layout_weight="7"
     android:weightSum="6">
 
+    <RadioButton android:id="@+id/radioSlower"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/choose_speed_fragment_slower"/>
+
+    <RadioButton android:id="@+id/radioSlow"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/choose_speed_fragment_slow"/>
+
     <RadioButton android:id="@+id/radioRegular"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:checked="true"
         android:text="@string/choose_speed_fragment_normal"/>
-
-    <RadioButton android:id="@+id/radioRegular2"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/choose_speed_fragment_faster"/>
 
     <RadioButton android:id="@+id/radioFast"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/choose_speed_fragment_normal"/>
+        android:checked="true"
+        android:text="@string/choose_speed_fragment_fast"/>
 
-    <RadioButton android:id="@+id/radioFast2"
+
+    <RadioButton android:id="@+id/radioFaster"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="@string/choose_speed_fragment_faster"/>
 
-
-    <RadioButton android:id="@+id/radioFast3"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/choose_speed_fragment_faster2"/>
-
-    <RadioButton android:id="@+id/radioFast4"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/choose_speed_fragment_faster4"/>
-
 </RadioGroup>
-
-<Button android:id="@+id/returnButton"
-    android:layout_width="match_parent"
-    android:layout_height="48dp"
-    android:layout_margin="20dp"
-    android:layout_weight="1"
-    android:text="@string/choose_speed_fragment_return"/>
 
 </LinearLayout>

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,25 +22,18 @@ import hearc.ch.starstrat.R;
  * Use the {@link SpeedChooseFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SpeedChooseFragment extends Fragment implements View.OnClickListener{
-    private static final int regularSpeed = 1;
-    private static final int fastSpeed = 2;
+public class SpeedChooseFragment extends Fragment{
+
+    public static final float slowerSpeed = 0.599f;
+    public static final float slowSpeed = 0.83f;
+    public static final float regularSpeed = 1;
+    public static final float fastSpeed = 1.21f;
+    public static final float fasterSpeed = 1.38f;
+
     private RadioGroup radioGroup;
     private Button buttonReturn;
     private TextView textTitle;
     private float speedOfGame;
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-  /*
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-*/
-    // TODO: Rename and change types of parameters
-    /*
-    private String mParam1;
-    private String mParam2;
-*/
 
     /**
      * Use this factory method to create a new instance of
@@ -49,12 +44,6 @@ public class SpeedChooseFragment extends Fragment implements View.OnClickListene
     // TODO: Rename and change types and number of parameters
     public static SpeedChooseFragment newInstance() {
         SpeedChooseFragment fragment = new SpeedChooseFragment();
-        /*
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        */
         return fragment;
     }
 
@@ -62,19 +51,18 @@ public class SpeedChooseFragment extends Fragment implements View.OnClickListene
 
     }
 
-    public void onClick(View v){
-        //TODO : Retourne dans le main
-    }
-
     @Override
     public void onActivityCreated (Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
-        textTitle = (TextView)getActivity().findViewById(R.id.textChooseSpeed);
 
-        //Récupère le bouton de retour et crée le lien pour retourner au parent
-        buttonReturn = (Button)getActivity().findViewById(R.id.returnButton);
-        buttonReturn.setOnClickListener(this);
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        int widthScreen = displaymetrics.widthPixels;
+
+        //Adapt text size related to screen width
+        textTitle = (TextView)getActivity().findViewById(R.id.textChooseSpeed);
+        textTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX,0.05f*widthScreen);
 
         //Récupére le groupe de radioButton et change la vitesse de jeu par rapport à la selection
         radioGroup = (RadioGroup)this.getActivity().findViewById(R.id.radioGroupSpeed);
@@ -83,45 +71,35 @@ public class SpeedChooseFragment extends Fragment implements View.OnClickListene
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch(checkedId)
                 {
-                    case R.id.radioRegular:
-                        speedOfGame = 1;
+                    case R.id.radioSlower:
+                        speedOfGame = slowerSpeed;
                         break;
-                    case R.id.radioRegular2:
-                        speedOfGame = (float)1.5*regularSpeed;
+                    case R.id.radioSlow:
+                        speedOfGame = slowSpeed;
+                        break;
+                    case R.id.radioRegular:
+                        speedOfGame = regularSpeed;
                         break;
                     case R.id.radioFast:
                         speedOfGame = fastSpeed;
                         break;
-                    case R.id.radioFast2:
-                        speedOfGame = (float)1.5*fastSpeed;
-                        break;
-                    case R.id.radioFast3:
-                        speedOfGame = (float)2*fastSpeed;
-                        break;
-                    case R.id.radioFast4:
-                        speedOfGame = (float)4*fastSpeed;
+                    case R.id.radioFaster:
+                        speedOfGame = fasterSpeed;
                         break;
                     default:
-                        speedOfGame = 1;
-                        radioGroup.check(0);
+                        speedOfGame = fastSpeed;
+                        radioGroup.check(R.id.radioFast);
                 }
+
+
+                ((MainActivity)getActivity()).setSpeedOfGame(speedOfGame);
             }
         });
-
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
-/*
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-*/
     }
 
     @Override

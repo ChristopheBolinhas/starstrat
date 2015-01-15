@@ -38,13 +38,13 @@
 
 
     <!-- Values for SpeedChooseFragment -->
-    <string name="choose_speed_fragment_title">Choose your speed of game</string>
-    <string name="choose_speed_fragment_normal">Regular</string>
-    <string name="choose_speed_fragment_faster">Faster</string>
-    <string name="choose_speed_fragment_faster2">Faster*2</string>
-    <string name="choose_speed_fragment_faster4">Faster*4</string>
-    <string name="choose_speed_fragment_return">Return</string>
-
+    <string name="choose_speed_fragment_title">Choix de la vitesse de jeu</string>
+    <string name="choose_speed_fragment_slower">Plus lent</string>
+    <string name="choose_speed_fragment_slow">Lent</string>
+    <string name="choose_speed_fragment_normal">Normal</string>
+    <string name="choose_speed_fragment_fast">Rapide</string>
+    <string name="choose_speed_fragment_faster">Plus rapide</string>
+    <string name="choose_speed_fragment_return">Retour</string>
 
     <!-- Values for LaunchGameFragment -->
     <string name="launch_game_fragment_Start">Start</string>

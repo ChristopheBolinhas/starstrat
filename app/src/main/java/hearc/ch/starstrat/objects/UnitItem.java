@@ -22,6 +22,10 @@ public class UnitItem {
         this.name = name;
     }
 
+    public Drawable getIcon()
+    {
+        return icon;
+    }
 
     public int getId()
     {

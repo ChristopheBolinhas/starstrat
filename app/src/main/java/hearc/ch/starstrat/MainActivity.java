@@ -44,6 +44,12 @@ public class MainActivity extends ActionBarActivity {
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
     private UseBDD useBDD;
+    private float speedOfGame = SpeedChooseFragment.fastSpeed;
+
+    public void setSpeedOfGame(float speed)
+    {
+        speedOfGame = speed;
+    }
 
     public MainActivity() {
     }
@@ -230,7 +236,7 @@ public class MainActivity extends ActionBarActivity {
                 {
                     strat.addItem("",0,0,i,true);
                 }
-                fragment = LaunchGameFragment.newInstance(strat);
+                fragment = LaunchGameFragment.newInstance(strat,speedOfGame);
             break;
             case 4://Hidden - LauchGameFragment
                 //TODO LaunchGameFragment

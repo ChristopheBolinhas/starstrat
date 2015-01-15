@@ -33,17 +33,23 @@ import hearc.ch.starstrat.objects.UnitItem;
  */
 public class LaunchGameFragment extends Fragment {
 
+    //Standard time between animation : 10s
+    private static int standardTimeOfAnimation = 10000;
+    private static float miniScale = 0.1f;
+
     //Real
     private LinkedList<ImagesViewLaunch> listImagesAnimation;
     private StrategyItem myStrategy;
-    private float speedGame;
+    private long timeBetweenAnimation, totalTime;
+    private float speedOfGame;
+
+    //To regroup all units under every 10s
     private int timeForUnit = 10;
 
-    private int widthScreen, heightScreen, transX = 20, marginLeftLayout = 200, sizeImage;
+    private int widthScreen, heightScreen, transX = 20, marginLeftLayout = 200;
     private boolean isPause, isFirstPassed;
-    private float miniScale = 0.1f;
-    private int nbAnimation = 10;
-    private int timeAnimate = 500, timeBetweenAnimation = 3000, totalTime = 30000;
+    private int nbAnimation;
+    private int timeAnimate = 500;
     private String textButtonStart, textButtonPause;
 
     private android.text.format.Time timeSincePause, timeSinceLastAnimation, totalTimeAnimation,timeAnimation;
@@ -120,10 +126,10 @@ public class LaunchGameFragment extends Fragment {
         }
     };
 
-    public static LaunchGameFragment newInstance(StrategyItem strategy) {
+    public static LaunchGameFragment newInstance(StrategyItem strategy, float speedGame) {
         LaunchGameFragment fragment = new LaunchGameFragment();
         fragment.myStrategy = strategy;
-        //fragment.speedGame = ((MainActivity)getActivity())
+        fragment.speedOfGame = speedGame;
         return fragment;
     }
 
@@ -151,6 +157,8 @@ public class LaunchGameFragment extends Fragment {
 
         textStepTime = (TextView)getActivity().findViewById(R.id.timerActuel);
         layoutAnimation = (RelativeLayout)getActivity().findViewById(R.id.layoutAnimation);
+
+        timeBetweenAnimation = (long)(standardTimeOfAnimation / speedOfGame);
 
         //GET SCREEN SIZE
         DisplayMetrics displaymetrics = new DisplayMetrics();
@@ -215,6 +223,7 @@ public class LaunchGameFragment extends Fragment {
                     }
 
                     nbAnimation = listImagesAnimation.size();
+                    totalTime = nbAnimation*timeBetweenAnimation;
 
                     isFirst = false;
                 }
@@ -327,7 +336,7 @@ public class LaunchGameFragment extends Fragment {
     private void secondAnimation(int index)
     {
         //Animate the object from 1/4 screen to 1/2 screen
-        (listImagesAnimation.get(index).getLinearAnimation()).animate().translationX(marginLeftLayout+(widthScreen/2)-listImagesAnimation.get(index).getLinearAnimation().getMeasuredWidth()/2).alpha(1).scaleX(listImagesAnimation.get(index).getBigScale()).scaleY(listImagesAnimation.get(index).getBigScale()).setDuration(timeAnimate).withLayer();
+        (listImagesAnimation.get(index).getLinearAnimation()).animate().translationX(marginLeftLayout+(widthScreen/2)-(listImagesAnimation.get(index).getLinearAnimation().getMeasuredWidth()/2)).alpha(1).scaleX(listImagesAnimation.get(index).getBigScale()).scaleY(listImagesAnimation.get(index).getBigScale()).setDuration(timeAnimate).withLayer();
         hAnimation3.postDelayed(launchThird,timeBetweenAnimation);
     }
 

@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import java.util.List;
 
 import hearc.ch.starstrat.R;
+import hearc.ch.starstrat.dataBase.Use.UseBDD;
 import hearc.ch.starstrat.model.StrategyListItem;
 
 /**
@@ -17,14 +18,12 @@ public class ImagesViewLaunch {
 
     List<UnitItem> myListOfUnit;
     Activity myActivity;
-    float littleScale, bigScale, sizeImage;
+    float littleScale, bigScale;
     int nbImagePerLine;
     boolean isVibrate;
     LinearLayout linearAnimation;
 
     public boolean getIsVibrate(){return isVibrate;}
-
-    public float getSizeImage(){return sizeImage;}
 
     public float getLittleScale()
     {
@@ -83,8 +82,7 @@ public class ImagesViewLaunch {
                 //Creation of the horizontal image
                 ImageView tmp = new ImageView(myActivity);
                 //Image de myListOfUnit.get(j+i);
-                tmp.setImageResource(R.drawable.ic_home_favs);
-                sizeImage = tmp.getMeasuredWidth();
+                tmp.setImageResource(R.drawable.ic_about);
                 l.addView(tmp);
             }
 
