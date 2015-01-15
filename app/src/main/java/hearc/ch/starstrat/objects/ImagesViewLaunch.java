@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -71,8 +72,9 @@ public class ImagesViewLaunch {
         else
             nbImagePerLine = 3;
 
+        //Toast.makeText(myActivity,"size " +myListOfUnit.size(),Toast.LENGTH_LONG).show();
         //foreach unit, get the image
-        for(UnitItem unit : myListOfUnit)
+        for(int j = 0; j < myListOfUnit.size(); j+= nbImagePerLine)
         {
             LinearLayout l = new LinearLayout(myActivity);
             l.setOrientation(LinearLayout.HORIZONTAL);
@@ -81,18 +83,30 @@ public class ImagesViewLaunch {
             {
                 //Creation of the horizontal image
                 ImageView tmp = new ImageView(myActivity);
-                //Image de myListOfUnit.get(j+i);
-                tmp.setImageDrawable(unit.getIcon());
+
+                if(myListOfUnit.get(j+i).getIcon() != null)
+                    tmp.setImageDrawable(myListOfUnit.get(j+i).getIcon());
+                else
+                    tmp.setImageResource(R.drawable.ic_home_favs);
+                /*
+                tmp.setMinimumHeight(60);
+                tmp.setMinimumWidth(60);
+                tmp.setScaleType(ImageView.ScaleType.FIT_XY);
+                */
                 l.addView(tmp);
+
+                //if vibrate then isvibrate = true
+                if(myListOfUnit.get(i+j).getVibrate()) {
+                    isVibrate = true;
+                }
             }
 
             //Put the horizontal image in vertical layout
             linearAnimation.addView(l);
 
-            //if vibrate then isvibrate = true
-            if(unit.getVibrate()) {
-                isVibrate = true;
-            }
         }
+
+        linearAnimation.setMinimumHeight(60);
+        linearAnimation.setMinimumWidth(60);
     }
 }

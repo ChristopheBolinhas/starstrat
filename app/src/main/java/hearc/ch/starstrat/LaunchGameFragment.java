@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -139,16 +140,18 @@ public class LaunchGameFragment extends Fragment {
 
     public void incrementTime()
     {
-        timeAnimation.format("MM:SS");
         timeAnimation.setToNow();
 
-        //Calculate the real time elapsed
-        long tmp = timeAnimation.toMillis(false)-totalTimeAnimation.toMillis(false);
-        textStepTime.setText(""+tmp);
+        //Calculate the real time elapsed in minute and second
+        long tmp = (timeAnimation.toMillis(false)-totalTimeAnimation.toMillis(false));
+
+        Time timeAffichage = new Time();
+        timeAffichage.set(tmp);
+        textStepTime.setText(""+timeAffichage.toMillis(false));
 
         //Set the time every 100ms
         if(totalTime > tmp && !isPause)
-            handlerStep.postDelayed(updateTime,100);
+            handlerStep.postDelayed(updateTime,1000);
     }
 
     @Override
@@ -195,14 +198,19 @@ public class LaunchGameFragment extends Fragment {
                     //Foreach strategy item in strategylistitem (list sort by time)
                     for(UnitItem unit : myStrategy.getListUnits(true))
                     {
+                        //Toast.makeText(getActivity(),"size " +unit.getSecondes(),Toast.LENGTH_LONG).show();
+
                         int timeUnit = unit.getMinutes()*60+unit.getSecondes();
-                        if(timeUnit <= time)
+
+                        if(timeUnit <= timeForUnit)
                         {
                             //we group the unit that have the same field of time
                             listUnite.add(unit);
                         }
                         else
                         {
+                            Toast.makeText(getActivity(),"size " +listUnite.size(),Toast.LENGTH_LONG).show();
+
                             //We create element to draw with right units
                             ImagesViewLaunch imgGroup = new ImagesViewLaunch(listUnite,getActivity());
                             imgGroup.constructImagesView(sizeHeight);
@@ -232,8 +240,8 @@ public class LaunchGameFragment extends Fragment {
                     //Calculate the scale for each image
                     for(ImagesViewLaunch im : listImagesAnimation)
                     {
-                        float lScale = (sizeHeight/2)/im.getLinearAnimation().getMeasuredHeight();
-                        float bScale = (sizeHeight)/im.getLinearAnimation().getMeasuredHeight();
+                        float lScale = (sizeHeight/2)/2;//im.getLinearAnimation().getMeasuredHeight();
+                        float bScale = (sizeHeight)/2;//im.getLinearAnimation().getMeasuredHeight();
                         im.setLittleScale(lScale);
                         im.setBigScale(bScale);
                     }

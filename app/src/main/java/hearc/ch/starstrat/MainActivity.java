@@ -155,7 +155,14 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void setLaunchGameFragment(StrategyItem strat) {
-        //TODO
+        final Fragment fragment = LaunchGameFragment.newInstance(strat,speedOfGame);
+        final FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.frame_container, fragment);
+
+        transaction.addToBackStack(null);
+
+        transaction.commit();
     }
 
     public void editStrat(StrategyItem strat)
