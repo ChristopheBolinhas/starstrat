@@ -156,7 +156,7 @@ public class UseBDD
             else if(objetStrategie.getRace()==2)
                 strategies.setId_race(1);
 
-
+            Toast.makeText(context,"ma Description "+strategies.getDescription(),Toast.LENGTH_LONG).show();
             long l = strats.insertStrategies(strategies);
 
             int id = (int)l;
@@ -255,6 +255,7 @@ public class UseBDD
                 Strategies stratref = listStrats.get(i);
                 item.setName(stratref.getName());
                 item.setDescription(stratref.getDescription());
+                Toast.makeText(context,"ma Description Recu "+stratref.getDescription(),Toast.LENGTH_LONG).show();
                 item.setDbId(stratref.getId());
                 item.setRace(convertRaceIdDbToApp(stratref.getId_race()));
 
