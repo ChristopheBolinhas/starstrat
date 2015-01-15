@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,7 +117,6 @@ public class StrategieFragment extends ListFragment {
         }
 
 
-        Toast.makeText(getActivity(),item.title,Toast.LENGTH_LONG).show();
 
 
     }
@@ -153,7 +152,6 @@ public class StrategieFragment extends ListFragment {
 
                 }
                 mItems.add(new StrategyListItem(icon, item));
-                //Toast.makeText(getActivity(),item.getDescription(),Toast.LENGTH_LONG).show();
             }
         }
 

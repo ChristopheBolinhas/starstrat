@@ -13,16 +13,14 @@
         <item>Accueil</item>
         <item>Liste de stratégie</item>
         <item>Choix de la vitesse</item>
-        <item>A propos</item>
     </string-array>
 
     <!-- Nav Drawer List Item Icons -->
     <!-- Keep them in order as the titles are in -->
     <array name="nav_drawer_icons">
         <item>@drawable/ic_home</item>
-        <item>@drawable/ic_exemple</item>
-        <item>@drawable/ic_zerg</item>
-        <item>@drawable/ic_zerg</item>
+        <item>@drawable/ic_list</item>
+        <item>@drawable/ic_settings</item>
     </array>
 
     <string-array name="races_array">
