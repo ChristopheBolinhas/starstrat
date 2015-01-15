@@ -240,17 +240,8 @@ public class MainActivity extends ActionBarActivity {
         //}
 
     }
-    public void getUnitFromId(int unitId){
-        //useBDD.g
-    }
 
-    /*public void displayViewMaker(StrategyItem strat)
-    {
-        Fragment fragment = null;
-        fragment = StrategieMakerFragment.newInstance(strat);
-        ((StrategieMakerFragment)fragment).setUseBDD(useBDD);
-        setFragment(fragment, 3);
-    }*/
+
 
     /**
      * Diplaying fragment view for selected nav drawer list item
@@ -266,7 +257,7 @@ public class MainActivity extends ActionBarActivity {
                 if(stratListFrag == null)
                     stratListFrag = StrategieFragment.newInstance();
                 else
-                    stratListFrag.updateList();
+                    //stratListFrag.updateList();
                 fragment = stratListFrag;
 
                 break;
