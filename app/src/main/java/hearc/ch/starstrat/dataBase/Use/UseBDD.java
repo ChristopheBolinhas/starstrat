@@ -132,6 +132,14 @@ public class UseBDD
     }
 
 
+    public void removeStrat(StrategyItem objetStrategie)
+    {
+        int id = objetStrategie.getDbId();
+
+        strats.removeStrategiesWithID(id);
+        elementStrategie.removeElementWithIDStrat(id);
+    }
+
     public void addStrat(StrategyItem objetStrategie)
     {
         int idStrat = objetStrategie.getDbId();

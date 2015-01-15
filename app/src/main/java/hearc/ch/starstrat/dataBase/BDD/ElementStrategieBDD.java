@@ -106,6 +106,12 @@ public class ElementStrategieBDD
         return bdd.delete(TABLE_ElementStrategie, COL_ID + " = " +id, null);
     }
 
+    public int removeElementWithIDStrat(int id)
+    {
+        //Suppression d'une Race de la BDD grâce à l'ID
+        return bdd.delete(TABLE_ElementStrategie, COL_ID_Strat + " = " +id, null);
+    }
+
     public ElementStrategie getElementWithID(int id)
     {
         //Récupère dans un Cursor les valeur correspondant à un RACE contenu dans la BDD (ici on sélectionne la RAce grâce à son titre)
