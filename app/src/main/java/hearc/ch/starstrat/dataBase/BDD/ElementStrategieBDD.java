@@ -106,7 +106,13 @@ public class ElementStrategieBDD
         return bdd.delete(TABLE_ElementStrategie, COL_ID + " = " +id, null);
     }
 
-    public ElementStrategie getRaceWithID(int id)
+    public int removeElementWithIDStrat(int id)
+    {
+        //Suppression d'une Race de la BDD grâce à l'ID
+        return bdd.delete(TABLE_ElementStrategie, COL_ID_Strat + " = " +id, null);
+    }
+
+    public ElementStrategie getElementWithID(int id)
     {
         //Récupère dans un Cursor les valeur correspondant à un RACE contenu dans la BDD (ici on sélectionne la RAce grâce à son titre)
         Cursor c = bdd.query(TABLE_ElementStrategie, new String[] {COL_ID, COL_ID_Strat,COL_ID_RaceEntities,COL_Minute,COL_Seconde,COL_Vibrate}, COL_ID + " = " + id, null, null, null, null);

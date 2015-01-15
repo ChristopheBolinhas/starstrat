@@ -13,6 +13,14 @@ public class UnitItem {
     private String name;
     private Drawable icon;
 
+    public Drawable getIcon() {
+        return icon;
+    }
+
+    public void setIcon(Drawable icon) {
+        this.icon = icon;
+    }
+
     public UnitItem(int id, int minutes, int secondes, boolean vibrate, String name)
     {
         this.id = id;
