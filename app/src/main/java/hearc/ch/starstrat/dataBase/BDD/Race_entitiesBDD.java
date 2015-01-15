@@ -175,6 +175,7 @@ public class Race_entitiesBDD
             list.add(race);
             c.moveToNext();
         }
+        c.close();
 
         return list;
     }
