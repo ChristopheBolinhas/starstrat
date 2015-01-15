@@ -45,6 +45,9 @@ public class MainActivity extends ActionBarActivity {
     private NavDrawerListAdapter adapter;
     private UseBDD useBDD;
 
+    private StrategieFragment stratListFrag = null;
+
+
     public MainActivity() {
     }
 
@@ -83,8 +86,6 @@ public class MainActivity extends ActionBarActivity {
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[1],navMenuIcons.getResourceId(1,0)));
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[2],navMenuIcons.getResourceId(2,0)));
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[3],navMenuIcons.getResourceId(3,0)));
-		//navDrawerItems.add(new NavDrawerItem(navMenuTitles[4],navMenuIcons.getResourceId(4,0)));
-        //navDrawerItems.add(new NavDrawerItem(navMenuTitles[5],navMenuIcons.getResourceId(5,0)));
         navMenuIcons.recycle();
 
         mDrawerList.setOnItemClickListener(new DrawerMenuClickListener() );
@@ -113,6 +114,11 @@ public class MainActivity extends ActionBarActivity {
         }
 
         //useBDD.close();
+    }
+
+    public void updateStratFrag() {
+        if(stratListFrag != null)
+            stratListFrag.updateList();
     }
 
     /**
@@ -158,12 +164,17 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public void onBackPressed() {
         FragmentManager fragmentManager = getFragmentManager();
-        if(fragmentManager.getBackStackEntryCount() > 0)
+        if(fragmentManager.getBackStackEntryCount() > 0) {
             fragmentManager.popBackStack();
+            stratListFrag.updateList();
+        }
         else
             this.finish();
 
     }
+
+
+
 
 
     public void setStrategieMakerFragement(StrategyItem strat)
@@ -174,6 +185,7 @@ public class MainActivity extends ActionBarActivity {
 
             final FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
+
             transaction.replace(R.id.frame_container, fragment);
 
             transaction.addToBackStack(null);
@@ -218,7 +230,12 @@ public class MainActivity extends ActionBarActivity {
                 fragment = new HomeFragment();
                 break;
             case 1://StrategyList
-                fragment = StrategieFragment.newInstance(useBDD); //TODO ADAPT
+                if(stratListFrag == null)
+                    stratListFrag = StrategieFragment.newInstance(useBDD);
+                else
+                    stratListFrag.updateList();
+                fragment = stratListFrag;
+
                 break;
 			case 2: //Speed choice
                 fragment = SpeedChooseFragment.newInstance();
