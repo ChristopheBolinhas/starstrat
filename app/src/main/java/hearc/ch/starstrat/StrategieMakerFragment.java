@@ -43,6 +43,8 @@ public class StrategieMakerFragment extends Fragment {
     private StrategyItem currentStrat;
     private int selectedRaceId;
     private boolean configurationInProgress = false;
+    private String validMessage;
+
 
     public StrategieMakerFragment() {
         //unitList = new ArrayList<UnitItem>();
@@ -53,8 +55,13 @@ public class StrategieMakerFragment extends Fragment {
         StrategieMakerFragment frag = new StrategieMakerFragment();
         //frag.useBDD = bdd;
         if(strat != null) {
+            frag.validMessage = "Modifier la stratégie";
             frag.currentStrat = strat;
             //frag.setControls();
+        }
+        else
+        {
+            frag.validMessage = "Ajouter la stratégie";
         }
         return frag;
     }
@@ -188,6 +195,7 @@ public class StrategieMakerFragment extends Fragment {
 
 
         Button buttonValidStrategy = (Button) getActivity().findViewById(R.id.buttonValidStrat);
+        buttonValidStrategy.setText(validMessage);
         buttonValidStrategy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

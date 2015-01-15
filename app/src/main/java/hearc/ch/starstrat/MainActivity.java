@@ -129,7 +129,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void addStrat(StrategyItem strat) {
         useBDD.addStrat(strat);
-        Toast.makeText(this,strat.getName() + " | " + strat.getDescription() + " | "  + strat.getListSize(), Toast.LENGTH_LONG).show();
+
     }
 
     /**
@@ -256,9 +256,9 @@ public class MainActivity extends ActionBarActivity {
             case 1://StrategyList
                 if(stratListFrag == null)
                     stratListFrag = StrategieFragment.newInstance();
-                else
                     //stratListFrag.updateList();
                 fragment = stratListFrag;
+
 
                 break;
 			case 2: //Speed choice
