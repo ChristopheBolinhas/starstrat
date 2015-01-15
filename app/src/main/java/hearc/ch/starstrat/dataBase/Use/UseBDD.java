@@ -132,39 +132,101 @@ public class UseBDD
     }
 
 
+    public void removeStrat(StrategyItem objetStrategie)
+    {
+        int id = objetStrategie.getDbId();
+
+        strats.removeStrategiesWithID(id);
+        elementStrategie.removeElementWithIDStrat(id);
+    }
+
     public void addStrat(StrategyItem objetStrategie)
     {
-        Strategies strategies = new Strategies();
-        strategies.setDescription(objetStrategie.getDescription());
-        strategies.setName(objetStrategie.getName());
-        if(objetStrategie.getRace()==0)
-            strategies.setId_race(3);
-        else if(objetStrategie.getRace()==1)
-            strategies.setId_race(2);
-        else if(objetStrategie.getRace()==2)
-            strategies.setId_race(1);
-
-
-        long l = strats.insertStrategies(strategies);
-
-
-        int id = (int)l;
-
-        List<UnitItem> list = objetStrategie.getListUnits(false);
-
-        for(int i=0;i<list.size();i++)
+        int idStrat = objetStrategie.getDbId();
+        if(idStrat==-1)
         {
-            ElementStrategie element = new ElementStrategie();
-            element.setId_Strat(id);
-            element.setMinute(list.get(i).getMinutes());
-            element.setSecond(list.get(i).getSecondes());
-            element.setVibrate(list.get(i).getVibrate());
+            Strategies strategies = new Strategies();
+            strategies.setDescription(objetStrategie.getDescription());
+            strategies.setName(objetStrategie.getName());
+            if(objetStrategie.getRace()==0)
+                strategies.setId_race(3);
+            else if(objetStrategie.getRace()==1)
+                strategies.setId_race(2);
+            else if(objetStrategie.getRace()==2)
+                strategies.setId_race(1);
 
-            Race_entities entities = raceEntities.getRaceEntitiesWithName(list.get(i).getNom());
-            element.setId_Race_Entities(entities.getId());
 
-            elementStrategie.insertElement(element);
+            long l = strats.insertStrategies(strategies);
+
+
+            int id = (int)l;
+
+            List<UnitItem> list = objetStrategie.getListUnits(false);
+
+            for(int i=0;i<list.size();i++)
+            {
+                ElementStrategie element = new ElementStrategie();
+                element.setId_Strat(id);
+                element.setMinute(list.get(i).getMinutes());
+                element.setSecond(list.get(i).getSecondes());
+                element.setVibrate(list.get(i).getVibrate());
+
+                Race_entities entities = raceEntities.getRaceEntitiesWithName(list.get(i).getNom());
+                element.setId_Race_Entities(entities.getId());
+
+                elementStrategie.insertElement(element);
+            }
         }
+        else
+        {
+            Strategies strategie = strats.getStrategiesWithID(idStrat);
+            strategie.setName(objetStrategie.getName());
+            strategie.setId_race(objetStrategie.getRace());
+            strategie.setDescription(objetStrategie.getDescription());
+
+            strats.updateStrategies(idStrat,strategie);
+
+            List<UnitItem> list = objetStrategie.getListUnits(false);
+            List<ElementStrategie> listElementStrat = elementStrategie.getListElementStrategieWithIDStrat(idStrat);
+
+            for(int i=0;i<list.size();i++)
+            {
+                boolean exist = false;
+                for(int j=0;j<listElementStrat.size();j++)
+                {
+                    if(listElementStrat.get(j).getId()==list.get(i).getId())
+                        exist = true;
+                }
+                UnitItem item = list.get(i);
+                if(exist)
+                {
+                    ElementStrategie element = elementStrategie.getElementWithID(item.getId());
+
+                    element.setMinute(item.getMinutes());
+                    element.setSecond(item.getSecondes());
+                    element.setVibrate(item.getVibrate());
+                    Race_entities entities = raceEntities.getRaceEntitiesWithName(item.getNom());
+                    element.setId_Race_Entities(entities.getId());
+
+                    elementStrategie.updateElement(item.getId(),element);
+                }
+                else
+                {
+                    ElementStrategie element = new ElementStrategie();
+                    element.setId_Strat(idStrat);
+                    element.setMinute(item.getMinutes());
+                    element.setSecond(item.getSecondes());
+                    element.setVibrate(item.getVibrate());
+
+                    Race_entities entities = raceEntities.getRaceEntitiesWithName(item.getNom());
+                    element.setId_Race_Entities(entities.getId());
+
+                    elementStrategie.insertElement(element);
+                }
+            }
+
+        }
+
     }
 
     public List<StrategyItem> getAllStrategie()
@@ -183,6 +245,7 @@ public class UseBDD
                     Race_entities entities = raceEntities.getRaceEntitiesWithID(el.getId_Race_Entities());
 
                     UnitItem item = new UnitItem(el.getId(), el.getMinute(), el.getSecond(), el.isVibrate(), entities.getName());
+                    item.setIcon(getDrawable(entities));
                     listUnit.add(item);
                 }
                 StrategyItem item = new StrategyItem();
