@@ -8,8 +8,8 @@
     <color name="counter_text_color">#c5c4c4</color>
 	
 	   <!-- ui colors for fragments -->
-    <color name="fragment_background_1">#062D6A</color>
-    <color name="fragment_text_1">#BDCBE0</color>
+    <color name="fragment_background_1">#BDCBE0</color>
+    <color name="fragment_text_1">#062D6A</color>
     <color name="fragment_text_2">#4970AD</color>
     <color name="fragment_borders_1">#011534</color>
 
