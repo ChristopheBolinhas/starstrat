@@ -23,7 +23,6 @@ import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import hearc.ch.starstrat.adapter.SpinnerUnitAdapter;
@@ -49,10 +48,10 @@ public class StrategieMakerFragment extends Fragment {
         //unitList = new ArrayList<UnitItem>();
         currentStrat = new StrategyItem();
     }
-    public static StrategieMakerFragment newInstance(StrategyItem strat, UseBDD bdd)
+    public static StrategieMakerFragment newInstance(StrategyItem strat)
     {
         StrategieMakerFragment frag = new StrategieMakerFragment();
-        frag.useBDD = bdd;
+        //frag.useBDD = bdd;
         if(strat != null) {
             frag.currentStrat = strat;
             //frag.setControls();
@@ -61,10 +60,10 @@ public class StrategieMakerFragment extends Fragment {
     }
 
 
-    public void setUseBDD(UseBDD use)
+    /*public void setUseBDD(UseBDD use)
     {
         useBDD = use;
-    }
+    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,10 +71,12 @@ public class StrategieMakerFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_strategie_maker, container, false);
     }
-        public void onActivityCreated (Bundle savedInstanceState) {
+    public void onActivityCreated (Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         final Spinner spinner = (Spinner) getActivity().findViewById(R.id.spinner_race);
+
+
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getView().getContext(),R.array.races_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -84,6 +85,8 @@ public class StrategieMakerFragment extends Fragment {
             spinner.setSelection(currentStrat.getRace());
             setControls();
         }
+
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
 
             @Override
@@ -224,15 +227,15 @@ public class StrategieMakerFragment extends Fragment {
         switch(selectedRaceId)
         {
             case 1://Protoss
-                list = useBDD.getAllUnitProtoss();
+                list = ((MainActivity)getActivity()).getDBInstance().getAllUnitProtoss();
                 break;
             case 2://Zerg
-                list = useBDD.getAllUnitZerg();
+                list = ((MainActivity)getActivity()).getDBInstance().getAllUnitZerg();
                 break;
 
             default:
             case 0://Terran
-                list = useBDD.getAllUnitTerran();
+                list = ((MainActivity)getActivity()).getDBInstance().getAllUnitTerran();
         }
 
 
@@ -245,7 +248,7 @@ public class StrategieMakerFragment extends Fragment {
         for(int i=0;i<list.size();i++)
         {
             unitTab[i] = list.get(i).getName();
-            iconTab[i] =  useBDD.getDrawable(list.get(i));
+            iconTab[i] =  ((MainActivity)getActivity()).getDBInstance().getDrawable(list.get(i));
             idTab[i] = list.get(i).getId();
             //idTab[i] = list.get(i).get
         }

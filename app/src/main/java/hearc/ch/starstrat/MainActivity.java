@@ -57,6 +57,9 @@ public class MainActivity extends ActionBarActivity {
     {
         if(useBDD == null)
             useBDD = new UseBDD(this);
+
+        useBDD.close();
+        useBDD.open();
         return useBDD;
     }
 
@@ -66,8 +69,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if(useBDD == null)
-            useBDD = new UseBDD(this);
+        getDBInstance();
 
 
 
@@ -227,7 +229,7 @@ public class MainActivity extends ActionBarActivity {
         }
         else
         {*/
-            final Fragment fragment = StrategieMakerFragment.newInstance(strat,useBDD);
+            final Fragment fragment = StrategieMakerFragment.newInstance(strat);
             final FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.frame_container, fragment);
@@ -262,7 +264,7 @@ public class MainActivity extends ActionBarActivity {
                 break;
             case 1://StrategyList
                 if(stratListFrag == null)
-                    stratListFrag = StrategieFragment.newInstance(useBDD);
+                    stratListFrag = StrategieFragment.newInstance();
                 else
                     stratListFrag.updateList();
                 fragment = stratListFrag;
@@ -280,7 +282,6 @@ public class MainActivity extends ActionBarActivity {
                 break;
             case 5://Hidden - StrategyMaker Fragment
                 fragment = new StrategieMakerFragment();
-                ((StrategieMakerFragment)fragment).setUseBDD(useBDD);
             default:
                 break;
         }

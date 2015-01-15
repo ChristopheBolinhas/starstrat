@@ -34,7 +34,7 @@ public class StrategieFragment extends ListFragment {
     private String mParam1;
     private String mParam2;
 
-    private UseBDD bdd;
+
 
     private List<StrategyListItem> mItems;
 
@@ -69,7 +69,7 @@ public class StrategieFragment extends ListFragment {
     }
 
 
-    public static StrategieFragment newInstance(UseBDD bdd) {
+    public static StrategieFragment newInstance() {
         StrategieFragment fragment = new StrategieFragment();
         //fragment.bdd = bdd;
         return fragment;
@@ -135,7 +135,7 @@ public class StrategieFragment extends ListFragment {
 
         mItems = new ArrayList<StrategyListItem>();
         mItems.add(new StrategyListItem(R.drawable.ic_add,"Nouvelle stratégie", "Composer une stratégie", -1));
-        bdd =((MainActivity)getActivity()).getDBInstance();
+        UseBDD bdd =((MainActivity)getActivity()).getDBInstance();
         if(bdd != null) {
             for (StrategyItem item : bdd.getAllStrategie()) {
                 int icon;
