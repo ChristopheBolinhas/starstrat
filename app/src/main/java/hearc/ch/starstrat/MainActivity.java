@@ -64,8 +64,6 @@ public class MainActivity extends ActionBarActivity {
         if(useBDD == null)
             useBDD = new UseBDD(this);
 
-        //useBDD.close();
-        //useBDD.open();
         return useBDD;
     }
 
