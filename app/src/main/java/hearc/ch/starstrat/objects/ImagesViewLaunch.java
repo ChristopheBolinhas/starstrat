@@ -83,16 +83,11 @@ public class ImagesViewLaunch {
             {
                 //Creation of the horizontal image
                 ImageView tmp = new ImageView(myActivity);
-
+                /*
                 if(myListOfUnit.get(j+i).getIcon() != null)
                     tmp.setImageDrawable(myListOfUnit.get(j+i).getIcon());
-                else
-                    tmp.setImageResource(R.drawable.ic_home_favs);
-                /*
-                tmp.setMinimumHeight(60);
-                tmp.setMinimumWidth(60);
-                tmp.setScaleType(ImageView.ScaleType.FIT_XY);
                 */
+                tmp.setImageResource(R.drawable.ic_about);
                 l.addView(tmp);
 
                 //if vibrate then isvibrate = true
@@ -103,10 +98,10 @@ public class ImagesViewLaunch {
 
             //Put the horizontal image in vertical layout
             linearAnimation.addView(l);
-
+            /*
+            linearAnimation.setMinimumWidth(60);
+            linearAnimation.setMinimumHeight(60);
+            */
         }
-
-        linearAnimation.setMinimumHeight(60);
-        linearAnimation.setMinimumWidth(60);
     }
 }

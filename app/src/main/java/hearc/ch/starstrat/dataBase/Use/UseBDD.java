@@ -2,6 +2,7 @@ package hearc.ch.starstrat.dataBase.Use;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -77,7 +78,7 @@ public class UseBDD
     }
 
     //Fonction pour ouvrir les tables
-    private void open()
+    public void open()
     {
         race.open();
         type.open();
@@ -155,9 +156,8 @@ public class UseBDD
             else if(objetStrategie.getRace()==2)
                 strategies.setId_race(1);
 
-
+            Toast.makeText(context,"ma Description "+strategies.getDescription(),Toast.LENGTH_LONG).show();
             long l = strats.insertStrategies(strategies);
-
 
             int id = (int)l;
 
@@ -174,6 +174,8 @@ public class UseBDD
                 Race_entities entities = raceEntities.getRaceEntitiesWithName(list.get(i).getNom());
                 element.setId_Race_Entities(entities.getId());
 
+                //Toast.makeText(context, list.get(i).getId(), Toast.LENGTH_LONG).show();
+
                 elementStrategie.insertElement(element);
             }
         }
@@ -181,7 +183,7 @@ public class UseBDD
         {
             Strategies strategie = strats.getStrategiesWithID(idStrat);
             strategie.setName(objetStrategie.getName());
-            strategie.setId_race(objetStrategie.getRace());
+            strategie.setId_race(convertRaceIdAppToDb(objetStrategie.getRace()));
             strategie.setDescription(objetStrategie.getDescription());
 
             strats.updateStrategies(idStrat,strategie);
@@ -194,13 +196,13 @@ public class UseBDD
                 boolean exist = false;
                 for(int j=0;j<listElementStrat.size();j++)
                 {
-                    if(listElementStrat.get(j).getId()==list.get(i).getId())
+                    if(listElementStrat.get(j).getId()==list.get(i).getIdDB())
                         exist = true;
                 }
                 UnitItem item = list.get(i);
                 if(exist)
                 {
-                    ElementStrategie element = elementStrategie.getElementWithID(item.getId());
+                    ElementStrategie element = elementStrategie.getElementWithID(item.getIdDB());
 
                     element.setMinute(item.getMinutes());
                     element.setSecond(item.getSecondes());
@@ -208,7 +210,7 @@ public class UseBDD
                     Race_entities entities = raceEntities.getRaceEntitiesWithName(item.getNom());
                     element.setId_Race_Entities(entities.getId());
 
-                    elementStrategie.updateElement(item.getId(),element);
+                    elementStrategie.updateElement(entities.getId(),element);
                 }
                 else
                 {
@@ -241,10 +243,11 @@ public class UseBDD
 
                 List<UnitItem> listUnit = new ArrayList<UnitItem>();
                 for (int j = 0; j < listElement.size(); j++) {
-                    ElementStrategie el = listElement.get(i);
+                    ElementStrategie el = listElement.get(j);
                     Race_entities entities = raceEntities.getRaceEntitiesWithID(el.getId_Race_Entities());
 
-                    UnitItem item = new UnitItem(el.getId(), el.getMinute(), el.getSecond(), el.isVibrate(), entities.getName());
+                    UnitItem item = new UnitItem(el.getId_Race_Entities(), el.getMinute(), el.getSecond(), el.isVibrate(), entities.getName());
+                    item.setIdDB(el.getId());
                     item.setIcon(getDrawable(entities));
                     listUnit.add(item);
                 }
@@ -252,8 +255,9 @@ public class UseBDD
                 Strategies stratref = listStrats.get(i);
                 item.setName(stratref.getName());
                 item.setDescription(stratref.getDescription());
+                Toast.makeText(context,"ma Description Recu "+stratref.getDescription(),Toast.LENGTH_LONG).show();
                 item.setDbId(stratref.getId());
-                item.setRace(convertRaceId(stratref.getId_race()));
+                item.setRace(convertRaceIdDbToApp(stratref.getId_race()));
 
                 item.setListUnits(listUnit);
                 listFinal.add(item);
@@ -263,7 +267,7 @@ public class UseBDD
         return listFinal;
     }
 
-    private int convertRaceId(int id)
+    private int convertRaceIdDbToApp(int id)
     {
         switch(id)
         {
@@ -273,6 +277,20 @@ public class UseBDD
                 return 1;
             case 1://zergs
                 return 2;
+        }
+        return -1;
+    }
+
+    private int convertRaceIdAppToDb(int id)
+    {
+        switch(id)
+        {
+            case 0://Terran
+                return 3;
+            case 1://Protoss
+                return 2;
+            case 2://zergs
+                return 1;
         }
         return -1;
     }

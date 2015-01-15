@@ -34,7 +34,7 @@ public class StrategieFragment extends ListFragment {
     private String mParam1;
     private String mParam2;
 
-    private UseBDD bdd;
+
 
     private List<StrategyListItem> mItems;
 
@@ -69,7 +69,7 @@ public class StrategieFragment extends ListFragment {
     }
 
 
-    public static StrategieFragment newInstance(UseBDD bdd) {
+    public static StrategieFragment newInstance() {
         StrategieFragment fragment = new StrategieFragment();
         //fragment.bdd = bdd;
         return fragment;
@@ -135,26 +135,26 @@ public class StrategieFragment extends ListFragment {
 
         mItems = new ArrayList<StrategyListItem>();
         mItems.add(new StrategyListItem(R.drawable.ic_add,"Nouvelle stratégie", "Composer une stratégie", -1));
-        UseBDD bdd1 =((MainActivity)getActivity()).getDBInstance();
+        UseBDD bdd =((MainActivity)getActivity()).getDBInstance();
+        if(bdd != null) {
+            for (StrategyItem item : bdd.getAllStrategie()) {
+                int icon;
+                switch (item.getRace()) {
+                    case 0:
+                    default:
+                        icon = R.drawable.ic_terran;
+                        break;
+                    case 1:
+                        icon = R.drawable.ic_protoss;
+                        break;
+                    case 2:
+                        icon = R.drawable.ic_zerg;
+                        break;
 
-        for(StrategyItem item : bdd1.getAllStrategie()) {
-            int icon;
-            switch(item.getRace())
-            {
-                case 0:
-                default:
-                    icon = R.drawable.ic_terran;
-                    break;
-                case 1:
-                    icon = R.drawable.ic_protoss;
-                    break;
-                case 2:
-                    icon = R.drawable.ic_zerg;
-                    break;
-
+                }
+                mItems.add(new StrategyListItem(icon, item));
+                //Toast.makeText(getActivity(),item.getDescription(),Toast.LENGTH_LONG).show();
             }
-            mItems.add(new StrategyListItem(icon, item));
-            //Toast.makeText(getActivity(),item.getDescription(),Toast.LENGTH_LONG).show();
         }
 
         setListAdapter(new StrategyListAdapter(getActivity(),mItems));

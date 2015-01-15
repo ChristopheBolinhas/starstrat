@@ -112,7 +112,7 @@ public class StrategiesBDD
 
     public List<Strategies> getAllStrategie()
     {
-        Cursor c = bdd.rawQuery("SELECT "+COL_ID+", "+ COL_ID_Race+", "+ COL_Name+", "+COL_Description+", "+COL_Game_Tried + ","+COL_Game_Won+" FROM "+TABLE_Strategies, null );
+        Cursor c = bdd.rawQuery("SELECT "+COL_ID+", "+ COL_ID_Race+", "+ COL_Name+", "+COL_Game_Tried + ","+COL_Game_Won+", "+COL_Description+" FROM "+TABLE_Strategies, null );
         return cursorToListStrategies(c);
     }
 
@@ -148,7 +148,6 @@ public class StrategiesBDD
 
         ArrayList<Strategies> list = new ArrayList<Strategies>();
 
-
         c.moveToFirst();
         while(!c.isAfterLast())
         {
@@ -164,6 +163,7 @@ public class StrategiesBDD
             list.add(strat);
             c.moveToNext();
         }
+        c.close();
 
         return list;
     }

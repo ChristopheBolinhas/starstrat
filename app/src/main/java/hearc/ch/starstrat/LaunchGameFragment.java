@@ -201,6 +201,7 @@ public class LaunchGameFragment extends Fragment {
                         //Toast.makeText(getActivity(),"size " +unit.getSecondes(),Toast.LENGTH_LONG).show();
 
                         int timeUnit = unit.getMinutes()*60+unit.getSecondes();
+                        //Toast.makeText(getActivity(),"size " +timeUnit,Toast.LENGTH_LONG).show();
 
                         if(timeUnit <= timeForUnit)
                         {
@@ -209,8 +210,6 @@ public class LaunchGameFragment extends Fragment {
                         }
                         else
                         {
-                            Toast.makeText(getActivity(),"size " +listUnite.size(),Toast.LENGTH_LONG).show();
-
                             //We create element to draw with right units
                             ImagesViewLaunch imgGroup = new ImagesViewLaunch(listUnite,getActivity());
                             imgGroup.constructImagesView(sizeHeight);
@@ -240,8 +239,8 @@ public class LaunchGameFragment extends Fragment {
                     //Calculate the scale for each image
                     for(ImagesViewLaunch im : listImagesAnimation)
                     {
-                        float lScale = (sizeHeight/2)/2;//im.getLinearAnimation().getMeasuredHeight();
-                        float bScale = (sizeHeight)/2;//im.getLinearAnimation().getMeasuredHeight();
+                        float lScale = (sizeHeight/2)/im.getLinearAnimation().getMeasuredHeight();
+                        float bScale = (sizeHeight)/im.getLinearAnimation().getMeasuredHeight();
                         im.setLittleScale(lScale);
                         im.setBigScale(bScale);
                     }

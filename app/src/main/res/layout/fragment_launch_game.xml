@@ -13,8 +13,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_marginLeft="-200px"
-        android:gravity="center_vertical"
-        android:background="@color/launch_fragment_background" >
+        android:gravity="center_vertical" >
 
     </RelativeLayout>
 

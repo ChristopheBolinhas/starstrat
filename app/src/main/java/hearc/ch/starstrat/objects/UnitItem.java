@@ -12,6 +12,7 @@ public class UnitItem {
     private boolean vibrate;
     private String name;
     private Drawable icon;
+    private int idDB = -1;
 
     public void setIcon(Drawable icon) {
         this.icon = icon;
@@ -26,9 +27,15 @@ public class UnitItem {
         this.name = name;
     }
 
-    public Drawable getIcon()
-    {
+    public Drawable getIcon() {
         return icon;
+    }
+    public int getIdDB() {
+        return idDB;
+    }
+
+    public void setIdDB(int idDB) {
+        this.idDB = idDB;
     }
 
     public int getId()

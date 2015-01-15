@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -62,6 +63,9 @@ public class MainActivity extends ActionBarActivity {
     {
         if(useBDD == null)
             useBDD = new UseBDD(this);
+
+        //useBDD.close();
+        //useBDD.open();
         return useBDD;
     }
 
@@ -71,8 +75,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        useBDD = new UseBDD(this);
+        getDBInstance();
 
 
 
@@ -104,6 +107,9 @@ public class MainActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        //getSupportActionBar().setDisplayOptions(0);
+        //getSupportActionBar().get
+
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,R.string.drawer_open,R.string.drawer_close);
         mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
             @Override
@@ -127,6 +133,11 @@ public class MainActivity extends ActionBarActivity {
             stratListFrag.updateList();
     }
 
+    public void addStrat(StrategyItem strat) {
+        useBDD.addStrat(strat);
+        Toast.makeText(this,strat.getName() + " | " + strat.getDescription() + " | "  + strat.getListSize(), Toast.LENGTH_LONG).show();
+    }
+
     /**
      * Slide menu item click listener
      * */
@@ -145,6 +156,7 @@ public class MainActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        menu.removeItem(0);
         return true;
     }
 
@@ -213,7 +225,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void setStrategieMakerFragement(StrategyItem strat)
     {
-        if(strat == null) {
+        /*if(strat == null) {
             final Fragment fragment = new StrategieMakerFragment();
             ((StrategieMakerFragment)fragment).setUseBDD(useBDD);
 
@@ -229,7 +241,7 @@ public class MainActivity extends ActionBarActivity {
 
         }
         else
-        {
+        {*/
             final Fragment fragment = StrategieMakerFragment.newInstance(strat);
             final FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -238,7 +250,7 @@ public class MainActivity extends ActionBarActivity {
             transaction.addToBackStack(null);
 
             transaction.commit();
-        }
+        //}
 
     }
     public void getUnitFromId(int unitId){
@@ -265,7 +277,7 @@ public class MainActivity extends ActionBarActivity {
                 break;
             case 1://StrategyList
                 if(stratListFrag == null)
-                    stratListFrag = StrategieFragment.newInstance(useBDD);
+                    stratListFrag = StrategieFragment.newInstance();
                 else
                     stratListFrag.updateList();
                 fragment = stratListFrag;
@@ -288,7 +300,6 @@ public class MainActivity extends ActionBarActivity {
                 break;
             case 5://Hidden - StrategyMaker Fragment
                 fragment = new StrategieMakerFragment();
-                ((StrategieMakerFragment)fragment).setUseBDD(useBDD);
             default:
                 break;
         }
