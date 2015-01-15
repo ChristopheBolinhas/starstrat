@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -63,6 +64,34 @@ public class SpeedChooseFragment extends Fragment{
         //Adapt text size related to screen width
         textTitle = (TextView)getActivity().findViewById(R.id.textChooseSpeed);
         textTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX,0.05f*widthScreen);
+
+        speedOfGame = ((MainActivity)getActivity()).getSpeedOfGame();
+
+        if(speedOfGame == slowerSpeed)
+        {
+            RadioButton r = (RadioButton)getActivity().findViewById(R.id.radioSlower);
+            r.setChecked(true);
+        }
+        else if(speedOfGame == slowSpeed)
+        {
+            RadioButton r = (RadioButton)getActivity().findViewById(R.id.radioSlow);
+            r.setChecked(true);
+        }
+        else if(speedOfGame == regularSpeed)
+        {
+            RadioButton r = (RadioButton)getActivity().findViewById(R.id.radioRegular);
+            r.setChecked(true);
+        }
+        else if(speedOfGame == fastSpeed)
+        {
+            RadioButton r = (RadioButton)getActivity().findViewById(R.id.radioFast);
+            r.setChecked(true);
+        }
+        else if(speedOfGame == fasterSpeed)
+        {
+            RadioButton r = (RadioButton)getActivity().findViewById(R.id.radioFaster);
+            r.setChecked(true);
+        }
 
         //Récupére le groupe de radioButton et change la vitesse de jeu par rapport à la selection
         radioGroup = (RadioGroup)this.getActivity().findViewById(R.id.radioGroupSpeed);

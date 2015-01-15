@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -49,13 +50,13 @@ public class LaunchGameFragment extends Fragment {
     private int widthScreen, heightScreen, transX = 20, marginLeftLayout = 200;
     private boolean isPause, isFirstPassed;
     private int nbAnimation;
-    private int timeAnimate = 500;
+    private int timeAnimate = 500, timeInGame;
     private String textButtonStart, textButtonPause;
 
     private android.text.format.Time timeSincePause, timeSinceLastAnimation, totalTimeAnimation,timeAnimation;
 
     private TextView textStepTime;
-    private Button buttonLaunchGame;
+    private ImageButton buttonLaunchGame;
     private RelativeLayout layoutAnimation;
 
     //Handler to update time
@@ -145,12 +146,12 @@ public class LaunchGameFragment extends Fragment {
         long tmp = (timeAnimation.toMillis(false)-totalTimeAnimation.toMillis(false));
 
         Time timeAffichage = new Time();
-        timeAffichage.set(tmp);
+        timeAffichage.set((long) (tmp*speedOfGame));
         textStepTime.setText(timeAffichage.minute + ":" + timeAffichage.second);
 
         //Set the time every 100ms
         if(totalTime > tmp && !isPause)
-            handlerStep.postDelayed(updateTime,1000);
+            handlerStep.postDelayed(updateTime,100);
     }
 
     @Override
@@ -167,10 +168,6 @@ public class LaunchGameFragment extends Fragment {
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         widthScreen = displaymetrics.widthPixels;
         heightScreen = displaymetrics.heightPixels;
-
-        //Get text for button (Start,Pause)
-        textButtonStart = (String)getActivity().getText(R.string.launch_game_fragment_Start);
-        textButtonPause = (String)getActivity().getText(R.string.launch_game_fragment_Pause);
 
         isPause = false;
 
@@ -196,8 +193,6 @@ public class LaunchGameFragment extends Fragment {
                     UnitItem lastUnit = listUnite.get(totalUnit-1);
 
                     int create = ((lastUnit.getMinutes()*60)+lastUnit.getSecondes())/timeForUnit;
-
-                    Log.d("LALALA","TIME " + (lastUnit.getMinutes()*60)+lastUnit.getSecondes() + "  CREATE " +create);
 
                     for(int i = 0 ; i <= create; i++)
                     {
@@ -258,7 +253,7 @@ public class LaunchGameFragment extends Fragment {
             }
         });
 
-        buttonLaunchGame = (Button)getActivity().findViewById(R.id.buttonLaunchGame);
+        buttonLaunchGame = (ImageButton)getActivity().findViewById(R.id.buttonLaunchGame);
         buttonLaunchGame.setOnClickListener(new View.OnClickListener() {
             private boolean isFirst = true;
             @Override
@@ -270,7 +265,8 @@ public class LaunchGameFragment extends Fragment {
 
                     handlerStep.post(updateTime);
                     isFirst = false;
-                    buttonLaunchGame.setText(textButtonPause);
+                    //TODO : changer l'image
+                    buttonLaunchGame.setImageResource(R.drawable.ic_add);
 
                     totalTimeAnimation = new Time();
                     timeAnimation = new Time();
@@ -293,7 +289,7 @@ public class LaunchGameFragment extends Fragment {
                     timeSincePause.set(timeSincePause.toMillis(false) - timeSinceLastAnimation.toMillis(false));
 
                     isPause = true;
-                    buttonLaunchGame.setText(textButtonStart);
+                    buttonLaunchGame.setImageResource(R.drawable.ic_play);
                 }
                 //else we relaunch the animation because the pause is finish
                 else
@@ -318,7 +314,8 @@ public class LaunchGameFragment extends Fragment {
                     }, timeBetweenAnimation-timeSincePause.toMillis(false));
 
                     isPause = false;
-                    buttonLaunchGame.setText(textButtonPause);
+                    //TODO : changer l'image
+                    buttonLaunchGame.setImageResource(R.drawable.ic_add);
                 }
             }
         });

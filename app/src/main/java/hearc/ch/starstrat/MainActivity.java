@@ -46,6 +46,7 @@ public class MainActivity extends ActionBarActivity {
     private UseBDD useBDD;
     private float speedOfGame = SpeedChooseFragment.fastSpeed;
 
+    public float getSpeedOfGame(){return speedOfGame;}
     public void setSpeedOfGame(float speed)
     {
         speedOfGame = speed;
