@@ -18,4 +18,10 @@
     <color name="launch_fragment_timer">#00FF00</color>
     <color name="launch_fragment_button">#0000FF</color>
     <color name="launch_fragment_background_timer">#000</color>
+
+    <!-- ui colors
+    <color name="button_bg_color"></color>
+    <color name="button_text_color"></color>
+    <color name="fragment_text"></color>-->
+
 </resources>

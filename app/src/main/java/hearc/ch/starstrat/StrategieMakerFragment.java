@@ -23,7 +23,6 @@ import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -190,6 +189,7 @@ public class StrategieMakerFragment extends Fragment {
                 {
                     useBDD.addStrat(currentStrat);
                     Toast.makeText(getActivity(),"Stratégie ajoutée !",Toast.LENGTH_LONG).show();
+                    ((MainActivity)getActivity()).updateStratFrag();
                     getFragmentManager().popBackStack();
                 }
                 else

@@ -90,16 +90,7 @@ public class StrategieFragment extends ListFragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }*/
-        mItems = new ArrayList<StrategyListItem>();
-        mItems.add(new StrategyListItem(R.drawable.ic_add,"Nouvelle stratégie", "Composer une stratégie", -1));
-        UseBDD bdd1 =((MainActivity)getActivity()).getDBInstance();
-
-        for(StrategyItem item : bdd1.getAllStrategie()) {
-            mItems.add(new StrategyListItem(R.drawable.ic_zerg, item));
-            Toast.makeText(getActivity(),item.getDescription(),Toast.LENGTH_LONG).show();
-        }
-
-        setListAdapter(new StrategyListAdapter(getActivity(),mItems));
+        updateList();
     }
 
     @Override
@@ -117,7 +108,7 @@ public class StrategieFragment extends ListFragment {
         StrategyListItem item = mItems.get(position);
         if(position == 0)
         {
-            ((MainActivity)getActivity()).setStrategieMakerFragement(null);
+
         }
         else
         {
@@ -140,4 +131,33 @@ public class StrategieFragment extends ListFragment {
     }
 
 
+    public void updateList() {
+
+        mItems = new ArrayList<StrategyListItem>();
+        mItems.add(new StrategyListItem(R.drawable.ic_add,"Nouvelle stratégie", "Composer une stratégie", -1));
+        UseBDD bdd1 =((MainActivity)getActivity()).getDBInstance();
+
+        for(StrategyItem item : bdd1.getAllStrategie()) {
+            int icon;
+            switch(item.getRace())
+            {
+                case 0:
+                default:
+                    icon = R.drawable.ic_terran;
+                    break;
+                case 1:
+                    icon = R.drawable.ic_protoss;
+                    break;
+                case 2:
+                    icon = R.drawable.ic_zerg;
+                    break;
+
+            }
+            mItems.add(new StrategyListItem(icon, item));
+            //Toast.makeText(getActivity(),item.getDescription(),Toast.LENGTH_LONG).show();
+        }
+
+        setListAdapter(new StrategyListAdapter(getActivity(),mItems));
+
+    }
 }
