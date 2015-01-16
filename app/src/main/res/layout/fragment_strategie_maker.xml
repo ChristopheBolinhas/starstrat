@@ -22,14 +22,15 @@
                 android:gravity="center"
                 android:text="Nom* : "
                 android:layout_weight="1"
-                />
+                android:textColor="@color/fragment_text_1"/>
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/editName"
                 android:layout_weight="3"
                 android:singleLine="true"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:textColor="@color/fragment_text_1"/>
             </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,13 +42,14 @@
                 android:gravity="center"
                 android:text="Race* : "
                 android:layout_weight="1"
-                />
+                android:textColor="@color/fragment_text_1"/>
             <Spinner
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:layout_weight="3"
-                android:id="@+id/spinner_race">
+                android:id="@+id/spinner_race"
+                android:textColor="@color/fragment_text_1">
 
                 </Spinner>
         </LinearLayout>
@@ -61,18 +63,22 @@
                 android:gravity="center"
                 android:text="Description : "
                 android:layout_weight="1"
-                />
+                android:textColor="@color/fragment_text_1"/>
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
-                android:id="@+id/editDescription"/>
+                android:id="@+id/editDescription"
+                android:textColor="@color/fragment_text_1"/>
         </LinearLayout>
         <Button android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:text="Ajouter stratégie"
+            android:padding="2dp"
             android:layout_gravity="center"
             android:id="@+id/buttonValidStrat"
+            android:textColor="@color/fragment_text_1"
+            android:background="@color/fragment_borders_1"
             />
         <View
             android:layout_width="100dp"
@@ -86,7 +92,7 @@
             android:textAlignment="center"
             android:gravity="center"
             android:textSize="24dp"
-           />
+            android:textColor="@color/fragment_text_1"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -101,12 +107,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Mins"
-                    android:textAlignment="center"/>
+                    android:textAlignment="center"
+                    android:textColor="@color/fragment_text_1"/>
                 <NumberPicker
 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/picker_minutes"
+                    android:textColor="@color/fragment_text_1"
                     ></NumberPicker>
                 </LinearLayout>
             <LinearLayout
@@ -118,11 +126,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Secs"
-                    android:textAlignment="center"/>
+                    android:textAlignment="center"
+                    android:textColor="@color/fragment_text_1"
+                    />
                 <NumberPicker
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/picker_secondes"
+                    android:textColor="@color/fragment_text_1"
                     ></NumberPicker>
             </LinearLayout>
 
@@ -135,18 +146,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Vibre ?"
-                    android:textAlignment="center"/>
+                    android:textAlignment="center"
+                    android:textColor="@color/fragment_text_1"/>
             <CheckBox
                 android:id="@+id/checkbox_vibrate"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+
                 />
             </LinearLayout>
             <Spinner android:id="@+id/spinner_unit_choice"
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
-                android:layout_weight="4"/>
+                android:layout_weight="4"
+                android:textColor="@color/fragment_text_1"/>
 
             <ImageButton
                 android:background="@null"
@@ -169,10 +183,10 @@
                 android:layout_height="60dp"
                 android:padding="5dp"
                 android:layout_width="match_parent">
-                <TextView android:padding="3dip" android:layout_width="0dp" android:text="Unité"/>
-                <TextView android:padding="3dip" android:layout_width="0dp" android:text="Vibre"/>
-                <TextView android:padding="3dip" android:layout_width="0dp" android:text="Temps"/>
-                <TextView android:padding="3dip" android:layout_width="0dp" android:text="Actions"/>
+                <TextView android:padding="3dip" android:layout_width="0dp" android:text="Unité" android:textColor="@color/fragment_text_1"/>
+                <TextView android:padding="3dip" android:layout_width="0dp" android:text="Vibre" android:textColor="@color/fragment_text_1"/>
+                <TextView android:padding="3dip" android:layout_width="0dp" android:text="Temps" android:textColor="@color/fragment_text_1"/>
+                <TextView android:padding="3dip" android:layout_width="0dp" android:text="Actions" android:textColor="@color/fragment_text_1"/>
             </TableRow>
 
 

@@ -194,6 +194,7 @@ public class StrategieMakerFragment extends Fragment {
         numberPickerSecondes.setMaxValue(59);
         numberPickerSecondes.setMinValue(0);
         numberPickerSecondes.setWrapSelectorWheel(false);
+        //numberPickerSecondes.get
 
 
         Button buttonValidStrategy = (Button) getActivity().findViewById(R.id.buttonValidStrat);
@@ -296,6 +297,53 @@ public class StrategieMakerFragment extends Fragment {
     {
         TableLayout tableLayout = (TableLayout)getActivity().findViewById(R.id.table_units);
         tableLayout.removeAllViews();
+        int hauteur = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48, getResources().getDisplayMetrics());
+        int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3, getResources().getDisplayMetrics());
+
+
+        TableRow newRow = new TableRow(getView().getContext());
+        LayoutParams rowParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,hauteur);
+        newRow.setLayoutParams(rowParams);
+        newRow.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        newRow.setPadding(padding,padding,padding,padding);
+
+        TextView txt = new TextView(getView().getContext());
+        txt.setPadding(3,3,3,3);
+        txt.setWidth(0);
+        txt.setText("Unité");
+        txt.setTextColor(getResources().getColor(R.color.fragment_text_1));
+
+        newRow.addView(txt);
+
+        txt = new TextView(getView().getContext());
+        txt.setPadding(3,3,3,3);
+        txt.setWidth(0);
+        txt.setText("Vibre");
+        txt.setTextColor(getResources().getColor(R.color.fragment_text_1));
+        newRow.addView(txt);
+
+
+
+        txt = new TextView(getView().getContext());
+        txt.setPadding(3,3,3,3);
+        txt.setWidth(0);
+        txt.setText("Temps");
+        txt.setTextColor(getResources().getColor(R.color.fragment_text_1));
+        newRow.addView(txt);
+
+       // tableLayout.addView(newRow);
+
+        txt = new TextView(getView().getContext());
+        txt.setPadding(3,3,3,3);
+        txt.setWidth(0);
+        txt.setText("Actions");
+        txt.setTextColor(getResources().getColor(R.color.fragment_text_1));
+        newRow.addView(txt);
+
+
+
+
+        tableLayout.addView(newRow);
 
         for(UnitItem item : currentStrat.getListUnits(false))
         {
@@ -319,7 +367,7 @@ public class StrategieMakerFragment extends Fragment {
         textView1.setText(unit.getNom());
         textView1.setGravity(TextView.TEXT_ALIGNMENT_CENTER);
         textView1.setPadding(padding,padding,padding,padding);
-
+        textView1.setTextColor(getResources().getColor(R.color.fragment_text_1));
 
         CheckBox box = new CheckBox(getView().getContext());
         box.setChecked(unit.getVibrate());
@@ -331,7 +379,8 @@ public class StrategieMakerFragment extends Fragment {
         TextView textView2 = new TextView(getView().getContext());
         textView2.setText(unit.getMinutes() + ":" + unit.getSecondes());
         textView2.setGravity(TextView.TEXT_ALIGNMENT_CENTER);
-        textView2.setPadding(padding,padding,padding,padding);
+        textView2.setPadding(padding, padding, padding, padding);
+        textView2.setTextColor(getResources().getColor(R.color.fragment_text_1));
         ImageButton buttonRemove = new ImageButton(getView().getContext());
         //buttonRemove.setText("x");
         //buttonRemove.setWidth(20);
@@ -339,6 +388,7 @@ public class StrategieMakerFragment extends Fragment {
         buttonRemove.setImageResource(R.drawable.ic_remove);
         buttonRemove.setScaleType(ImageView.ScaleType.FIT_CENTER);
         buttonRemove.setBackground(null);
+
         //buttonRemove.setBackgroundResource(R.drawable.button_stratmake_style_normal);
         buttonRemove.setOnClickListener(new View.OnClickListener() {
             @Override

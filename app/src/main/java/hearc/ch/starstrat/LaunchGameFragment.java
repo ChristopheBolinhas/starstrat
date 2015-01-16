@@ -1,19 +1,17 @@
 package hearc.ch.starstrat;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.text.format.Time;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -265,8 +263,8 @@ public class LaunchGameFragment extends Fragment {
 
                     handlerStep.post(updateTime);
                     isFirst = false;
-                    //TODO : changer l'image
-                    buttonLaunchGame.setImageResource(R.drawable.ic_add);
+
+                    buttonLaunchGame.setImageResource(R.drawable.ic_pause);
 
                     totalTimeAnimation = new Time();
                     timeAnimation = new Time();
@@ -314,8 +312,8 @@ public class LaunchGameFragment extends Fragment {
                     }, timeBetweenAnimation-timeSincePause.toMillis(false));
 
                     isPause = false;
-                    //TODO : changer l'image
-                    buttonLaunchGame.setImageResource(R.drawable.ic_add);
+
+                    buttonLaunchGame.setImageResource(R.drawable.ic_pause);
                 }
             }
         });

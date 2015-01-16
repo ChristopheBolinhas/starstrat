@@ -13,7 +13,8 @@ tools:context="hearc.ch.starstrat.SpeedChooseFragment">
     android:layout_height="wrap_content"
     android:gravity="center"
     android:layout_weight="2"
-    android:text="@string/choose_speed_fragment_title" />
+    android:text="@string/choose_speed_fragment_title"
+    android:textColor="@color/fragment_text_1"/>
 
 <RadioGroup android:id="@+id/radioGroupSpeed"
     android:layout_width="match_parent"
@@ -28,33 +29,38 @@ tools:context="hearc.ch.starstrat.SpeedChooseFragment">
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/choose_speed_fragment_slower"/>
+        android:text="@string/choose_speed_fragment_slower"
+        android:textColor="@color/fragment_text_1"/>
 
     <RadioButton android:id="@+id/radioSlow"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/choose_speed_fragment_slow"/>
+        android:text="@string/choose_speed_fragment_slow"
+        android:textColor="@color/fragment_text_1"/>
 
     <RadioButton android:id="@+id/radioRegular"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/choose_speed_fragment_normal"/>
+        android:text="@string/choose_speed_fragment_normal"
+        android:textColor="@color/fragment_text_1"/>
 
     <RadioButton android:id="@+id/radioFast"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:checked="true"
-        android:text="@string/choose_speed_fragment_fast"/>
+        android:text="@string/choose_speed_fragment_fast"
+        android:textColor="@color/fragment_text_1"/>
 
 
     <RadioButton android:id="@+id/radioFaster"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/choose_speed_fragment_faster"/>
+        android:text="@string/choose_speed_fragment_faster"
+        android:textColor="@color/fragment_text_1"/>
 
 </RadioGroup>
 

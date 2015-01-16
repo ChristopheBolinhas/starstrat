@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="hearc.ch.starstrat.LaunchGameFragment"
-    android:weightSum="5">
+    android:weightSum="5"
+    android:background="@color/launch_fragment_background">
 
     <RelativeLayout
         android:id="@+id/layoutAnimation"

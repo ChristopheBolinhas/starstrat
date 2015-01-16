@@ -8,14 +8,15 @@
     <color name="counter_text_color">#c5c4c4</color>
 	
 	   <!-- ui colors for fragments -->
-    <color name="fragment_background_1">#BDCBE0</color>
-    <color name="fragment_text_1">#062D6A</color>
+    <!--<color name="fragment_background_1">#BDCBE0</color>011534-->
+    <color name="fragment_text_1">#011534</color>
     <color name="fragment_text_2">#4970AD</color>
-    <color name="fragment_borders_1">#011534</color>
+    <color name="fragment_borders_1">#4970AD</color>
+    <color name="fragment_background_1">#BDCBE0</color>
 
     <!-- ui colors for launchFragment -->
-    <color name="launch_fragment_background">#FFFFFF</color>
-    <color name="launch_fragment_timer">#00FF00</color>
+    <color name="launch_fragment_background">#011534</color>
+    <color name="launch_fragment_timer">#BDCBE0</color>
     <color name="launch_fragment_button">#0000FF</color>
     <color name="launch_fragment_background_timer">#000</color>
 
