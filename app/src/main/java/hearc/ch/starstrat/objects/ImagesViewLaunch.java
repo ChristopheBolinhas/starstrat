@@ -20,7 +20,7 @@ public class ImagesViewLaunch {
 
     List<UnitItem> myListOfUnit;
     Activity myActivity;
-    float littleScale, bigScale;
+    float bigScale;
     int nbImagePerLine;
     boolean isVibrate;
     LinearLayout linearAnimation;
@@ -37,18 +37,9 @@ public class ImagesViewLaunch {
 
     public boolean getIsVibrate(){return isVibrate;}
 
-    public float getLittleScale()
-    {
-        return littleScale;
-    }
-
     public float getBigScale()
     {
         return bigScale;
-    }
-
-    public void setLittleScale(float scale){
-        littleScale = scale;
     }
 
     public void setBigScale(float scale){
@@ -109,9 +100,13 @@ public class ImagesViewLaunch {
                 }
 
             }
+
             //Put the horizontal image in vertical layout
             linearAnimation.addView(l);
-
         }
+
+        //Minimum size to prevent errors
+        linearAnimation.setMinimumHeight(30);
+        linearAnimation.setMinimumWidth(30);
     }
 }

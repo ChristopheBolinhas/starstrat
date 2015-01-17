@@ -47,5 +47,6 @@
     <!-- Values for LaunchGameFragment -->
     <string name="launch_game_fragment_Start">Start</string>
     <string name="launch_game_fragment_Pause">Pause</string>
+    <string name="launch_game_fragment_end">Fin</string>
 
 </resources>
