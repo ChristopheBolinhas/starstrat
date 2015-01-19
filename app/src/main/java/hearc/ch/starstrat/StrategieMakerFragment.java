@@ -56,6 +56,7 @@ public class StrategieMakerFragment extends Fragment {
     {
         StrategieMakerFragment frag = new StrategieMakerFragment();
         //frag.useBDD = bdd;
+        //Définition de l'ajout ou modification (button text) en fonction de la strat
         if(strat != null) {
             frag.validMessage = "Modifier la stratégie";
             frag.currentStrat = strat;
@@ -83,6 +84,7 @@ public class StrategieMakerFragment extends Fragment {
     public void onActivityCreated (Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+
         final Spinner spinner = (Spinner) getActivity().findViewById(R.id.spinner_race);
 
 
@@ -96,13 +98,13 @@ public class StrategieMakerFragment extends Fragment {
         }
 
 
+
+        //Si on modifie le choix de race
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
 
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 String selectedRace = (String)adapterView.getItemAtPosition(position);
-                /*if (currentStrat.getDbId() != -1)
-                    setControls();*/
 
                 if(!configurationInProgress) {
                     switch (selectedRace) {
@@ -122,6 +124,7 @@ public class StrategieMakerFragment extends Fragment {
                     if (currentStrat.getRace() == -1) {
                         resetConfiguration();
                     } else {
+                        //On indique à l'utilisateur qu'on a besoin de vider la liste
                         if (currentStrat.getRace() != selectedRaceId && currentStrat.getListSize() > 0) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                             builder.setMessage("Changer de race supprimera la configuration actuelle")
@@ -129,7 +132,9 @@ public class StrategieMakerFragment extends Fragment {
                             builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
+                                    currentStrat.clearList();
                                     resetConfiguration();
+                                    remakeUnitList();
                                 }
                             });
 

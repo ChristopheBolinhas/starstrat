@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import hearc.ch.starstrat.comparators.UnitItemComparator;
-import hearc.ch.starstrat.dataBase.Use.UseBDD;
 
 /**
  * Created by JuUsT on 28.12.2014.
@@ -96,15 +95,6 @@ public class StrategyItem {
 
 
 
-    public void loadFromDB(UseBDD useBDD)
-    {
-        //TODO
-    }
-
-    public void saveToDB(UseBDD useBDD)
-    {
-        //TODO
-    }
 
 
     public int getRace()
@@ -122,6 +112,10 @@ public class StrategyItem {
         return listUnits.size();
     }
 
+    public void clearList()
+    {
+        listUnits.clear();
+    }
 
     public void removeUnit(UnitItem unit) {
         listUnits.remove(unit);

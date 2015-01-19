@@ -31,10 +31,10 @@ public class MainActivity extends ActionBarActivity {
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
 
-    // nav drawer title
+    // titre du tiroire
     private CharSequence mDrawerTitle;
 
-    // used to store app title
+    // titre de l'application
     private CharSequence mTitle;
 
     // slide menu items
@@ -58,7 +58,7 @@ public class MainActivity extends ActionBarActivity {
     public MainActivity() {
     }
 
-
+    //Permet de récupérer l'instance de connexion à la base de données
     public UseBDD getDBInstance()
     {
         if(useBDD == null)
@@ -72,42 +72,46 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+        //On instancie la connexion à la base de données
         getDBInstance();
 
 
-
+        //On défini le titre du tiroire
         mTitle = mDrawerTitle = getTitle();
-        //setActionBar(new Toolbar(this));
+
+
+        //On récupère la liste des objets pour le tiroir (icone + texte)
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
         navMenuIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);
 
-        navMenuIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);
-
+        //On récupère le layout du drawer et de la liste
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.list_menu);
 
+        //On créer nos éléments pour le drawer
         navDrawerItems = new ArrayList<NavDrawerItem>();
 
+        //On ajoute les  éléments au drawer
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[0],navMenuIcons.getResourceId(0,0)));
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[1],navMenuIcons.getResourceId(1,0)));
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[2],navMenuIcons.getResourceId(2,0)));
-        //navDrawerItems.add(new NavDrawerItem(navMenuTitles[3],navMenuIcons.getResourceId(3,0)));
         navMenuIcons.recycle();
-
+        //On prépare l'evenement onClick
         mDrawerList.setOnItemClickListener(new DrawerMenuClickListener() );
 
-
+        //On créer l'adapteur pour notre liste d'objets du menu
         adapter = new NavDrawerListAdapter(getApplicationContext(),navDrawerItems);
+
+        //On défini l'adapteur du drawer
         mDrawerList.setAdapter(adapter);
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        //getSupportActionBar().setDisplayOptions(0);
-        //getSupportActionBar().get
-
+        //Toogle du drawer
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,R.string.drawer_open,R.string.drawer_close);
         mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
             @Override
@@ -119,32 +123,35 @@ public class MainActivity extends ActionBarActivity {
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
+        //On affiche le fragment accueil
         if(savedInstanceState == null){
             displayView(0);
         }
-
-        //useBDD.close();
     }
 
+
+    //Mets à jour la liste des stratégies, peut être appelée depuis n'importe quel fragment
     public void updateStratFrag() {
         if(stratListFrag != null)
             stratListFrag.updateList();
     }
 
+
+    //Ajoute une stratégie à la base de données
     public void addStrat(StrategyItem strat) {
         useBDD.addStrat(strat);
 
     }
 
     /**
-     * Slide menu item click listener
+     * OnClickListener pour le drawer
      * */
     private class DrawerMenuClickListener  implements
             ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position,
                                 long id) {
-            // display view for selected nav drawer item
+            // Affiche la vu pour l'object sélectionné dans la liste
             displayView(position);
         }
     }
@@ -158,19 +165,25 @@ public class MainActivity extends ActionBarActivity {
         return true;
     }
 
+    //Fonction pour lancer la stratégie sélectionnée par l'utilisateur dans la fenetre de jeu
     public void playStrat(StrategyItem strat)
     {
         setLaunchGameFragment(strat);
 
     }
 
+    //Affiche le LauchGameFragment
     private void setLaunchGameFragment(StrategyItem strat) {
+        //On récupère une instance de LaunchGameFragment
         final Fragment fragment = LaunchGameFragment.newInstance(strat,speedOfGame);
         final FragmentManager fragmentManager = getFragmentManager();
+        //Si il y'a encore des élémments de le backstack on le vide
         if(fragmentManager.getBackStackEntryCount() > 0) {
             fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
+
         FragmentTransaction transaction = fragmentManager.beginTransaction();
+        //On remplace le fragment actuel (StrategieFragment) et on l'ajoute au backstack
         transaction.replace(R.id.frame_container, fragment);
 
         transaction.addToBackStack(null);
@@ -178,10 +191,14 @@ public class MainActivity extends ActionBarActivity {
         transaction.commit();
     }
 
+    //Ouvre le fragment pour modifier la stratégie
     public void editStrat(StrategyItem strat)
     {
+
         setStrategieMakerFragement(strat);
     }
+
+    //Supprimer une stratégie
     public void removeStrat(StrategyItem strat)
     {
         useBDD.removeStrat(strat);
@@ -191,9 +208,6 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if(mDrawerToggle.onOptionsItemSelected(item))
         {
@@ -208,6 +222,8 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    //Lorsque l'on appui sur le bouton retour, permet de ne pas quitter mais de pop le backstack
     @Override
     public void onBackPressed() {
         FragmentManager fragmentManager = getFragmentManager();
@@ -276,19 +292,6 @@ public class MainActivity extends ActionBarActivity {
                 fragment = SpeedChooseFragment.newInstance();
 
                 break;
-            case 3://About
-                StrategyItem strat = new StrategyItem();
-                for(int i = 0; i < 40; i+=2)
-                {
-                    strat.addItem("Zerg",0,0,i,true);
-                }
-                fragment = LaunchGameFragment.newInstance(strat,speedOfGame);
-            break;
-            case 4://Hidden - LauchGameFragment
-                //TODO LaunchGameFragment
-                break;
-            case 5://Hidden - StrategyMaker Fragment
-                fragment = new StrategieMakerFragment();
             default:
                 break;
         }
