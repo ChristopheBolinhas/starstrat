@@ -3,7 +3,7 @@
 
     <string name="app_name">StarStrat</string>
     <string name="title_activity_main">StarStrat</string>
-    <string name="home_welcome">Bienvenue sur StarStrat,\nune application vous permettant de préparer vos BO pour le célébre jeu Starcraft 2.</string>
+    <string name="home_welcome">Bienvenue sur StarStrat,\nune application vous permettant de préparer vos BO pour le célébre jeu Starcraft 2.\n\n Auteurs: \n\tBolinhas Christophe\n\tChételat Pierre\n\tBaland Kévin</string>
     <string name="action_settings">Settings</string>
     <string name="drawer_open">Slider Menu Opened</string>
     <string name="drawer_close">Slider Menu Closed</string>

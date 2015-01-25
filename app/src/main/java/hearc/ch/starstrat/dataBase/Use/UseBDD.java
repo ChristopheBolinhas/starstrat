@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hearc.ch.starstrat.dataBase.BDD.ElementStrategieBDD;
-import hearc.ch.starstrat.dataBase.BDD.EventsBDD;
 import hearc.ch.starstrat.dataBase.BDD.RaceBDD;
 import hearc.ch.starstrat.dataBase.BDD.Race_entitiesBDD;
 import hearc.ch.starstrat.dataBase.BDD.StrategiesBDD;
@@ -33,7 +32,6 @@ public class UseBDD
     private RaceBDD race;
     private TypeBDD type;
     private Race_entitiesBDD raceEntities;
-    private EventsBDD events;
     private StrategiesBDD strats;
     private ElementStrategieBDD elementStrategie;
 
@@ -44,7 +42,6 @@ public class UseBDD
         this.race = new RaceBDD(context);
         this.type = new TypeBDD(context);
         this.raceEntities = new Race_entitiesBDD(context);
-        this.events = new EventsBDD(context);
         this.strats = new StrategiesBDD(context);
         this.elementStrategie = new ElementStrategieBDD(context);
 
@@ -82,7 +79,6 @@ public class UseBDD
         race.open();
         type.open();
         raceEntities.open();
-        events.open();
         strats.open();
         elementStrategie.open();
     }
@@ -93,7 +89,6 @@ public class UseBDD
         race.close();
         type.close();
         raceEntities.close();
-        events.close();
         strats.close();
         elementStrategie.close();
     }
